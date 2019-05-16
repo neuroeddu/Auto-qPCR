@@ -40,6 +40,21 @@ def run_model(wdir, d, cfg):
 
 	control_final_mean = np.mean(control_means)
 
+	for target, array in targets.items():
+		for i, item in enumerate(array):
+			ct = item 
+			delta_ct = ct - control_final_mean
+			RQ = np.power(2, -delta_ct)
+			targets[target][i] = RQ
+
+	target_means = {}
+	target_stderr = {}
+
+	for target, array in targets.items():
+		target_means[target] = np.mean(array)
+		target_stderr[target] = np.std(array) / np.sqrt(len(array))
+
+
 	print(controls)
 
 	print(control_means)
@@ -48,7 +63,7 @@ def run_model(wdir, d, cfg):
 
 	print(targets)
 
-
+	print(target_means)
 
 
 #Clean outliers from sample and control groups
