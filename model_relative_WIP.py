@@ -11,49 +11,42 @@ import warnings
 
 def run_model(wdir, d, cfg):
 	
-	controls = cfg['MODEL']['ControlGenes'].split(', ')
+	control_names = cfg['MODEL']['ControlGenes'].split(', ')
 
-	averageControls = 0
+	target_names = list(dict.fromkeys(d['Target Name']))
+	targets = dict((target,[]) for target in target_names)
 
-	for i, well in enumerate(d['Well']):
-		target_name = d['Target Name'][i]
-		if d['CT'][i] != 'Undetermined':
-			ct = float(d['CT'][i])
+	for control in control_names:
+		targets.pop(control, None)
 
-			for control in controls:
-				if target_name == control:
-					averageControls += ct
-
-	averageControls = averageControls / len(d['Well'])
-
-	RQ = []
+	controls = dict((control,[]) for control in control_names)
 
 	for i, well in enumerate(d['Well']):
-		target_name = d['Target Name'][i]
 
-		RQ.append('None')
+		if d['CT'][i] != "Undetermined":
 
-		if d['CT'][i] != 'Undetermined':
-			ct = float(d['CT'][i])
+			t = d['Target Name'][i]
 
-			if target_name != control in controls:
-				RQ[i] = np.power(2.0, -(ct - averageControls))
+			if t in control_names:
+				controls[t].append(float(d['CT'][i]))
+			else:
+				targets[t].append(float(d['CT'][i]))
 
-	triplicates = list(dict.fromkeys(d['Target Name']))
+	control_means = []
 
-	targetRQ = dict((triplicate,[]) for triplicate in triplicates)
+	for control, array in controls.items():
+		if len(array) > 0:
+			control_means.append(np.mean(array))
 
-	for i, well in enumerate(d['Well']):
-		target_name = d['Target Name'][i]
+	control_final_mean = np.mean(control_means)
 
-		if RQ[i] != 'None':
-			if target_name in triplicates:
-				targetRQ[target_name].append(int(RQ[i]))
+	print(controls)
 
+	print(control_means)
 
-	for key, array in targetRQ.items():
-		print(sum(array)/len(array))
-		print(np.std(array)/ np.sqrt(3.0))
+	print(control_final_mean)
+
+	print(targets)
 
 
 
