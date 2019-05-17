@@ -6,6 +6,7 @@ import pandas as pd
 import helpers as h
 import config as c
 import model as m
+import model_relative as mr
 
 INIT = {
     'project': {'local_config': None, 'data': pd.DataFrame()}
@@ -125,5 +126,11 @@ def load_files(wdir, cfg, files):
 def process_project(wdir, p, cfg):
     # if h.verbosity == h.LOG_DEBUG:
         # print(p)
-    d = p['data']
-    m.run_model(wdir, d, cfg)
+    data = p['data']
+
+    # Branches based on type of quantification specified in the .config file
+
+    if cfg['MODEL']['Type'] == 'Relative':
+        mr.run_model(wdir, data, cfg)
+    elif cfg['MODEL']['Type'] == 'Absolute':
+        m.run_model(wdir, data, cfg)

@@ -16,13 +16,12 @@ def run_model(wdir, d, cfg):
     # Add filter columns
     d['Ignore'] = False
     d['Control'] = False
-    d['NormQuant'] = 0
-    d['NormMean'] = np.nan
-    d['NormSEM'] = np.nan
-    d['NormSD'] = np.nan
-    d['NormMeanBio'] = np.nan
-    d['NormSEMBio'] = np.nan
-    d['NormSDBio'] = np.nan
+    d['RQ'] = np.nan
+    d['RQSEM'] = np.nan
+    d['RQSD'] = np.nan
+    d['RQMeanBio'] = np.nan
+    d['RQSEMBio'] = np.nan
+    d['RQSDBio'] = np.nan
     
     # define sorter for sample name order based on list in local config file
     # this list is case sensitive
@@ -135,8 +134,8 @@ def run_model(wdir, d, cfg):
 
     #print(d4.to_string())
     
-    fn = Path(wdir).joinpath("biological_group_rq.xlsx")
-    d4.to_excel(fn, encoding = cfg['FILE']['Encoding'])
+    #fn = Path(wdir).joinpath("biological_group_rq.xlsx")
+    #d4.to_excel(fn, encoding = cfg['FILE']['Encoding'])
     
     # Plots the Normalized Quantities for all targets in one figure
     f5 = (d['Task'] == 'UNKNOWN') & (d['Control'].eq(False))
