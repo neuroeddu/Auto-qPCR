@@ -53,7 +53,7 @@ def run_model(wdir, d, cfg):
     with warnings.catch_warnings():
         warnings.simplefilter('ignore')
         cleanup_ouliers(d, cfg)
-    
+
     # Add sorter to dataframe to order Sample Names in output files
     targets = set(d['Target Name'])
     for target in targets:
@@ -152,7 +152,7 @@ def run_model(wdir, d, cfg):
             if sample_name in samples['Sample Name'].values:
                 names.append(sample_name)
                 try:
-                    values.append(samples[samples['Sample Name'] == sample_name]['RQMean'].iat[0])
+                    values.append(samples[samples['Sample Name'] == sample_name]['RQ'].iat[0])
                     sem.append(samples[samples['Sample Name'] == sample_name]['RQSEM'].iat[0])
                 except Exception:
                     values.append(0)
@@ -161,7 +161,7 @@ def run_model(wdir, d, cfg):
             if sample_name not in names:
                 names.append(sample_name)
                 try:
-                    values.append(samples[samples['Sample Name'] == sample_name]['RQMean'].iat[0])
+                    values.append(samples[samples['Sample Name'] == sample_name]['RQ'].iat[0])
                     sem.append(samples[samples['Sample Name'] == sample_name]['RQSEM'].iat[0])
                 except Exception:
                     values.append(0)
@@ -213,7 +213,7 @@ def cleanup_ouliers(d, cfg):
                 f = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') \
                     & (d['Sample Name'] == row[0][0]) & (d['Target Name'] == row[0][1])
                 dx = d[f].copy()
-                dxg = d[f].groupby(['Sample Name', 'Target Name']).agg({'CT': [np.size, 'std'], 'Quantity': ['mean']})
+                dxg = d[f].groupby(['Sample Name', 'Target Name']).agg({'CT': [np.size, 'std', 'mean']})
                 if dxg['CT']['std'].iloc[0] <= cfg['MODEL']['OutlierCutoff']:
                     # CT std is under the threshold
                     break
@@ -225,6 +225,6 @@ def cleanup_ouliers(d, cfg):
                         d['Ignore'].loc[j] = True
                     break
                 # Will remove the measurement which is furthest from the mean
-                dx['Distance'] = (dx['Quantity'] - dxg['Quantity']['mean'].iloc[0])**2
+                dx['Distance'] = (dx['CT'] - dxg['CT']['mean'].iloc[0])**2
                 j = dx.sort_values(by = 'Distance', ascending = False).index[0]
                 d['Ignore'].loc[j] = True
