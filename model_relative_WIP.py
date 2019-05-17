@@ -30,16 +30,16 @@ def run_model(wdir, d, cfg):
     # print(sorter)
     
     # Convert all values in selected columns to numeric
-    cols = ['CT','Quantity']
+    cols = ['CT']
     d[cols] = d[cols].apply(pd.to_numeric, errors='coerce')
     
     # Mark the data for the controls defined in the config file in a new column
     # This will allow filtering of the dataframe and different treatment of controls
-    ctrls = set([x.strip().lower() for x in cfg['MODEL']['ControlGenes'].split(',')])    
-    d['Control'] = d['Target Name'].apply(lambda x: True if x.lower() in ctrls else False)
+    ctrls = set([x.strip() for x in cfg['MODEL']['ControlGenes'].split(',')])    
+    d['Control'] = d['Target Name'].apply(lambda x: True if x in ctrls else False)
     
     # Create column 'Ignore' in dataframe to mark rows with NaN values in certain columns 
-    cols = ['Sample Name', 'Target Name', 'Task', 'Reporter', 'CT','Quantity']
+    cols = ['Sample Name', 'Target Name', 'Task', 'Reporter', 'CT']
     for col in cols:
         d.loc[d[col].isnull(), 'Ignore'] = True
     
@@ -69,20 +69,19 @@ def run_model(wdir, d, cfg):
     if h.verbosity == h.LOG_DEBUG:    
         h.bprint(s, 74)
         print(d1_1)
-    d2 = d[f1].groupby(['Sample Name']).agg({'CT':'mean'})
-    d2_1 = d[f1].groupby(['Sample Order','Sample Name']).agg({'CT':'mean'})    
+    d2 = d1.groupby(['Sample Name']).agg({('CT', 'mean'):'mean'})
+    d2_1 = d1_1.groupby(['Sample Order','Sample Name']).agg({('CT', 'mean'):'mean'})    
     s = "Combined Endogenous Control CT Means and SSD"
     if h.verbosity == h.LOG_DEBUG:
         h.bprint(s, 74)
         print(d2_1)
     
-    #Create Normalized Quantity column        
+    #Create RQ column        
     for i, row in enumerate(d2.itertuples(name = None), 1):
         f = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') \
             & (d['Control'].eq(False)) & (d['Sample Name'] == row[0])
         for j in d[f].index:
-            d.loc[j, 'NormQuant'] = d.loc[j, 'Quantity'] / row[1]
-            #d.loc[j, 'NormQuantSD'] = d.loc[j, 'NormQuant'].std
+            d.loc[j, 'RQ'] = np.power(2, -(d.loc[j, 'CT'] - row[1]))
             
     # Calculate the SEM for technical and biological replicate groups
     targets = set(d['Target Name'])
@@ -93,14 +92,15 @@ def run_model(wdir, d, cfg):
         samples = set(d[d['Target Name'] == target]['Sample Name'])
         for sample in samples:
             target_sample_data = d[(d['Target Name'] == target) & (d['Sample Name'] == sample) & d['Ignore'].eq(False)]
-            mean = target_sample_data['NormQuant'].mean()
-            sdt_dev = target_sample_data['NormQuant'].std()
-            std_err = target_sample_data['NormQuant'].sem()
+            mean = target_sample_data['RQ'].mean()
+            sdt_dev = target_sample_data['RQ'].std()
+            std_err = target_sample_data['RQ'].sem()
             mean_sem_result[target][sample] = (mean, sdt_dev, std_err)
     for i_row, row in d.iterrows():
-        d.at[i_row, 'NormMean'] = mean_sem_result[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name']][0]
-        d.at[i_row, 'NormSD'] = mean_sem_result[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name']][1]
-        d.at[i_row, 'NormSEM'] = mean_sem_result[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name']][2]
+        if d.at[i_row, 'Sample Name'] in samples:
+            d.at[i_row, 'RQ'] = mean_sem_result[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name']][0]
+            d.at[i_row, 'RQSD'] = mean_sem_result[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name']][1]
+            d.at[i_row, 'RQSEM'] = mean_sem_result[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name']][2]
     
     mean_sem_result_bio = {}
     targets = set(d['Target Name'])
@@ -109,32 +109,33 @@ def run_model(wdir, d, cfg):
         samples = set(d[d['Target Name'] == target]['Sample Name Key'])
         for sample in samples:
             target_sample_data = d[(d['Target Name'] == target) & (d['Sample Name Key'] == sample) & d['Ignore'].eq(False)]
-            mean = target_sample_data['NormQuant'].mean()
-            sdt_dev = target_sample_data['NormQuant'].std()
-            std_err = target_sample_data['NormQuant'].sem()
+            mean = target_sample_data['RQ'].mean()
+            sdt_dev = target_sample_data['RQ'].std()
+            std_err = target_sample_data['RQ'].sem()
             mean_sem_result_bio[target][sample] = (mean, sdt_dev, std_err)
     for i_row, row in d.iterrows():
-        d.at[i_row, 'NormMeanBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][0]
-        d.at[i_row, 'NormSDBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][1]
-        d.at[i_row, 'NormSEMBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][2]
+        if d.at[i_row, 'Sample Name Key'] in samples:
+            d.at[i_row, 'RQMeanBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][0]
+            d.at[i_row, 'RQSDBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][1]
+            d.at[i_row, 'RQSEMBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][2]
     
     f2 = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') & (d['Control'].eq(False))
-    d3 = d[f2].groupby(['Target Name','Sample Order','Sample Name']).agg({'NormQuant': [np.size, 'mean', 'std'], 'NormSEM': 'mean'})
+    d3 = d[f2].groupby(['Target Name','Sample Order','Sample Name']).agg({'RQ': [np.size, 'mean', 'std'], 'RQSEM': 'mean'})
     s = "Mean and SSD for all sample groups"
     
     if h.verbosity == h.LOG_DEBUG:
         h.bprint(s, 85)
         print(d3.to_string())
-    fn = Path(wdir).joinpath("technical_group_quantities.xlsx")
+    fn = Path(wdir).joinpath("technical_group_rq.xlsx")
     d3.to_excel(fn, encoding = cfg['FILE']['Encoding'])
     
     # Calculate Mean and SSD for all sample groups
     f3 = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') & (d['Control'].eq(False))
-    d4 = d[f3].groupby(['Target Name','Sample Name Key']).agg({'Quantity': ['mean'], 'NormQuant': [np.size, 'mean', 'std'], 'NormSEMBio': 'mean'})
+    d4 = d[f3].groupby(['Target Name','Sample Name Key']).agg({'CT': ['mean'], 'RQ': [np.size, 'mean', 'std'], 'RQSEMBio': 'mean'})
 
     #print(d4.to_string())
     
-    fn = Path(wdir).joinpath("biological_group_quantities.xlsx")
+    fn = Path(wdir).joinpath("biological_group_rq.xlsx")
     d4.to_excel(fn, encoding = cfg['FILE']['Encoding'])
     
     # Plots the Normalized Quantities for all targets in one figure
@@ -151,8 +152,8 @@ def run_model(wdir, d, cfg):
             if sample_name in samples['Sample Name'].values:
                 names.append(sample_name)
                 try:
-                    values.append(samples[samples['Sample Name'] == sample_name]['NormMean'].iat[0])
-                    sem.append(samples[samples['Sample Name'] == sample_name]['NormSEM'].iat[0])
+                    values.append(samples[samples['Sample Name'] == sample_name]['RQMean'].iat[0])
+                    sem.append(samples[samples['Sample Name'] == sample_name]['RQSEM'].iat[0])
                 except Exception:
                     values.append(0)
                     sem.append(0)
@@ -160,8 +161,8 @@ def run_model(wdir, d, cfg):
             if sample_name not in names:
                 names.append(sample_name)
                 try:
-                    values.append(samples[samples['Sample Name'] == sample_name]['NormMean'].iat[0])
-                    sem.append(samples[samples['Sample Name'] == sample_name]['NormSEM'].iat[0])
+                    values.append(samples[samples['Sample Name'] == sample_name]['RQMean'].iat[0])
+                    sem.append(samples[samples['Sample Name'] == sample_name]['RQSEM'].iat[0])
                 except Exception:
                     values.append(0)
                     sem.append(0)
@@ -171,7 +172,7 @@ def run_model(wdir, d, cfg):
         ax.set_xticklabels(names, rotation=90)
         ax.set_title(target_name)
         fig.tight_layout()
-        fn = Path(wdir).joinpath(f'{target_name}.png')
+        fn = Path(wdir).joinpath(f'{target_name}.png'.replace('/', '-'))
         try: os.remove(fn)
         except Exception: pass
         fig.savefig(fn, bbox_inches='tight')
