@@ -7,9 +7,13 @@ QUALITY = ""
 from sys import argv
 from pathlib import Path
 from argparse import ArgumentParser
+from tkinter import Tk
+from tkinter.filedialog import askdirectory
+
 import helpers as h
 import config as c
 import project as p
+
 
 def main():
     h.verbosity = h.LOG_DEBUG
@@ -21,7 +25,12 @@ def main():
             ("Documents/McGill/_Research/Durcan_Lab/qPCR_program/qPCR_Program-0.1.5/idlab/Gilles_plates")
     c.set_global_config(argv[0])
 
-    get_cmd_args()
+    #get_cmd_args()
+
+    root = Tk()
+    root.withdraw()
+    c.CONFIG['PROJECT']['Directory'] = askdirectory(title = "Please select the input directory (Containing the input data and project .config file)")
+    root.destroy()
 
     p.process_root_directory()
     h.log(h.LOG_INFO, "\nAll done")
