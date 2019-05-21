@@ -31,6 +31,8 @@ def set_default_config():
             'Encoding': "utf-8"
         },
         'MODEL': {
+            # The type of quantification
+            'Type': "Absolute",
             # The names of the control genes
             'ControlGenes': "",
             # The order in which samples will appear in data tables and graphs
