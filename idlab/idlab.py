@@ -27,7 +27,7 @@ def main():
 
     #get_cmd_args()
 
-    h.log(h.LOG_INFO, "\nPlease select the input directory (Containing the input data and project .config file)")x    
+    h.log(h.LOG_INFO, "\nPlease select the input directory (Containing the input data and project .config file)")    
 
     root = Tk()
     root.withdraw()
