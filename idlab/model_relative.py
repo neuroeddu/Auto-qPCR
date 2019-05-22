@@ -132,7 +132,7 @@ def run_model(wdir, d, cfg):
     f3 = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') & (d['Control'].eq(False))
     d4 = d[f3].groupby(['Target Name','Sample Name Key']).agg({'CT': ['mean'], 'RQ': [np.size, 'mean', 'std'], 'RQSEMBio': 'mean'})
 
-    print(d4.to_string())
+    #print(d4.to_string())
     
     #fn = Path(wdir).joinpath("biological_group_rq.xlsx")
     #d4.to_excel(fn, encoding = cfg['FILE']['Encoding'])

@@ -27,6 +27,8 @@ def main():
 
     #get_cmd_args()
 
+    h.log(h.LOG_INFO, "\nPlease select the input directory (Containing the input data and project .config file)")x    
+
     root = Tk()
     root.withdraw()
     c.CONFIG['PROJECT']['Directory'] = askdirectory(title = "Please select the input directory (Containing the input data and project .config file)")
