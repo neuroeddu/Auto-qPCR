@@ -28,6 +28,6 @@ MANIFEST
 
 # Output files
 
-.xls
-.xlsx
-.png
+*.xls
+*.xlsx
+*.png
