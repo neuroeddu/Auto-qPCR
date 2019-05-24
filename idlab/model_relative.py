@@ -63,13 +63,13 @@ def run_model(wdir, d, cfg):
     # Calculate CT Mean (Endogenous Control Mean) and SSD for all Controls
     f1 = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') & (d['Control'].eq(True))
     d1 = d[f1].groupby(['Target Name','Sample Name']).agg({'CT': [np.size, 'mean', 'std']})
-    d1_1 = d[f1].groupby(['Target Name','Sample Order','Sample Name']).agg({'CT': [np.size, 'mean', 'std']})
+    d1_1 = d[f1].groupby(['Target Name','Sample Name']).agg({'CT': [np.size, 'mean', 'std']})
     s = "Endogenous Control CT Means and SSD"
     if h.verbosity == h.LOG_DEBUG:    
         h.bprint(s, 74)
         print(d1_1)
     d2 = d1.groupby(['Sample Name']).agg({('CT', 'mean'):'mean'})
-    d2_1 = d1_1.groupby(['Sample Order','Sample Name']).agg({('CT', 'mean'):'mean'})    
+    d2_1 = d1_1.groupby(['Sample Name']).agg({('CT', 'mean'):'mean'})    
     s = "Combined Endogenous Control CT Means and SSD"
     if h.verbosity == h.LOG_DEBUG:
         h.bprint(s, 74)
@@ -119,7 +119,7 @@ def run_model(wdir, d, cfg):
             d.at[i_row, 'RQSEMBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][2]
     
     f2 = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') & (d['Control'].eq(False))
-    d3 = d[f2].groupby(['Target Name','Sample Order','Sample Name']).agg({'RQ': [np.size, 'mean'], 'RQSD': 'mean', 'RQSEM': 'mean'})
+    d3 = d[f2].groupby(['Target Name','Sample Name']).agg({'RQ': [np.size, 'mean'], 'RQSD': 'mean', 'RQSEM': 'mean'})
     s = "Mean and SSD for all sample groups"
     
     if h.verbosity == h.LOG_DEBUG:
