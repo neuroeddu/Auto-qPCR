@@ -96,7 +96,7 @@ def run_model(wdir, d, cfg):
             std_err = target_sample_data['RQ'].sem()
             mean_sem_result[target][sample] = (mean, sdt_dev, std_err)
     for i_row, row in d.iterrows():
-        if d.at[i_row, 'Sample Name'] in samples:
+        if d.at[i_row, 'Sample Name'] in samples and d.at[i_row, 'Sample Name'] in samples and d.at[i_row, 'Target Name'] in mean_sem_result and d.at[i_row, 'Sample Name'] in mean_sem_result[d.at[i_row, 'Target Name']]:
             d.at[i_row, 'RQ'] = mean_sem_result[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name']][0]
             d.at[i_row, 'RQSD'] = mean_sem_result[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name']][1]
             d.at[i_row, 'RQSEM'] = mean_sem_result[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name']][2]
@@ -113,7 +113,7 @@ def run_model(wdir, d, cfg):
             std_err = target_sample_data['RQ'].sem()
             mean_sem_result_bio[target][sample] = (mean, sdt_dev, std_err)
     for i_row, row in d.iterrows():
-        if d.at[i_row, 'Sample Name Key'] in samples:
+        if d.at[i_row, 'Sample Name Key'] in samples and d.at[i_row, 'Sample Name'] in samples and d.at[i_row, 'Target Name'] in mean_sem_result_bio and d.at[i_row, 'Sample Name Key'] in mean_sem_result_bio[d.at[i_row, 'Target Name']]:
             d.at[i_row, 'RQMeanBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][0]
             d.at[i_row, 'RQSDBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][1]
             d.at[i_row, 'RQSEMBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][2]
