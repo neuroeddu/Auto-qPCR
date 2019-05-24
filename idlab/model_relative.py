@@ -220,8 +220,8 @@ def cleanup_ouliers(d, cfg):
                 size -= 1
                 if size < min_size:
                     # Ignore the entire group of measurements
-                    for j in dx_idx:
-                        d['Ignore'].loc[j] = True
+                    #for j in dx_idx:
+                    #    d['Ignore'].loc[j] = True
                     break
                 # Will remove the measurement which is furthest from the mean
                 dx['Distance'] = (dx['CT'] - dxg['CT']['mean'].iloc[0])**2
