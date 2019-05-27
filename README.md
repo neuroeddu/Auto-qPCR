@@ -7,9 +7,13 @@ Step to run a qPCR analysis
    b) copy the project_config.conf file into the data folder.
    
    c) Update the project_config.conf file to match your situation:
+   
          1. choose your model: absolute, relative (delta CT), stability (delta delta CT)
+   
          2. Specify Control Genes (house keeping/ configuration genes)
+         
          3. If you are using delta-delta CT (the stability test) specify your reference sample.
+         
          4. Save the file. 
 2. open command window (by typing cmd in your windows bar).
 3. navigate to the folder with the program files. Type: "cd /Desktop/Auto-qPCR/program/idlab/
