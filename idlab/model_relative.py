@@ -18,12 +18,12 @@ def run_model(wdir, d, cfg):
     # Add filter columns
     d['Ignore'] = False
     d['Control'] = False
-    d['RQ'] = np.nan
-    d['RQSEM'] = np.nan
-    d['RQSD'] = np.nan
-    d['RQMeanBio'] = np.nan
-    d['RQSEMBio'] = np.nan
-    d['RQSDBio'] = np.nan
+    d['rq'] = np.nan
+    d['rqSEM'] = np.nan
+    d['rqSD'] = np.nan
+    d['rqMeanBio'] = np.nan
+    d['rqSEMBio'] = np.nan
+    d['rqSDBio'] = np.nan
     
     # define sorter for sample name order based on list in local config file
     # this list is case sensitive
@@ -77,12 +77,12 @@ def run_model(wdir, d, cfg):
         h.bprint(s, 74)
         print(d2_1)
     
-    #Create RQ column        
+    #Create rq column        
     for i, row in enumerate(d2.itertuples(name = None), 1):
         f = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') \
             & (d['Control'].eq(False)) & (d['Sample Name'] == row[0])
         for j in d[f].index:
-            d.loc[j, 'RQ'] = np.power(2, -(d.loc[j, 'CT'] - row[1]))
+            d.loc[j, 'rq'] = np.power(2, -(d.loc[j, 'CT'] - row[1]))
             
     # Calculate the SEM for technical and biological replicate groups
     targets = set(d['Target Name'])
@@ -93,15 +93,15 @@ def run_model(wdir, d, cfg):
         samples = set(d[d['Target Name'] == target]['Sample Name'])
         for sample in samples:
             target_sample_data = d[(d['Target Name'] == target) & (d['Sample Name'] == sample) & d['Ignore'].eq(False)]
-            mean = target_sample_data['RQ'].mean()
-            sdt_dev = target_sample_data['RQ'].std()
-            std_err = target_sample_data['RQ'].sem()
+            mean = target_sample_data['rq'].mean()
+            sdt_dev = target_sample_data['rq'].std()
+            std_err = target_sample_data['rq'].sem()
             mean_sem_result[target][sample] = (mean, sdt_dev, std_err)
     for i_row, row in d.iterrows():
         if d.at[i_row, 'Sample Name'] in samples and d.at[i_row, 'Sample Name'] in samples and d.at[i_row, 'Target Name'] in mean_sem_result and d.at[i_row, 'Sample Name'] in mean_sem_result[d.at[i_row, 'Target Name']]:
-            d.at[i_row, 'RQ'] = mean_sem_result[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name']][0]
-            d.at[i_row, 'RQSD'] = mean_sem_result[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name']][1]
-            d.at[i_row, 'RQSEM'] = mean_sem_result[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name']][2]
+            d.at[i_row, 'rq'] = mean_sem_result[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name']][0]
+            d.at[i_row, 'rqSD'] = mean_sem_result[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name']][1]
+            d.at[i_row, 'rqSEM'] = mean_sem_result[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name']][2]
     
     mean_sem_result_bio = {}
     targets = set(d['Target Name'])
@@ -110,18 +110,18 @@ def run_model(wdir, d, cfg):
         samples = set(d[d['Target Name'] == target]['Sample Name Key'])
         for sample in samples:
             target_sample_data = d[(d['Target Name'] == target) & (d['Sample Name Key'] == sample) & d['Ignore'].eq(False)]
-            mean = target_sample_data['RQ'].mean()
-            sdt_dev = target_sample_data['RQ'].std()
-            std_err = target_sample_data['RQ'].sem()
+            mean = target_sample_data['rq'].mean()
+            sdt_dev = target_sample_data['rq'].std()
+            std_err = target_sample_data['rq'].sem()
             mean_sem_result_bio[target][sample] = (mean, sdt_dev, std_err)
     for i_row, row in d.iterrows():
         if d.at[i_row, 'Sample Name Key'] in samples and d.at[i_row, 'Sample Name'] in samples and d.at[i_row, 'Target Name'] in mean_sem_result_bio and d.at[i_row, 'Sample Name Key'] in mean_sem_result_bio[d.at[i_row, 'Target Name']]:
-            d.at[i_row, 'RQMeanBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][0]
-            d.at[i_row, 'RQSDBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][1]
-            d.at[i_row, 'RQSEMBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][2]
+            d.at[i_row, 'rqMeanBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][0]
+            d.at[i_row, 'rqSDBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][1]
+            d.at[i_row, 'rqSEMBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][2]
     
     f2 = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') & (d['Control'].eq(False))
-    d3 = d[f2].groupby(['Target Name','Sample Name']).agg({'RQ': [np.size, 'mean'], 'RQSD': 'mean', 'RQSEM': 'mean'})
+    d3 = d[f2].groupby(['Target Name','Sample Name']).agg({'rq': [np.size, 'mean'], 'rqSD': 'mean', 'rqSEM': 'mean'})
     s = "Mean and SSD for all sample groups"
     
     if h.verbosity == h.LOG_DEBUG:
@@ -132,7 +132,7 @@ def run_model(wdir, d, cfg):
     
     # Calculate Mean and SSD for all sample groups
     f3 = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') & (d['Control'].eq(False))
-    d4 = d[f3].groupby(['Target Name','Sample Name Key']).agg({'CT': ['mean'], 'RQ': [np.size, 'mean', 'std'], 'RQSEMBio': 'mean'})
+    d4 = d[f3].groupby(['Target Name','Sample Name Key']).agg({'CT': ['mean'], 'rq': [np.size, 'mean', 'std'], 'rqSEMBio': 'mean'})
 
     #print(d4.to_string())
     
@@ -153,8 +153,8 @@ def run_model(wdir, d, cfg):
             if sample_name in samples['Sample Name'].values:
                 names.append(sample_name)
                 try:
-                    values.append(samples[samples['Sample Name'] == sample_name]['RQ'].iat[0])
-                    sem.append(samples[samples['Sample Name'] == sample_name]['RQSEM'].iat[0])
+                    values.append(samples[samples['Sample Name'] == sample_name]['rq'].iat[0])
+                    sem.append(samples[samples['Sample Name'] == sample_name]['rqSEM'].iat[0])
                 except Exception:
                     values.append(0)
                     sem.append(0)
@@ -162,8 +162,8 @@ def run_model(wdir, d, cfg):
             if sample_name not in names:
                 names.append(sample_name)
                 try:
-                    values.append(samples[samples['Sample Name'] == sample_name]['RQ'].iat[0])
-                    sem.append(samples[samples['Sample Name'] == sample_name]['RQSEM'].iat[0])
+                    values.append(samples[samples['Sample Name'] == sample_name]['rq'].iat[0])
+                    sem.append(samples[samples['Sample Name'] == sample_name]['rqSEM'].iat[0])
                 except Exception:
                     values.append(0)
                     sem.append(0)
