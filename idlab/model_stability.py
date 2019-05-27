@@ -11,14 +11,13 @@ import warnings
 
 def run_model(wdir, d, cfg):
     # Clean up column names
-
-
     d.columns = [x.strip() for x in d.columns]
 
     # Add filter columns
     d['Ignore'] = False
     d['Control'] = False
-    d['RQ'] = np.nan
+    d['ControlSample'] = False
+    d['deltaCT'] = np.nan
     d['RQSEM'] = np.nan
     d['RQSD'] = np.nan
     d['RQMeanBio'] = np.nan
@@ -77,13 +76,27 @@ def run_model(wdir, d, cfg):
         h.bprint(s, 74)
         print(d2_1)
     
-    #Create RQ column        
+    #Create deltaCT column        
     for i, row in enumerate(d2.itertuples(name = None), 1):
         f = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') \
             & (d['Control'].eq(False)) & (d['Sample Name'] == row[0])
         for j in d[f].index:
-            d.loc[j, 'RQ'] = np.power(2, -(d.loc[j, 'CT'] - row[1]))
-            
+            d.loc[j, 'deltaCT'] = d.loc[j, 'CT'] - row[1]
+
+    #Mark the data for Control Sample to calculate delta delta CT
+    controlSamples = set([x.strip() for x in cfg['MODEL']['ControlGenes'].split(',')])    
+    d['ControlSample'] = d['Sample Name'].apply(lambda x: True if x in controlSamples else False)
+    fs = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') & (d['ControlSample'].eq(True))
+    ds = d.groupby(['Target Name']).agg({('deltaCT'):'mean'})
+
+    for i, row in enumerate(ds.itertuples(name = None), 1):
+        f = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') \
+            & (d['ControlSample'].eq(False)) & (d['Target Name'] == row[0]) & (d['Control'].eq(False))
+        for j in d[f].index:
+            d.loc[j, 'RQ'] = np.power(2, -(d.loc[j, 'deltaCT'] - row[1]))
+
+
+
     # Calculate the SEM for technical and biological replicate groups
     targets = set(d['Target Name'])
     mean_sem_result = {}
@@ -120,7 +133,7 @@ def run_model(wdir, d, cfg):
             d.at[i_row, 'RQSDBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][1]
             d.at[i_row, 'RQSEMBio'] = mean_sem_result_bio[d.at[i_row, 'Target Name']][d.at[i_row, 'Sample Name Key']][2]
     
-    f2 = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') & (d['Control'].eq(False))
+    f2 = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') & (d['Control'].eq(False)) & (d['ControlSample'].eq(False))
     d3 = d[f2].groupby(['Target Name','Sample Name']).agg({'RQ': [np.size, 'mean'], 'RQSD': 'mean', 'RQSEM': 'mean'})
     s = "Mean and SSD for all sample groups"
     
@@ -131,7 +144,7 @@ def run_model(wdir, d, cfg):
     d3.to_excel(fn, encoding = cfg['FILE']['Encoding'])
     
     # Calculate Mean and SSD for all sample groups
-    f3 = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') & (d['Control'].eq(False))
+    f3 = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') & (d['Control'].eq(False)) & (d['ControlSample'].eq(False))
     d4 = d[f3].groupby(['Target Name','Sample Name Key']).agg({'CT': ['mean'], 'RQ': [np.size, 'mean', 'std'], 'RQSEMBio': 'mean'})
 
     #print(d4.to_string())

@@ -26,6 +26,7 @@ def main():
     c.set_global_config(argv[0])
 
     #get_cmd_args()
+    
 
     h.log(h.LOG_INFO, "\nPlease select the input directory (Containing the input data and project .config file)")    
 

@@ -6,7 +6,9 @@ import pandas as pd
 import helpers as h
 import config as c
 import model as m
+import model_stability as ms
 import model_relative as mr
+
 
 INIT = {
     'project': {'local_config': None, 'data': pd.DataFrame()}
@@ -19,7 +21,6 @@ def process_root_directory():
     if not root.is_dir():
         h.log(h.LOG_QUIET, 'ABORTING: The specified root directory was not found: {}'.format(root))
         quit
-
     # Walk the root directory
     for wdir, wdirs, wfiles in os.walk(root, topdown=True):
         stop_recurse = process_directory(wdir, wfiles)
@@ -129,8 +130,9 @@ def process_project(wdir, p, cfg):
     data = p['data']
 
     # Branches based on type of quantification specified in the .config file
-
+    if cfg['MODEL']['Type'] == 'Stability':
+        ms.run_model(wdir, data, cfg)
     if cfg['MODEL']['Type'] == 'Relative':
         mr.run_model(wdir, data, cfg)
-    elif cfg['MODEL']['Type'] == 'Absolute':
+    if cfg['MODEL']['Type'] == 'Absolute':
         m.run_model(wdir, data, cfg)

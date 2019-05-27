@@ -10,6 +10,7 @@ import config #as c
 import warnings
 
 def run_model(wdir, d, cfg):
+
     # Clean up column names
     d.columns = [x.strip() for x in d.columns]
 
@@ -36,7 +37,7 @@ def run_model(wdir, d, cfg):
     # Mark the data for the controls defined in the config file in a new column
     # This will allow filtering of the dataframe and different treatment of controls
     ctrls = set([x.strip().lower() for x in cfg['MODEL']['ControlGenes'].split(',')])    
-    d['Control'] = d['Target Name'].apply(lambda x: True if x.lower() in ctrls else False)
+    d['Control'] = d['Target Name'].apply(lambda x: True if str(x).lower() in ctrls else False)
     
     # Create column 'Ignore' in dataframe to mark rows with NaN values in certain columns 
     cols = ['Sample Name', 'Target Name', 'Task', 'Reporter', 'CT','Quantity']

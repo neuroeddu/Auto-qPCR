@@ -35,6 +35,8 @@ def set_default_config():
             'Type': "Absolute",
             # The names of the control genes
             'ControlGenes': "",
+            # The names of the control samples (for stability)
+            'ControlSample': "",
             # The order in which samples will appear in data tables and graphs
             'SampleOrder': "",
             # Threshold value when looking for outliers
