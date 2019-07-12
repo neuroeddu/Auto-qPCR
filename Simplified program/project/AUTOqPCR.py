@@ -321,10 +321,10 @@ def get_cmd_args():
 	parser.add_argument('-hd', '--header',
 				default = 47)
 
-	return vars(parser.parse_args("-f C:/Users/eddie/Documents/idlab/test/Iva/2018-09-14GAPDHP2X3.csv C:/Users/eddie/Documents/idlab/test/Iva/2018-09-18OPRD1bACTIN.csv C:/Users/eddie/Documents/idlab/test/Iva/2018-09-20PIEZO2.csv C:/Users/eddie/Documents/idlab/test/Iva/2018-10-02RET.csv -o C:/Users/eddie/Documents/Auto-qPCR/Auto-qPCR-program/example_relative/ -m absolute -cg GAPDH ACTB BACT".split()))
+	return vars(parser.parse_args())
 
 #-f C:/Users/eddie/Documents/Auto-qPCR/Auto-qPCR-program/example_stability/2019-05-23_133411-controlandko-line.csv -o C:/Users/eddie/Documents/Auto-qPCR/Auto-qPCR-program/example_relative/ -m stability -cg GAPDH ACTB -cs H9
-#-f C:/Users/eddie/Documents/Auto-qPCR/Auto-qPCR-program/example_relative/data.csv -o C:/Users/eddie/Documents/Auto-qPCR/Auto-qPCR-program/example_relative/ -m relative -cg GAPDH1 GAPDH2 ACTB 
+#	
 #-f C:/Users/eddie/Documents/idlab/test/Iva/2018-09-14GAPDHP2X3.csv C:/Users/eddie/Documents/idlab/test/Iva/2018-09-18OPRD1bACTIN.csv C:/Users/eddie/Documents/idlab/test/Iva/2018-09-20PIEZO2.csv C:/Users/eddie/Documents/idlab/test/Iva/2018-10-02RET.csv -o C:/Users/eddie/Documents/Auto-qPCR/Auto-qPCR-program/example_relative/ -m absolute -cg GAPDH ACTB BACT 
 
 
