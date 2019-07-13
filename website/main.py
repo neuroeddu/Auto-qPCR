@@ -1,15 +1,9 @@
-from flask import Flask, request, make_response
+from flask import Flask, request, make_response, send_file
 import io
-import readCSV
 import pandas as pd
-
+import AUTOqPCR
 
 app: Flask = Flask(__name__)
-
-
-def transform(text_file_contents):
-    return text_file_contents.replace("=", ",")
-
 
 @app.route('/')
 def form():
@@ -34,23 +28,29 @@ def form():
             "    </tr>\n"
             "    <tr>\n"
             "     <td height=\"79\">\n"
-            "   <form action=\"/hello\" method=\"post\" enctype=\"multipart/form-data\">\n"    
-            "        <input id=\"file-input\" type=\"file\" name= \"data_file\" accept=\".csv\" multiple/><br>\n"
+            "   <form action=\"/download\" method=\"post\" enctype=\"multipart/form-data\">\n"    
+            "        <input id=\"file-input\" type=\"file\" name= \"file[]\" accept=\".csv\" multiple/><br>\n"
             "	  </td>\n"
             "    </tr>\n"
             "    <tr>\n"
             "      <td height=\"79\">"
             "        Model<br> \n"
-            "        <input type=\"radio\" name=\"option\" value=\"hello\" checked>Hello</input><br>\n"
-            "        <input type=\"radio\" name=\"option\" value=\"goodbye\" >Goodbye</input><br>\n"
-            "        <input type=\"radio\" name=\"option\" value=\"whatsup\" >What's up</input><br>\n"
+            "        <input type=\"radio\" name=\"option\" value=\"absolute\" checked>Absolute</input><br>\n"
+            "        <input type=\"radio\" name=\"option\" value=\"relative\" >Relative</input><br>\n"
+            "        <input type=\"radio\" name=\"option\" value=\"stability\" >Stability</input><br>\n"
             "       </td>\n"
             "    </tr>\n"
             "   <tr>\n"
             " <td height=\"79\">"
-            "   Name: <br>"
-            "   <input type=\"text\" name=\"name\"><br>"
-            "       </td>\n"
+            "   Control Genes: <br>"
+            "   <input type=\"text\" name=\"cgenes\" autocomplete=\"off\"><br>"
+            "   Cut-Off: <br>"
+            "   <input type=\"text\" name=\"cutoff\" min=\"0\" max=\"1\" step=\"any\" autocomplete=\"off\"><br>"
+            "   Max Outliers: <br>"
+            "   <input type=\"number\" name=\"max_outliers\" autocomplete=\"off\"><br>"
+            "   Control Sample: <br>"
+            "   <input type=\"text\" name=\"csample\" autocomplete=\"off\"><br>"
+            " </td>\n"
             "    </tr>\n"
             "   <tr>\n"
             " <td height=\"79\">"
@@ -66,56 +66,41 @@ def form():
             "</html>\n")
 
 
-@app.route('/hello', methods=["POST"])
+@app.route('/download', methods=["POST"])
 def transform_view():
-    file = request.files['data_file']
-    if not file:
+    files = request.files.getlist('file[]')
+    if len(files) == 0:
         return "No file"
 
-    stream = io.StringIO(file.stream.read().decode("ISO-8859-1"), newline="")
-    csv_input = pd.read_csv(stream,
-                            skip_blank_lines=True,
-                            skipinitialspace=True,
-                            engine='python',
-                            encoding="utf-8"
-                            )
-    print(csv_input)
-    for i, row in enumerate(csv_input):
-        if i <= 1:
-            print(row)
+    # Creates empty data frame
+    data = pd.DataFrame()
 
-    stream.seek(0)
-    opt = request.form['option']
+    for item in files:
+        stream = io.StringIO(item.stream.read().decode("utf-8") , newline="")
+        filedata = pd.read_csv(stream,
+                               skip_blank_lines=True ,
+                               skipinitialspace=True ,
+                               engine='python' ,
+                               encoding="utf-8" ,
+                               header=46)
 
-    str = request.form['name']
-    result = readCSV.csvwriter(stream.read(), opt + " " + str)
+        data = data.append(filedata , ignore_index=True , sort=True)
+        stream.seek(0)
 
-    response = make_response(result)
-    response.headers["Content-Disposition"] = "attachment; filename=result.csv"
+    model = request.form['option']
+    cgenes = request.form['cgenes']
+    cutoff = request.form.get('cutoff', type=float)
+    max_outliers = request.form.get('max_outliers', type=int)
+    csample = request.form['csample']
+
+    result = AUTOqPCR.process_data(data, model, cgenes, cutoff, max_outliers, csample)
+    output = result.to_csv()
+    response = make_response(output)
+    response.headers['Content-Disposition'] = "attachment; filename=output.csv"
     return response
 
 
-@app.route('/goodbye', methods=["POST"])
-def transform_view2():
-    file = request.files['data_file']
-    if not file:
-        return "No file"
+if __name__=='__main__':
+    app.debug = True
+    app.run(host = '0.0.0.0', port=5000)
 
-    stream = io.StringIO(file.stream.read().decode("ISO-8859-1"), newline="")
-    csv_input = pd.read_csv(stream,
-                            skip_blank_lines=True,
-                            skipinitialspace=True,
-                            engine='python',
-                            encoding="utf-8"
-                            )
-    print(csv_input)
-    for i, row in enumerate(csv_input):
-        if i <= 1:
-            print(row)
-
-    stream.seek(0)
-    result = readCSV.csvwriter2(stream.read())
-
-    response = make_response(result)
-    response.headers["Content-Disposition"] = "attachment; filename=result.csv"
-    return response
