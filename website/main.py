@@ -5,8 +5,8 @@ import AUTOqPCR
 import json
 import plotly
 import plotly.graph_objs as go
-from typing import Union, Text
-from werkzeug.wrappers import Response
+
+
 app: Flask = Flask(__name__)
 
 
@@ -16,9 +16,8 @@ def form():
 
 
 @app.route('/download', methods=["POST"])
-def transform_view() -> Union[Response, Text]:
+def transform_view():
 
-    #result, model, targets, samples = handle_files()
     files = request.files.getlist('file[]')
     if len(files) == 0:
         return "No file"
@@ -44,53 +43,12 @@ def transform_view() -> Union[Response, Text]:
 
     result, targets, samples = AUTOqPCR.process_data(data , model , cgenes , cutoff , max_outliers , csample)
 
-    bar = create_plot(result , model , targets , samples)
-
     output = result.to_csv()
 
-    #response = make_response(output)
+    response = make_response(output)
+    response.headers['Content-Disposition'] = 'attachment; filename=output.csv'
 
-    return render_template('layout2.html', plot=bar)
-        # , {'Content-Disposition': 'attachment; filename=output.csv'}
-
-
-
-# @app.route('/plot', methods=["POST"])
-# def plot():
-#
-#     result, model, targets, samples = handle_files()
-#     bar = create_plot(result, model, targets, samples)
-#
-#     return render_template('layout.html', plot=bar), result, model, targets, samples
-#
-#
-# def handle_files():
-#     files = request.files.getlist('file[]')
-#     if len(files) == 0:
-#         return "No file"
-#     # Creates empty data frame
-#     data = pd.DataFrame()
-#     for item in files:
-#         stream = io.StringIO(item.stream.read().decode("utf-8") , newline="")
-#         filedata = pd.read_csv(stream ,
-#                                skip_blank_lines=True ,
-#                                skipinitialspace=True ,
-#                                engine='python' ,
-#                                encoding="utf-8" ,
-#                                header=46)
-#
-#         data = data.append(filedata , ignore_index=True , sort=True)
-#         stream.seek(0)
-#
-#     model = request.form['option']
-#     cgenes = request.form['cgenes']
-#     cutoff = request.form.get('cutoff' , type=float)
-#     max_outliers = request.form.get('max_outliers' , type=float)
-#     csample = request.form['csample']
-#
-#     result, targets, samples = AUTOqPCR.process_data(data , model , cgenes , cutoff , max_outliers , csample)
-#
-#     return result, model, targets, samples
+    return response
 
 
 def create_plot(dataframe, model, targets, samples):
