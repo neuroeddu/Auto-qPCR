@@ -1,67 +1,63 @@
 <!doctype html>
 <html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	
-<title>Untitled Document</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Untitled Document</title>
 </head>
 
 <body>
-<form action=/transform method=post enctype=multipart/form-data>\n"
-<link rel="stylesheet"
-      type="text/css"
-      href="/static/style.css"/>
-
-<header>(Name of the website)</header>
-<table width="1044" height="250" border="1">
-  <tbody>
-    <tr>
-      <th width="511" height="76" scope="col">Please upload your data (.csv) </th>
-      <th width="517" scope="col">Choose the model for the analysis </th>
-    </tr>
-    <tr>
-      <td height="79">
-  		<input id="file-input" type="file" name= "data_file" accept=".csv" multiple/>
-	  </td>
-      <td height="79">
-      </td>
-    </tr>
-    <tr>
-      <td height="79">
-          <input type="checkbox" >Hello</input>
-          <input type="checkbox" >Goodbye</input>
-          <input type="checkbox" >What's up</input>
-      </td>
-	  <td>
-		  <input type="submit">
-	  </td>
-    </tr>
-  </tbody>
-</table>
-
-<script>
-
-    function myFunction() {
-      document.getElementById("myDropdown").classList.toggle("show");
-    }
-
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
-
-</script>
-</form>
+    <header>(Name of the website)</header>
+    <table width="1000" height="250" border="1">
+        <tbody>
+            <tr>
+                <th width="500" height="76" scope="col">Please upload your data (.csv) </th>
+            </tr>
+            <form action="/download" method="post" enctype="multipart/form-data">
+            <tr>
+                <td height="79">
+                    <input id="file-input" type="file" name="file[]" accept=".csv" multiple/>
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td height="79">
+                    Model
+                    <br>
+                    <input type="radio" name="option" value="absolute" checked>Absolute</input>
+                    <br>
+                    <input type="radio" name="option" value="relative">Relative</input>
+                    <br>
+                    <input type="radio" name="option" value="stability">Stability</input>
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td height="79">
+                    Control Genes:
+                    <br>
+                    <input type="text" name="cgenes" autocomplete="off">
+                    <br> Cut-Off:
+                    <br>
+                    <input type="text" name="cutoff" value="0.3" min="0" max="1" step="any" autocomplete="off">
+                    <br> Max Outliers:
+                    <br>
+                    <input type="number" name="max_outliers" value="0.5" autocomplete="off">
+                    <br> Control Sample:
+                    <br>
+                    <input type="text" name="csample" autocomplete="off">
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td height="79">
+                    <button type="submit">Submit</button>
+                    <br>
+                </td>
+            </tr>
+            </form>
+        </tbody>
+    </table>
 </body>
 </html>
