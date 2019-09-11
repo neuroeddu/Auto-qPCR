@@ -35,7 +35,7 @@ def main():
     data, data_summary, targets, samples = process_data(data , args['mod'] , args['cgenes'] , args['ocutoff'] ,
                                                         args['omax'] , args['csample'])
     # data.to_csv('stability_result.csv')
-    stats(3, data, targets, False, 'ttest_fdr')
+    stats(4, data, targets, False, 'bonferroni')
     #results.to_excel(args['output'] + "output.xlsx" , encoding=args['encoding'])
     #results.to_csv(args['output'] + "output.csv")
 
@@ -341,39 +341,46 @@ def stats(quantity, data, targets, rm, posthoc):
             ttest(group1, group2, paired=bool(rm))
     elif quantity >= 3:
         # ANOVA test
-        anova_dfs=[]
-        posthoc_dfs=[]
+        anova_dfs = pandas.DataFrame()
+        posthoc_dfs = pandas.DataFrame()
         if rm == 'True':
             # repeated measure anova
-            aov = pandas.DataFrame(['rm_anova'])
+            aov = pandas.DataFrame(['Repeated measure anova'])
             aov = aov.append(pg.rm_anova(dv='NormMean', within='Group', subject='Target Name', data=data))
-            print(aov)
-            anova_dfs.append(aov)
-            ph = posthocs_test(posthoc, data=data)
-            posthoc_dfs.append(ph)
+            anova_dfs = aov
+            ph = pandas.DataFrame([posthoc])
+            ph = ph.append(posthocs_test(posthoc, data=data))
+            posthoc_dfs = ph
         else:
             # anova
             pvals=[]
             for item in targets:
-                aov = pandas.DataFrame(['anova_'+item])
-                aov = aov.append(pg.anova(dv='NormMean', between='Group', data=data[data['Target Name'].eq(item)],
-                                          detailed=True))
-                anova_dfs.append(aov)
+                aov = pg.anova(dv='NormMean', between='Group', data=data[data['Target Name'].eq(item)], detailed=True)
                 pvals.append(aov['p-unc'][0])
-                print(item)
-                print(aov)
+                aov2 = pandas.DataFrame(['anova_'+item])
+                aov = aov2.append(aov)
+                if anova_dfs is None:
+                    anova_dfs = aov
+                else:
+                    anova_dfs = anova_dfs.append(aov, ignore_index=True)
+
                 print("")
                 if posthoc == 'ttest_fdr':
                     ph = pandas.DataFrame(['T-Test+FDR_'+item])
                     ph = ph.append(posthocs_test('ttest_fdr', data=data, item=item))
+
+                    if posthoc_dfs is None:
+                        posthoc_dfs = ph
+                    else:
+                        posthoc_dfs = posthoc_dfs.append(ph, ignore_index=True)
                     print(ph)
                     print("")
-                    posthoc_dfs.append(ph)
+
             if posthoc == 'bonferroni':
                 ph = pandas.DataFrame(['Bonferroni'])
-                ph = ph.append(posthocs_test('bonferroni', pvals=pvals))
+                ph = ph.append(posthocs_test('bonferroni', pvals=pvals), ignore_index=True)
+                posthoc_dfs = ph
                 print(ph)
-                posthoc_dfs.append(ph)
 
     return anova_dfs, posthoc_dfs
 

@@ -44,14 +44,11 @@ def transform_view():
     posthoc = request.form['option3']
 
     data1, summary_data, targets, samples = AUTOqPCR.process_data(data , model , cgenes , cutoff , max_outliers , csample)
+
     # making stats csv
-    f = open('stats_result.csv', 'a')
     anova_dfs, posthoc_dfs = AUTOqPCR.stats(qty, data1, targets, rm, posthoc)
-    for item in anova_dfs:
-        item.to_csv(f)
-    for item in posthoc_dfs:
-        item.to_csv(f)
-    f.close()
+    anova_output = anova_dfs.to_csv(index=False)
+    posthoc_output = posthoc_dfs.to_csv(index=False)
 
     fig = create_plot(summary_data, model, targets, samples)
     fig.show()
@@ -59,7 +56,8 @@ def transform_view():
     output = summary_data.to_csv()
     outfile = io.BytesIO()
     with ZipFile(outfile, 'w') as myzip:
-        myzip.writestr('stats_result.csv', f)
+        myzip.writestr('anova_result.csv', anova_output)
+        myzip.writestr(posthoc+'_result.csv' , posthoc_output)
         myzip.writestr('summary_data.csv', output)
         myzip.close()
 
