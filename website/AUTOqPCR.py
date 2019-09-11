@@ -8,6 +8,8 @@ from sys import argv
 from argparse import ArgumentParser, FileType
 import pandas
 import numpy as np
+import pingouin as pg
+from pingouin import pairwise_ttests, multicomp, ttest
 
 
 def main():
@@ -30,15 +32,12 @@ def main():
 
     # Runs the main process model with input arguments
     #
-    results, targets, samples = process_data(data , args['mod'] , args['cgenes'] , args['ocutoff'] , args['omax'] ,
-                                             args['csample'])
-    #
-
+    data, data_summary, targets, samples = process_data(data , args['mod'] , args['cgenes'] , args['ocutoff'] ,
+                                                        args['omax'] , args['csample'])
+    # data.to_csv('stability_result.csv')
+    stats(3, data, targets, False, 'ttest_fdr')
     #results.to_excel(args['output'] + "output.xlsx" , encoding=args['encoding'])
-
     #results.to_csv(args['output'] + "output.csv")
-
-
 
 
 def process_data(data , model , cgenes , cutoff , max_outliers , csample=None):
@@ -53,6 +52,7 @@ def process_data(data , model , cgenes , cutoff , max_outliers , csample=None):
 
     # Create column 'Ignore' in dataframe to mark rows with NaN values in certain columns
     data['Ignore'] = False
+    data['Outliers'] = False
     cols = ['Sample Name' , 'Target Name' , 'Task' , 'Reporter' , 'CT']
     for col in cols:
         data.loc[data[col].isnull() , 'Ignore'] = True
@@ -60,27 +60,28 @@ def process_data(data , model , cgenes , cutoff , max_outliers , csample=None):
     # Calls the different processing models depending on the model argument
     if model == 'absolute':
         data = cleanup_outliers(data , "Quantity" , cutoff , max_outliers)
-        results, targets, samples = process_absolute(data)
+        data, data_summary, targets, samples = process_absolute(data)
 
     elif model == 'relative':
         data = cleanup_outliers(data , "CT" , cutoff , max_outliers)
-        results, targets, samples  = process_relative(data)
+        data, data_summary, targets, samples  = process_relative(data)
 
     elif model == 'stability':
         data = cleanup_outliers(data , "CT" , cutoff , max_outliers)
-        results, targets, samples = process_stability(data , csample)
+        data, data_summary, targets, samples = process_stability(data , csample)
 
-    return results, targets, samples
+    return data, data_summary, targets, samples
 
 
 def process_absolute(data):
+
+    outlier_data = data[data['Outliers'].eq(True)]
+    data = data[data['Outliers'].eq(False)]
     # Calculate Mean (Endogenous Control Mean) and SSD for all Controls
 
     data['NormQuant'] = 0
 
     control_filter = (data['Control'].eq(True))
-    data_controls_grouped = data[control_filter].groupby(['Target Name' , 'Sample Name']).agg(
-        {'Quantity': [np.size , 'mean' , 'std']})
 
     # print("Endogenous Control Quantity Means and SSD")
     # print(data_controls_grouped)
@@ -97,7 +98,6 @@ def process_absolute(data):
             data.loc[j , 'NormQuant'] = data.loc[j , 'Quantity'] / row[1]
 
     # Calculate the SEM for technical replicate groups
-
     targets = set(data['Target Name'])
     mean_sem_result = {}
     for target in targets:
@@ -119,14 +119,39 @@ def process_absolute(data):
                 1]
             data.at[i_row , 'NormSEM'] = \
             mean_sem_result[data.at[i_row , 'Target Name']][data.at[i_row , 'Sample Name']][2]
+    #
+    # Making the intermediate dataframe
+    data = data.append(outlier_data)
+    cols = ['Sample Name', 'Target Name', 'NormQuant', 'NormMean', 'NormSD', 'NormSEM', 'Outliers']
+    df = pandas.DataFrame(columns=cols)
+    for item in cols:
+        df[item] = data[item]
+
+    for i_row, row in df.iterrows():
+        if 'IPSC' in df.at[i_row, 'Sample Name']:
+            df.at[i_row, 'Group'] = 'IPSC'
+            df.at[i_row, 'Sample Name'] = df.at[i_row, 'Sample Name'].replace('-IPSC', '')
+        elif 'NPC' in df.at[i_row, 'Sample Name']:
+            df.at[i_row, 'Group'] = 'NPC'
+            df.at[i_row, 'Sample Name'] = df.at[i_row , 'Sample Name'].replace('-NPC', '')
+        elif 'DA4W' in df.at[i_row, 'Sample Name']:
+            df.at[i_row, 'Group'] = 'DA4W'
+            df.at[i_row, 'Sample Name'] = df.at[i_row , 'Sample Name'].replace('-DA4W' , '')
+        elif 'DA6W' in df.at[i_row, 'Sample Name']:
+            df.at[i_row, 'Group'] = 'DA6W'
+            df.at[i_row, 'Sample Name'] = df.at[i_row , 'Sample Name'].replace('-DA6W' , '')
 
     data_output_summary = data.groupby(['Target Name' , 'Sample Name']).agg(
         {'NormQuant': [np.size , 'mean' , 'std'] , 'NormSEM': 'mean'})
 
-    return data_output_summary, targets, samples
+    return df, data_output_summary, targets, samples
 
 
 def process_relative(data):
+
+    outlier_data = data[data['Outliers'].eq(True)]
+    data = data[data['Outliers'].eq(False)]
+
     # Calculate CT Mean (Endogenous Control Mean) and SSD for all Controls
 
     control_filter = (data['Control'].eq(True))
@@ -167,14 +192,23 @@ def process_relative(data):
             data.at[i_row , 'rqSD'] = mean_sem_result[data.at[i_row , 'Target Name']][data.at[i_row , 'Sample Name']][1]
             data.at[i_row , 'rqSEM'] = mean_sem_result[data.at[i_row , 'Target Name']][data.at[i_row , 'Sample Name']][
                 2]
+    # Making the intermediate dataframe
+    data = data.append(outlier_data)
+    cols = ['Sample Name' , 'Target Name' , 'rq' , 'rqSD' , 'rqSEM' , 'Outliers']
+    df = pandas.DataFrame(columns=cols)
+    for item in cols:
+        df[item] = data[item]
 
     data_output_summary = data.groupby(['Target Name' , 'Sample Name']).agg(
         {'rq': [np.size , 'mean'] , 'rqSD': 'mean' , 'rqSEM': 'mean'})
 
-    return data_output_summary, targets, samples
+    return df, data_output_summary, targets, samples
 
 
 def process_stability(data , csample):
+    outlier_data = data[data['Outliers'].eq(True)]
+    data = data[data['Outliers'].eq(False)]
+
     # Calculate CT Mean (Endogenous Control Mean) and SSD for all Controls
 
     control_filter = (data['Control'].eq(True))
@@ -229,10 +263,17 @@ def process_stability(data , csample):
             data.at[i_row , 'rqSEM'] = mean_sem_result[data.at[i_row , 'Target Name']][data.at[i_row , 'Sample Name']][
                 2]
 
+    # Making the intermediate dataframe
+    data = data.append(outlier_data)
+    cols = ['Sample Name' , 'Target Name' , 'rq' , 'rqSD' , 'rqSEM' , 'Outliers']
+    df = pandas.DataFrame(columns=cols)
+    for item in cols:
+        df[item] = data[item]
+
     data_output_summary = data.groupby(['Target Name' , 'Sample Name']).agg(
         {'rq': [np.size , 'mean'] , 'rqSD': 'mean' , 'rqSEM': 'mean'})
 
-    return data_output_summary, targets, samples
+    return df, data_output_summary, targets, samples
 
 
 def cleanup_outliers(d , feature , cutoff , max_outliers):
@@ -275,9 +316,90 @@ def cleanup_outliers(d , feature , cutoff , max_outliers):
                 # Will remove the measurement which is furthest from the mean
                 dx['Distance'] = (dx[feature] - dxg[feature]['mean'].iloc[0]) ** 2
                 j = dx.sort_values(by='Distance' , ascending=False).index[0]
+                d['Outliers'].loc[j] = True
                 d['Ignore'].loc[j] = True
 
     return (d[(d['Ignore'].eq(False))])
+
+
+def stats(quantity, data, targets, rm, posthoc):
+
+    # prepare data from intermediate dataframe
+    data = data[data['Outliers'].eq(False)]
+    data = data.drop(['NormQuant'], axis=1)
+    data = data.drop_duplicates(keep='first')
+
+    # write to csv
+    if quantity == 2:
+        # T-Test between 2 groups
+        group = data['Group']
+        group = group.drop_duplicates(keep='first')
+        for item in targets:
+            df = data[data['Target Name'].eq(item)]
+            group1 = df[df['Group'].eq(group[0])]['NormMean']
+            group2 = df[df['Group'].eq(group[1])]['NormMean']
+            ttest(group1, group2, paired=bool(rm))
+    elif quantity >= 3:
+        # ANOVA test
+        anova_dfs=[]
+        posthoc_dfs=[]
+        if rm == 'True':
+            # repeated measure anova
+            aov = pandas.DataFrame(['rm_anova'])
+            aov = aov.append(pg.rm_anova(dv='NormMean', within='Group', subject='Target Name', data=data))
+            print(aov)
+            anova_dfs.append(aov)
+            ph = posthocs_test(posthoc, data=data)
+            posthoc_dfs.append(ph)
+        else:
+            # anova
+            pvals=[]
+            for item in targets:
+                aov = pandas.DataFrame(['anova_'+item])
+                aov = aov.append(pg.anova(dv='NormMean', between='Group', data=data[data['Target Name'].eq(item)],
+                                          detailed=True))
+                anova_dfs.append(aov)
+                pvals.append(aov['p-unc'][0])
+                print(item)
+                print(aov)
+                print("")
+                if posthoc == 'ttest_fdr':
+                    ph = pandas.DataFrame(['T-Test+FDR_'+item])
+                    ph = ph.append(posthocs_test('ttest_fdr', data=data, item=item))
+                    print(ph)
+                    print("")
+                    posthoc_dfs.append(ph)
+            if posthoc == 'bonferroni':
+                ph = pandas.DataFrame(['Bonferroni'])
+                ph = ph.append(posthocs_test('bonferroni', pvals=pvals))
+                print(ph)
+                posthoc_dfs.append(ph)
+
+    return anova_dfs, posthoc_dfs
+
+
+def posthocs_test(posthoc, data=None, item=None, pvals=None):
+    # Post hocs
+    if posthoc == 'ttest_fdr':
+        post_hocs = pairwise_ttests(data=data[data['Target Name'].eq(item)], dv='NormMean' , between='Group' ,
+                                        padjust='fdr_bh')
+
+    elif posthoc == 'bonferroni':
+        reject, pvals_corr = pg.multicomp(pvals, alpha=0.05, method='bonf')
+        post_hocs = pandas.DataFrame({'reject': reject,
+                                      'pvals_corr': pvals_corr})
+    #if posthoc == 'dunnetts_test':
+    return post_hocs
+
+# def simple_anova(group, col, data):
+#     col_list = data[col].drop_duplicates(keep='first')
+#     for item in col_list:
+#         filename = 'anova_' + item
+#         aov = pg.anova(dv='NormMean' , between=group , data=data[data[col].eq(item)] , detailed=True)
+#         print(item)
+#         print(aov)
+#         print("")
+
 
 
 def get_cmd_args():
@@ -329,13 +451,22 @@ def get_cmd_args():
     parser.add_argument('-hd' , '--header' ,
                         default=47)
 
-    return vars(parser.parse_args("-f /Users/admin/Documents/GitHub/Auto-qPCR/Auto-qPCR-program/example_relative/data.csv -o /Users/admin/Documents/GitHub/Auto-qPCR/Auto-qPCR-program/example_relative/ -m relative -cg NANOG C-MYC ZFP42".split()))
+    return vars(parser.parse_args("-f /Users/admin/Documents/Gilles_data/Gilles_data_combined.csv -o /Users/admin/Documents/Gilles_data/ -m absolute -cg GAPDH ACTB".split()))
+
+#-f /Users/admin/Documents/GitHub/Auto-qPCR/Auto-qPCR-program/example_stability/2019-05-23_133411-control_and_ko-line.csv -o /Users/admin/Documents/GitHub/Auto-qPCR/Auto-qPCR-program/example_stability/ -m stability -cg ACTB GAPDH -cs H9".split()))
+#-f /Users/admin/Documents/Gilles_data/Gilles_data_combined.csv -o /Users/admin/Documents/Gilles_data/ -m absolute -cg GAPDH ACTB".split())
+
+#-f /Users/admin/Documents/GitHub/Auto-qPCR/Auto -qPCR-program/example_relative/data.csv -o /Users/admin/Documents/GitHub/Auto-qPCR/Auto-qPCR-program/example_relative/ -m relative -cg NANOG C-MYC ZFP42
+
+#return vars(parser.parse_args("-f /Users/admin/Documents/GitHub/Auto-qPCR/Auto-qPCR-program/example_relative/data.csv -o /Users/admin/Documents/GitHub/Auto-qPCR/Auto-qPCR-program/example_relative/ -m relative -cg NANOG C-MYC ZFP42".split()))
+
 
 
 # -f C:/Users/eddie/Documents/Auto-qPCR/Auto-qPCR-program/example_stability/2019-05-23_133411-controlandko-line.csv -o C:/Users/eddie/Documents/Auto-qPCR/Auto-qPCR-program/example_relative/ -m stability -cg GAPDH ACTB -cs H9
 # -f C:/Users/eddie/Documents/Auto-qPCR/Auto-qPCR-program/example_relative/data.csv -o C:/Users/eddie/Documents/Auto-qPCR/Auto-qPCR-program/example_relative/ -m relative -cg GAPDH1 GAPDH2 ACTB
 # -f C:/Users/eddie/Documents/idlab/test/Iva/2018-09-14GAPDHP2X3.csv C:/Users/eddie/Documents/idlab/test/Iva/2018-09-18OPRD1bACTIN.csv C:/Users/eddie/Documents/idlab/test/Iva/2018-09-20PIEZO2.csv C:/Users/eddie/Documents/idlab/test/Iva/2018-10-02RET.csv -o C:/Users/eddie/Documents/Auto-qPCR/Auto-qPCR-program/example_relative/ -m absolute -cg GAPDH ACTB BACT
 # -f /Users/admin/Documents/GitHub/Auto-qPCR/Auto-qPCR-program/example_relative/data.csv -o /Users/admin/Documents/GitHub/Auto-qPCR/Auto-qPCR-program/example_relative/ -m relative -cg NANOG C-MYC ZFP42
+
 
 
 if __name__ == "__main__":

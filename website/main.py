@@ -2,9 +2,8 @@ from flask import Flask, request, make_response, render_template
 import io
 import pandas as pd
 import AUTOqPCR
-import json
-import plotly
 import plotly.graph_objs as go
+from zipfile import ZipFile
 
 
 app: Flask = Flask(__name__)
@@ -38,15 +37,35 @@ def transform_view():
     model = request.form['option']
     cgenes = request.form['cgenes']
     cutoff = request.form.get('cutoff' , type=float)
-    max_outliers = request.form.get('max_outliers' , type=float)
+    max_outliers = request.form.get('max_outliers', type=float)
     csample = request.form['csample']
+    qty = request.form.get('quantity', type=int)
+    rm = request.form['option2']
+    posthoc = request.form['option3']
 
-    result, targets, samples = AUTOqPCR.process_data(data , model , cgenes , cutoff , max_outliers , csample)
+    data1, summary_data, targets, samples = AUTOqPCR.process_data(data , model , cgenes , cutoff , max_outliers , csample)
+    # making stats csv
+    f = open('stats_result.csv', 'a')
+    anova_dfs, posthoc_dfs = AUTOqPCR.stats(qty, data1, targets, rm, posthoc)
+    for item in anova_dfs:
+        item.to_csv(f)
+    for item in posthoc_dfs:
+        item.to_csv(f)
+    f.close()
 
-    output = result.to_csv()
+    fig = create_plot(summary_data, model, targets, samples)
+    fig.show()
+    # making summary data csv
+    output = summary_data.to_csv()
+    outfile = io.BytesIO()
+    with ZipFile(outfile, 'w') as myzip:
+        myzip.writestr('stats_result.csv', f)
+        myzip.writestr('summary_data.csv', output)
+        myzip.close()
 
-    response = make_response(output)
-    response.headers['Content-Disposition'] = 'attachment; filename=output.csv'
+    response = make_response(outfile.getvalue())
+    response.headers['Content-Type'] = 'application/actet-stream'
+    response.headers['Content-Disposition'] = 'attachment; filename=outputs_'+model+'.zip'
 
     return response
 
@@ -62,7 +81,6 @@ def create_plot(dataframe, model, targets, samples):
                 error_y=dict(type='data', array=dataframe.loc[item, 'NormSEM']['mean'])
             ))
 
-        fig.show()
     else:
         fig = go.Figure()
         for item in targets:
@@ -73,9 +91,9 @@ def create_plot(dataframe, model, targets, samples):
                 error_y=dict(type='data', array=dataframe.loc[item, 'rqSEM']['mean'])
             ))
 
-    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    #graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
-    return graphJSON
+    return fig
 
 
 if __name__=='__main__':
