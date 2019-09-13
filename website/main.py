@@ -2,6 +2,7 @@ from flask import Flask, request, make_response, render_template
 import io
 import pandas as pd
 import AUTOqPCR
+import statistics
 import plotly.graph_objs as go
 from zipfile import ZipFile
 
@@ -19,6 +20,7 @@ def transform_view():
 
     files = request.files.getlist('file[]')
     if len(files) == 0:
+
         return "No file"
     # Creates empty data frame
     data = pd.DataFrame()
@@ -46,7 +48,7 @@ def transform_view():
     data1, summary_data, targets, samples = AUTOqPCR.process_data(data , model , cgenes , cutoff , max_outliers , csample)
 
     # making stats csv
-    anova_dfs, posthoc_dfs = AUTOqPCR.stats(qty, data1, targets, rm, posthoc)
+    anova_dfs, posthoc_dfs = statistics.stats(qty, data1, targets, rm, posthoc)
     anova_output = anova_dfs.to_csv(index=False)
     posthoc_output = posthoc_dfs.to_csv(index=False)
 
