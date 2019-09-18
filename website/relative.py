@@ -1,6 +1,7 @@
 import pandas
 import numpy as np
 
+
 def process(data):
 
     outlier_data = data[data['Outliers'].eq(True)]

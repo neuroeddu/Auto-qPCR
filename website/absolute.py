@@ -1,6 +1,7 @@
 import pandas
 import numpy as np
 
+
 def process(data):
 
     outlier_data = data[data['Outliers'].eq(True)]
@@ -71,5 +72,7 @@ def process(data):
 
     data_output_summary = data.groupby(['Target Name' , 'Sample Name']).agg(
         {'NormQuant': [np.size , 'mean' , 'std'] , 'NormSEM': 'mean'})
+
+    df.to_csv('intermediate_absolute.csv')
 
     return df, data_output_summary, targets, samples

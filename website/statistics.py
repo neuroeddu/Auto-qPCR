@@ -1,8 +1,6 @@
 import pandas
-import numpy as np
 import pingouin as pg
 from pingouin import pairwise_ttests, multicomp, ttest
-
 
 
 def stats(quantity, data, targets, rm, posthoc):
@@ -78,8 +76,9 @@ def posthocs_test(posthoc, data=None, item=None, pvals=None):
         reject, pvals_corr = pg.multicomp(pvals, alpha=0.05, method='bonf')
         post_hocs = pandas.DataFrame({'reject': reject,
                                       'pvals_corr': pvals_corr})
-    #if posthoc == 'dunnetts_test':
+
     return post_hocs
+
 
 # def simple_anova(group, col, data):
 #     col_list = data[col].drop_duplicates(keep='first')

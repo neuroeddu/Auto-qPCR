@@ -5,10 +5,9 @@ VERSION = "0.1.7"
 QUALITY = ""
 
 import pandas
-import pingouin as pg
 import numpy as np
-from pingouin import pairwise_ttests, multicomp, ttest
 import absolute, relative, stability
+
 
 def process_data(data , model , cgenes , cutoff , max_outliers , csample=None):
     """This filters the data and processes the selected model, returning a list of output dataframes"""
@@ -64,7 +63,6 @@ def cleanup_outliers(d , feature , cutoff , max_outliers):
             size = group_size
             if min_size < 2:
                 min_size = 2
-                h.log(5 , 'Minimum group size must be equal or greater than 2')
             while True:
                 f = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') \
                     & (d['Sample Name'] == row[0][0]) & (d['Target Name'] == row[0][1])
