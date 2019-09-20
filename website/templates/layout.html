@@ -114,6 +114,7 @@
         border-collapse: collapse;
         background-color: #eee;
 
+
     }
     th, td {
         border-bottom: 1px solid #000;
@@ -151,6 +152,7 @@
                     
                     <div class="input-container">
                         <b> Model </b>
+                        <br>
                         <div class="help-tip" id="model-helptip">
                             <p>(How to choose different models)</p>
                         </div>
@@ -168,8 +170,12 @@
             </tr>
             <tr>
                 <td >
+
+                    <b> Options </b>
+                    <br>
+                    <br>
                     <div class="input-container">
-                        <b> Enter endogenous control gene(s): (seperate genes with spaces) </b>
+                        Enter endogenous control gene(s): (seperate genes with spaces)
                         <div class="help-tip">
                             <p>Something about control genes</p>
                         </div>
@@ -209,6 +215,7 @@
                 <td >
                     <b> Statistics </b>
                     <br>
+                    <br>
                     How many groups do you have?
                     <br>
                     <input type="number"  name="quantity" min="1">
@@ -224,6 +231,7 @@
             <tr>
                 <td >
                     <b> Model for Post-hoc test: </b>
+                    <br>
                     <br>
                     <input type="radio" name="option3" value="ttest_fdr" checked>Pairwise t-test and FDR</input>
                     <br>
