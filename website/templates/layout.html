@@ -4,16 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Untitled Document</title>
+    <title>AUTOqPCR</title>
     <style>
     .input-container {
         position: relative;
-        margin-bottom: 2em;
     }
     .help-tip{
         position: absolute;
         top: -.2em;
-        right: 1.1em;
+        right: 0em;
         text-align: center;
         background-color: #BCDBEA;
         border-radius: 50%;
@@ -43,7 +42,7 @@
         display: none;
         text-align: left;
         background-color: #1E2021;
-        padding: 20px;
+        padding: 10px;
         width: 300px;
         position: absolute;
         border-radius: 3px;
@@ -92,87 +91,129 @@
         0% { opacity:0; }
         100% { opacity:100%; }
     }
+
+    button {
+        background-color: #008CBA; /* Blue */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 8px;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+    }
+
+    button:hover {
+        background-color: #005987;
+    }
+
+    table {
+        border-collapse: collapse;
+        background-color: #eee;
+
+    }
+    th, td {
+        border-bottom: 1px solid #000;
+        padding: 15px;
+    }
+    th {
+        background-color: #008CBA;
+
+    }
     </style>
 </head>
 
 <body>
-    <header>(Name of the website)</header>
-    <table width="1000" height="250" border="1">
+    <table border = 1>
         <tbody>
             <tr>
-                <th width="500" height="76" scope="col">Please upload your data (.csv) </th>
+                <th scope="col"><font color="white" size = 4>Please upload your data (.csv)</font> </th>
             </tr>
             <form action="/download" method="POST" enctype="multipart/form-data">
             <tr>
-                <td height="79">
+                <td >
                     <div class="input-container">
-                        Upload your data:
+                        <b> Upload your data: </b>
+                        <br>
                         <br>
                         <input id="file-input" type="file" name="file[]" accept=".csv" multiple/>
                         <div class="help-tip" id="file-helptip">
                             <p>Something</p>    <!--text inside question mark here-->
                         </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td >
+                    
+                    <div class="input-container">
+                        <b> Model </b>
+                        <div class="help-tip" id="model-helptip">
+                            <p>(How to choose different models)</p>
+                        </div>
+                        <br>
+                        <input type="radio" name="option" value="absolute" checked>Absolute</input>
+                        <br>
+                        <input type="radio" name="option" value="relative">Relative (delta CT)</input>
+                        <br>
+                        <input type="radio" name="option" value="stability">Relative (delta delta CT)</input>
+                        <br>
+                        <input type="radio" name="option" value="stability">Stability</input>
                         <br>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td height="79">
-                    Model
-                    <div class="help-tip" id="model-helptip">
-                        <p>(How to choose different models)</p>
+                <td >
+                    <div class="input-container">
+                        <b> Enter endogenous control gene(s): (seperate genes with spaces) </b>
+                        <div class="help-tip">
+                            <p>Something about control genes</p>
+                        </div>
+                        <br>
+                        <input type="text" name="cgenes" autocomplete="off">
                     </div>
-                    <br>
-                    <input type="radio" name="option" value="absolute" checked>Absolute</input>
-                    <br>
-                    <input type="radio" name="option" value="relative">Relative</input>
-                    <br>
-                    <input type="radio" name="option" value="stability">Stability</input>
-                    <br>
+                    <div class="input-container">
+                        Cut-Off:
+                        <div class="help-tip">
+                            <p>Something</p>
+                        </div>
+                        <br>
+                        <input type="text" name="cutoff" value="0.3" min="0" max="1" step="any" autocomplete="off">
+                        <br>
+                    </div>
+                    <div class="input-container">
+                       Max Outliers:
+                        <div class="help-tip">
+                            <p>Something</p>
+                        </div>
+                        <br>
+                        <input type="number" name="max_outliers" value="0.5" autocomplete="off">
+                        <br>
+                    </div>
+                    <div class="input-container">
+                        Control Sample:
+                        <div class="help-tip">
+                            <p>Something</p>
+                        </div>
+                        <br>
+                        <input type="text" name="csample" autocomplete="off">
+                        <br>
+                    </div>
                 </td>
             </tr>
             <tr>
-                <td height="79">
-                    Enter endogenous control gene(s): (if you have more than one gene, separate with spaces)
-                    <div class="help-tip">
-                        <p>Something about control genes</p>
-                    </div>
-                    <br>
-                    <input type="text" name="cgenes" autocomplete="off">
-                    <br>
-                    Cut-Off:
-                    <div class="help-tip">
-                        <p>Something</p>
-                    </div>
-                    <br>
-                    <input type="text" name="cutoff" value="0.3" min="0" max="1" step="any" autocomplete="off">
-                    <br>
-                    Max Outliers:
-                    <div class="help-tip">
-                        <p>Something</p>
-                    </div>
-                    <br>
-                    <input type="number" name="max_outliers" value="0.5" autocomplete="off">
-                    <br>
-                    Control Sample:
-                    <div class="help-tip">
-                        <p>Something</p>
-                    </div>
-                    <br>
-                    <input type="text" name="csample" autocomplete="off">
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td height="79">
-                    Statistics
+                <td >
+                    <b> Statistics </b>
                     <br>
                     How many groups do you have?
                     <br>
                     <input type="number"  name="quantity" min="1">
                     <br>
-                </td>
-                <td>
+                    <br>
                     Is it a time series or repeated measures?
                     <br>
                     <input type="radio" name="option2" value="False" checked>No</input>
@@ -181,8 +222,8 @@
                 </td>
             </tr>
             <tr>
-                <td height="79">
-                    Model for Post-hoc test:
+                <td >
+                    <b> Model for Post-hoc test: </b>
                     <br>
                     <input type="radio" name="option3" value="ttest_fdr" checked>Pairwise t-test and FDR</input>
                     <br>
@@ -193,7 +234,7 @@
                 </td>
             </tr>
             <tr>
-                <td height="79">
+                <td     >
                     <button type="submit">Submit</button>
                     <br>
                 </td>
