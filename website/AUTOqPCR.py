@@ -35,7 +35,7 @@ def process_data(data , model , cgenes , cutoff , max_outliers , sample_sorter, 
     targets = set(data['Target Name'])
     for target in targets:
         sorter_index = dict(zip(sorter, range(len(sorter))))
-        data['Sample Order'] = d['Sample Name'].map(sorter_index)
+        data['Sample Order'] = data['Sample Name'].map(sorter_index)
         data.sort_values(['Sample Order'], inplace = True)
     
     
@@ -54,7 +54,7 @@ def process_data(data , model , cgenes , cutoff , max_outliers , sample_sorter, 
         data = cleanup_outliers(data , "CT" , cutoff , max_outliers)
         data, data_summary, targets, samples = stability.process(data , csample)
 
-    return data, data_summary, targets, samples
+    return data, data_summary, targets, samples, sorter
 
 
 def cleanup_outliers(d , feature , cutoff , max_outliers):
