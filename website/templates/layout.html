@@ -142,7 +142,13 @@
                         <br>
                         <input id="file-input" type="file" name="file[]" accept=".csv" multiple/>
                         <div class="help-tip" id="file-helptip">
-                            <p>Something</p>    <!--text inside question mark here-->
+                            <p>Upload your data: Nativage to your folder of raw data csv files. These should be the output files
+                                from you PCR machine.
+                                If you don't have a csv use excel to save a csv file.
+                                You can included multiple spread sheets.  The data will
+                                be combined into a single analysis. For separate analysis
+                                you must separately upload and analyze the data. Be sure to
+                                inclue the control genes you want to normalize. </p>    <!--text inside question mark here-->
                         </div>
                     </div>
                 </td>
@@ -177,7 +183,12 @@
                     <div class="input-container">
                         Enter endogenous control gene(s): (seperate genes with spaces)
                         <div class="help-tip">
-                            <p>Something about control genes</p>
+                            <p>Endogenous control genes: These are the housekeeping or reference
+                            genes you wish to normalize agains. Actin or GADPH are common options.
+                            You must enter the gene names exactly as they appear in your data spread sheet.
+                            You many enter multiple control genes.  Separate the genes with commas.
+                            The average of the techinical replicates will be used to calculate expression values.
+                            If you want to compare </p>
                         </div>
                         <br>
                         <input type="text" name="cgenes" autocomplete="off">
