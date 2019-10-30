@@ -48,6 +48,7 @@ def process(data):
                 1]
             data.at[i_row , 'NormSEM'] = \
             mean_sem_result[data.at[i_row , 'Target Name']][data.at[i_row , 'Sample Name']][2]
+
     #
     # Making the intermediate dataframe
     data = data.append(outlier_data)
@@ -56,23 +57,7 @@ def process(data):
     for item in cols:
         df[item] = data[item]
 
-    for i_row, row in df.iterrows():
-        if 'IPSC' in df.at[i_row, 'Sample Name']:
-            df.at[i_row, 'Group'] = 'IPSC'
-            df.at[i_row, 'Sample Name'] = df.at[i_row, 'Sample Name'].replace('-IPSC', '')
-        elif 'NPC' in df.at[i_row, 'Sample Name']:
-            df.at[i_row, 'Group'] = 'NPC'
-            df.at[i_row, 'Sample Name'] = df.at[i_row , 'Sample Name'].replace('-NPC', '')
-        elif 'DA4W' in df.at[i_row, 'Sample Name']:
-            df.at[i_row, 'Group'] = 'DA4W'
-            df.at[i_row, 'Sample Name'] = df.at[i_row , 'Sample Name'].replace('-DA4W' , '')
-        elif 'DA6W' in df.at[i_row, 'Sample Name']:
-            df.at[i_row, 'Group'] = 'DA6W'
-            df.at[i_row, 'Sample Name'] = df.at[i_row , 'Sample Name'].replace('-DA6W' , '')
-
     data_output_summary = data.groupby(['Target Name' , 'Sample Name']).agg(
         {'NormQuant': [np.size , 'mean' , 'std'] , 'NormSEM': 'mean'})
-
-    df.to_csv('intermediate_absolute.csv')
 
     return df, data_output_summary, targets, samples

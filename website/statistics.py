@@ -10,6 +10,7 @@ def stats(model, quantity, data, targets, rm, posthoc):
     elif model == 'relative' or 'stability':
         qty = 'rq'
         mean = 'rqMean'
+
     # prepare data from intermediate dataframe
     data = data[data['Outliers'].eq(False)]
     data = data.drop([qty], axis=1)
@@ -34,9 +35,9 @@ def stats(model, quantity, data, targets, rm, posthoc):
             aov = pandas.DataFrame(['Repeated measure anova'])
             aov = aov.append(pg.rm_anova(dv=mean, within='Group', subject='Target Name', data=data))
             anova_dfs = aov
-            ph = pandas.DataFrame([posthoc])
-            ph = ph.append(posthocs_test(posthoc, data=data))
-            posthoc_dfs = ph
+            # ph = pandas.DataFrame([posthoc])
+            # ph = ph.append(posthocs_test(posthoc, data=data))
+            # posthoc_dfs = ph
         else:
             # anova
             pvals=[]
@@ -49,7 +50,7 @@ def stats(model, quantity, data, targets, rm, posthoc):
                     anova_dfs = aov
                 else:
                     anova_dfs = anova_dfs.append(aov, ignore_index=True)
-
+                print(anova_dfs)
                 print("")
                 if posthoc == 'ttest_fdr':
                     ph = pandas.DataFrame(['T-Test+FDR_'+item])
@@ -74,3 +75,13 @@ def stats(model, quantity, data, targets, rm, posthoc):
 
     return anova_dfs, posthoc_dfs
 
+
+# Extract groups from sample name
+def add_groups(df, groups):
+    for i_row , row in df.iterrows():
+        for group in groups:
+            if group in df.at[i_row , 'Sample Name']:
+                df.at[i_row , 'Group'] = group
+                df.at[i_row , 'Sample Name'] = df.at[i_row , 'Sample Name'].replace(group , '')
+
+    return df

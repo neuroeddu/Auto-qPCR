@@ -240,6 +240,15 @@
                     <input type="number"  name="quantity" min="1">
                     <br>
                     <br>
+                    If you have more than 1 group, do you already have a group column?
+                    <br>
+                    <input type="radio" name="option4" value="True" checked>Yes. Enter the name of your group column</input>
+                    <input type="text" name="gcol" autocomplete="off">
+                    <br>
+                    <input type="radio" name="option4" value="False">No. Enter your group names as they are indicated in your sample names (separate with spaces)</input>
+                    <input type="text" name="glist" autocomplete="off">
+                    <br>
+                    <br>
                     Is it a time series or repeated measures?
                     <br>
                     <input type="radio" name="option2" value="False" checked>No</input>
@@ -262,18 +271,9 @@
                 <td>
                     <b> Plot: </b>
                     <br>
-                    <br>
-                    Input sample names in the order you want to appear on the plots (separate by spaces):
-                    <br>
-                    <input type="text" name="osamples" autocomplete="off">
-                    <br>
-                    Input target names in the order you want to appear on the plots (separate by spaces):
+                    Input target names in the order you want to appear on the plots (separate with spaces):
                     <br>
                     <input type="text" name="otargets" autocomplete="off">
-                    <br>
-                    Input group names in the order you want to appear on the plots (separate by spaces):
-                    <br>
-                    <input type="text" name="ogroups" autocomplete="off">
                     <br>
                 </td>
             </tr>

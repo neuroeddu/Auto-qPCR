@@ -53,10 +53,9 @@ def transform_view():
                                    encoding="utf-8" ,
                                    header= i)
 
-        #print(filedata)
+        # print(filedata)
         data = data.append(filedata , ignore_index=True , sort=True)
         #stream.seek(0)
-        
 
     model = request.form['option']
     cgenes = request.form['cgenes']
@@ -73,36 +72,41 @@ def transform_view():
     data1, summary_data, targets, samples, sorter = AUTOqPCR.process_data(data , model , cgenes , cutoff , max_outliers , sample_sorter , csample)
 
     # taking lists of samples, targets and groups in the order user want to plot
-    osamples = request.form['osamples'].split()
     otargets = request.form['otargets'].split()
-    ogroups = request.form['ogroups'].split()
-    if osamples is not None:
-        samples = osamples
-    if otargets is not None:
+    if len(otargets) != 0:
         targets = otargets
 
     # making stats csv
     if qty is not None:
-        anova_dfs , posthoc_dfs = statistics.stats(model, qty , data1 , targets , rm , posthoc)
+        if request.form['option4'] != 'False':
+            gcol = data[request.form['gcol']]
+            data1['Group'] = gcol
+        else:
+            groups = request.form['glist'].split()
+            data1 = statistics.add_groups(data1, groups)
+
+        anova_dfs , posthoc_dfs = statistics.stats(model, qty , data1, targets , rm , posthoc)
+        print(anova_dfs)
+        print(posthoc_dfs)
         anova_output = anova_dfs.to_csv(index=False)
         posthoc_output = posthoc_dfs.to_csv(index=False)
 
-    # online plotly plots
-    data_list, layout = plot_by_targets(summary_data, model, targets, samples)
-    for d in data_list:
-        fig = go.Figure(data=d , layout=layout)
-        fig.update_xaxes(showline=True , linewidth=2 , linecolor='black' , showgrid=False)
-        fig.update_yaxes(showline=True , linewidth=2 , linecolor='black' , showgrid=False)
-        fig.show()
-
-    if qty is not None:
-        data_list1, layout = plot_by_groups(data1, model, ogroups, targets)
-        for d in data_list1:
-            fig = go.Figure(data=d, layout=layout)
-            fig.update_layout(height=600 , width=400 , title_text=t)
-            fig.update_xaxes(showline=True , linewidth=2 , linecolor='black' , showgrid=False)
-            fig.update_yaxes(showline=True , linewidth=2 , linecolor='black' , showgrid=False)
-            fig.show()
+    # # online plotly plots
+    # data_list, layout = plot_by_targets(summary_data, model, targets, samples)
+    # for d in data_list:
+    #     fig = go.Figure(data=d , layout=layout)
+    #     fig.update_xaxes(showline=True , linewidth=2 , linecolor='black' , showgrid=False)
+    #     fig.update_yaxes(showline=True , linewidth=2 , linecolor='black' , showgrid=False)
+    #     fig.show()
+    #
+    # if qty is not None:
+    #     data_list1, layout = plot_by_groups(data1, model, ogroups, targets)
+    #     for d in data_list1:
+    #         fig = go.Figure(data=d, layout=layout)
+    #         fig.update_layout(height=600 , width=400 , title_text=t)
+    #         fig.update_xaxes(showline=True , linewidth=2 , linecolor='black' , showgrid=False)
+    #         fig.update_yaxes(showline=True , linewidth=2 , linecolor='black' , showgrid=False)
+    #         fig.show()
 
     # making summary data csv
     output = summary_data.to_csv()

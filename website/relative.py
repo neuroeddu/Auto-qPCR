@@ -42,11 +42,11 @@ def process(data):
     for i_row , row in data.iterrows():
         if data.at[i_row , 'Sample Name'] in samples and data.at[i_row , 'Sample Name'] in samples and data.at[
             i_row , 'Target Name'] in mean_sem_result and data.at[i_row , 'Sample Name'] in mean_sem_result[
-            data.at[i_row , 'Target Name']]:
-            data.at[i_row , 'rq'] = mean_sem_result[data.at[i_row , 'Target Name']][data.at[i_row , 'Sample Name']][0]
-            data.at[i_row , 'rqSD'] = mean_sem_result[data.at[i_row , 'Target Name']][data.at[i_row , 'Sample Name']][1]
-            data.at[i_row , 'rqSEM'] = mean_sem_result[data.at[i_row , 'Target Name']][data.at[i_row , 'Sample Name']][
-                2]
+            data.at[i_row, 'Target Name']]:
+            data.at[i_row, 'rq'] = mean_sem_result[data.at[i_row, 'Target Name']][data.at[i_row , 'Sample Name']][0]
+            data.at[i_row, 'rqSD'] = mean_sem_result[data.at[i_row, 'Target Name']][data.at[i_row , 'Sample Name']][1]
+            data.at[i_row, 'rqSEM'] = mean_sem_result[data.at[i_row, 'Target Name']][data.at[i_row, 'Sample Name']][2]
+
     # Making the intermediate dataframe
     data = data.append(outlier_data)
     cols = ['Sample Name' , 'Target Name' , 'rq' , 'rqSD' , 'rqSEM' , 'Outliers']
