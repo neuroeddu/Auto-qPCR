@@ -9,7 +9,7 @@ import numpy as np
 import absolute, relative, stability
 
 
-def process_data(data , model , cgenes , cutoff , max_outliers , csample=None):
+def process_data(data , model , cgenes , cutoff , max_outliers , sample_sorter, csample=None):
     """This filters the data and processes the selected model, returning a list of output dataframes"""
 
     # Transforms certain columns from string to numeric
@@ -25,7 +25,22 @@ def process_data(data , model , cgenes , cutoff , max_outliers , csample=None):
     cols = ['Sample Name' , 'Target Name' , 'Task' , 'Reporter' , 'CT']
     for col in cols:
         data.loc[data[col].isnull() , 'Ignore'] = True
-
+    
+    # define sorter for sample name order based on list
+    # this list is case sensitive
+    sorter = [x.strip() for x in sample_sorter.split(',')]
+    print(sorter)
+    
+    # Add sorter to dataframe to order Sample Names in output files
+    targets = set(data['Target Name'])
+    for target in targets:
+        sorter_index = dict(zip(sorter, range(len(sorter))))
+        data['Sample Order'] = d['Sample Name'].map(sorter_index)
+        data.sort_values(['Sample Order'], inplace = True)
+    
+    
+    
+    
     # Calls the different processing models depending on the model argument
     if model == 'absolute':
         data = cleanup_outliers(data , "Quantity" , cutoff , max_outliers)
