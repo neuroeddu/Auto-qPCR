@@ -7,7 +7,7 @@ def stats(model, quantity, data, targets, rm, posthoc):
     if model == 'absolute':
         qty = 'NormQuant'
         mean = 'NormMean'
-    elif model == 'relative' or 'stability':
+    elif model == 'relative':
         qty = 'rq'
         mean = 'rqMean'
 
