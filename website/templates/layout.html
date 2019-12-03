@@ -160,7 +160,7 @@
                         <b> Model </b>
                         <br>
                         <div class="help-tip" id="model-helptip">
-                            <p>(How to choose different models)</p>
+                            <p>Choose your model based on the experimental design used in your Q-PCR. See the model descriptions below.</p>
                         </div>
                         <br>
                         <input type="radio" name="option" value="absolute" checked>Absolute</input>
@@ -188,7 +188,7 @@
                             You must enter the gene names exactly as they appear in your data spread sheet.
                             You many enter multiple control genes.  Separate the genes with commas.
                             The average of the techinical replicates will be used to calculate expression values.
-                            If you want to compare </p>
+                            </p>
                         </div>
                         <br>
                         <input type="text" name="cgenes" autocomplete="off">
@@ -196,7 +196,9 @@
                     <div class="input-container">
                         Cut-Off:
                         <div class="help-tip">
-                            <p>Something</p>
+                            <p>Techical replicate for a given sample will be removed if the standard deviation (SD)
+                                of those replicates is about 0.3 (or the entered value).
+                                Replicates will be removed until the SD is below the cuttoff.</p>
                         </div>
                         <br>
                         <input type="text" name="cutoff" value="0.3" min="0" max="1" step="any" autocomplete="off">
@@ -205,7 +207,8 @@
                     <div class="input-container">
                        Max Outliers:
                         <div class="help-tip">
-                            <p>Something</p>
+                            <p>How many technical replicates can be removed to reach the standard deviation cut off about?
+                                The default of 0.5 means that in 3  technical replicates only one can be removed. </p>
                         </div>
                         <br>
                         <input type="number" name="max_outliers" value="0.5" autocomplete="off">
@@ -214,7 +217,7 @@
                     <div class="input-container">
                         Enter sample order: (seperate genes with commas)
                         <div class="help-tip">
-                            <p>This list is case sensitive</p>
+                            <p>Enter the order you would like samples to appear on the plots.</p>
                         </div>
                         <br>
                         <input type="text" name="sample_sorter" autocomplete="off">
@@ -222,7 +225,8 @@
                     <div class="input-container">
                         Control Sample:
                         <div class="help-tip">
-                            <p>Something</p>
+                            <p>The sample used as calibrator (compare with this sample) for the relative (delta delta CT)
+                                and for the stability models.</p>
                         </div>
                         <br>
                         <input type="text" name="csample" autocomplete="off">
@@ -232,20 +236,26 @@
             </tr>
             <tr>
                 <td >
-                    <b> Statistics </b>
+                    <b> Compare your samples with one way ANOVA or t-test  </b>
                     <br>
                     <br>
                     How many groups do you have?
+                    <div class="help-tip">
+                            <p>Groups can be either different genes, time points, animals, treatments or any conditions you wish to compare.
+                            </p>
+                    </div>
                     <br>
                     <input type="number"  name="quantity" min="1">
                     <br>
                     <br>
-                    If you have more than 1 group, do you already have a group column?
+                    How are your groups defined?
                     <br>
-                    <input type="radio" name="option4" value="True" checked>Yes. Enter the name of your group column</input>
+                    <br>
+                    <input type="radio" name="option4" value="True" checked>I have a group column. Enter the name of your group column</input>
                     <input type="text" name="gcol" autocomplete="off">
                     <br>
-                    <input type="radio" name="option4" value="False">No. Enter your group names as they are indicated in your sample names (separate with spaces)</input>
+                    <input type="radio" name="option4" value="False">Group names are within the sample name.
+                    Enter your group names as they are indicated in your sample names (separate with spaces)</input>
                     <input type="text" name="glist" autocomplete="off">
                     <br>
                     <br>
