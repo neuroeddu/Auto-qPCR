@@ -1,10 +1,10 @@
 # Auto-qPCR
 
-Currently the website folder contains python script using flask to create a local server
+Currently the "website" folder contains python scripts using flask to create a local server which works to process qPCR data and perform statistics. 
 
-We are deploying that program using google cloud computing and the scripts for that process are in the "cloud" folder.
+We are deploying that program using google cloud computing and the scripts for that process are in the "cloud" folder. The work is in inprogress.
 
-A user guide in in progress.
+A user guide will be available when the web app is complete.
 
 
 
