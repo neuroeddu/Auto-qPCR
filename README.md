@@ -1,5 +1,21 @@
 # Auto-qPCR
 
+Currently the website folder contains python script using flask to create a local server
+
+We are deploying that program using google cloud computing and the scripts for that process are in the "cloud" folder.
+
+A user guide in in progress.
+
+
+
+
+
+
+
+# Orginal python script instructions
+
+The python script for to run processing from the terminal is still avialable
+
 Step to run a qPCR analysis
 
 1. a) save the raw qPCR output data as a .csv file. Place the file(s) in a data folder.
