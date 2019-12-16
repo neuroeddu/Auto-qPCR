@@ -69,11 +69,20 @@ def transform_view():
     data1, summary_data, targets, samples, sorter = AUTOqPCR.process_data(data , model , cgenes , cutoff , max_outliers , sample_sorter , csample)
 
 
-    response = make_response(outfile.getvalue())
-    response.headers['Content-Type'] = 'application/actet-stream'
-    response.headers['Content-Disposition'] = 'attachment; filename=outputs_'+model+'.zip'
+    # taking lists of samples, targets and groups in the order user want to plot
+    otargets = request.form['otargets'].split()
+    if len(otargets) != 0:
+        targets = otargets
 
-    return response
+  # making summary data csv
+    output = summary_data.to_csv()
+    clean_output = data1.to_csv()
+
+#    response = make_response(outfile.getvalue())
+#    response.headers['Content-Type'] = 'application/actet-stream'
+#    response.headers['Content-Disposition'] = 'attachment; filename=outputs_'+model+'.zip'
+
+#    return response
 
 
 if __name__=='__main__':
