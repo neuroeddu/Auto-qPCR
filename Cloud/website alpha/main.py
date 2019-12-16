@@ -79,11 +79,11 @@ def transform_view():
     clean_output = data1.to_csv()
 # try to save the files
     
-    response = make_response(clean_output)
-    response.headers['Content-Disposition'] = 'attachment; filename= clean_output.csv'
-    return response
+    #response = make_response(clean_output)
+    #response.headers['Content-Disposition'] = 'attachment; filename= clean_output.csv'
+    #return response
 
-	response = make_response(output)
+    response = make_response(output)
     response.headers['Content-Disposition'] = 'attachment; filename= output.csv'
     return response
 
