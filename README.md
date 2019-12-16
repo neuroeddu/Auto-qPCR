@@ -14,7 +14,7 @@ A user guide in in progress.
 
 # Orginal python script instructions
 
-The python script for to run processing from the terminal is still avialable
+The python script to run the RNA seq data processing from the terminal is still avialable in "simplified program"
 
 Step to run a qPCR analysis
 
