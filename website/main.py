@@ -77,15 +77,14 @@ def transform_view():
   # making summary data csv
     output = summary_data.to_csv()
     clean_output = data1.to_csv()
-
-#    response = make_response(outfile.getvalue())
-#    response.headers['Content-Type'] = 'application/actet-stream'
-#    response.headers['Content-Disposition'] = 'attachment; filename=outputs_'+model+'.zip'
-
-#    return response
-
+# try to save the files
+    
+    response = make_response(clean_output)
+    response.headers['Content-Disposition'] = 'attachment; filename= clean_output.csv'
+    return response
 
 if __name__=='__main__':
+    app.debug = True
+    app.run(host = '0.0.0.0', port=5000)
 
-    app.run(host='127.0.0.1', port=8080, debug=True)
 #
