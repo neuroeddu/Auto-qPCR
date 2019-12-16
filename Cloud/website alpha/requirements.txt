@@ -2,5 +2,4 @@ Flask
 pandas
 numpy
 Plotly
-pingouin
 

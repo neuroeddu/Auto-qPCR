@@ -69,13 +69,6 @@ def transform_view():
     data1, summary_data, targets, samples, sorter = AUTOqPCR.process_data(data , model , cgenes , cutoff , max_outliers , sample_sorter , csample)
 
 
-    response = make_response(outfile.getvalue())
-    response.headers['Content-Type'] = 'application/actet-stream'
-    response.headers['Content-Disposition'] = 'attachment; filename=outputs_'+model+'.zip'
-
-    return response
-
-
 if __name__=='__main__':
 
     app.run(host='127.0.0.1', port=8080, debug=True)
