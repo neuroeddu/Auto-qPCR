@@ -1,5 +1,21 @@
 # Auto-qPCR
 
+Currently the "website" folder contains python scripts using flask to create a local server which works to process qPCR data and perform statistics. 
+
+We are deploying that program using google cloud computing and the scripts for that process are in the "cloud" folder. The work is in inprogress.
+
+A user guide will be available when the web app is complete.
+
+
+
+
+
+
+
+# Orginal python script instructions
+
+The python script to run the RNA seq data processing from the terminal is still avialable in "simplified program"
+
 Step to run a qPCR analysis
 
 1. a) save the raw qPCR output data as a .csv file. Place the file(s) in a data folder.
