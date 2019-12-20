@@ -21,7 +21,7 @@ def transform_view():
         return "No file"
     # Creates empty data frame
     data = pd.DataFrame()
-
+    # finds the correct data to put into the data frame 
     for item in files:
         stream = io.StringIO(item.stream.read().decode("utf-8"), newline="")
         i = 0
@@ -41,6 +41,8 @@ def transform_view():
         else:
             print("Header found at {} in '{}'".format(i, item))
         #print(i)
+        
+        # check if there are more csv files
 
         stream.seek(0)
         filedata = pd.read_csv(stream ,
@@ -54,6 +56,7 @@ def transform_view():
         data = data.append(filedata , ignore_index=True , sort=True)
         #stream.seek(0)
 
+    # get the user settings
     model = request.form['option']
     cgenes = request.form['cgenes']
     cutoff = request.form.get('cutoff' , type=float)
@@ -66,6 +69,12 @@ def transform_view():
     rm = request.form['option2']
     posthoc = request.form['option3']
 
+    # create all the output files by running the AUTOqPCR function with the arguments input by the user in the GUI
+    # data1 is the processed data for all technical replicates 
+    # summary_data processed data means for technical replicates with outliers removed
+    # targets is 
+    # samples is
+    # sort is 
     data1, summary_data, targets, samples, sorter = AUTOqPCR.process_data(data , model , cgenes , cutoff , max_outliers , sample_sorter , csample)
 
 
