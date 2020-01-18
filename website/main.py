@@ -2,7 +2,7 @@ from flask import Flask, request, make_response, render_template
 import io
 import pandas as pd
 import AUTOqPCR
-
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -51,7 +51,9 @@ def transform_view():
                                    header= i)
 
         # print(filedata)
-        data = data.append(filedata , ignore_index=True , sort=True)
+
+        data = data.append(filedata, ignore_index=True , sort=True)
+        data['filename'] = item.filename
         #stream.seek(0)
 
     model = request.form['option']
@@ -79,8 +81,11 @@ def transform_view():
     clean_output = data1.to_csv()
 # try to save the files
     
+    now = datetime.now()
+    dt_string = now.strftime("%Y-%m-%d-%H-%M-%S")
+
     response = make_response(clean_output)
-    response.headers['Content-Disposition'] = 'attachment; filename= clean_output.csv'
+    response.headers['Content-Disposition'] = 'attachment; filename= clean_output+' +dt_string+ '.csv'
     return response
 
 if __name__=='__main__':
