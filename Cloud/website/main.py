@@ -3,8 +3,8 @@ import io
 import pandas as pd
 import AUTOqPCR
 from datetime import datetime
-
-
+import tkinter as tk
+from tkinter import ttk
 app = Flask(__name__)
 
 
@@ -71,7 +71,7 @@ def transform_view():
     data1, summary_data, targets, samples, sorter = AUTOqPCR.process_data(data , model , cgenes , cutoff , max_outliers , sample_sorter , csample)
 
 
-    # taking lists of samples, targets and groups in the order user want to plot
+    # taking lists of samples, targets and groups in the order user wants to plot
     otargets = request.form['otargets'].split()
     if len(otargets) != 0:
         targets = otargets

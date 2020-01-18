@@ -7,7 +7,8 @@ QUALITY = ""
 import pandas
 import numpy as np
 import absolute, relative, stability
-
+import tkinter as tk
+from tkinter import ttk
 
 def process_data(data, model, cgenes, cutoff, max_outliers, sample_sorter=None, csample=None):
     """This filters the data and processes the selected model, returning a list of output dataframes"""
@@ -16,10 +17,36 @@ def process_data(data, model, cgenes, cutoff, max_outliers, sample_sorter=None, 
     cols = ['CT', 'Quantity']
     data[cols] = data[cols].apply(pandas.to_numeric, errors='coerce')
 
+# make a popup
+    NORM_FONT = ("Verdana", 10)
+    def popupmsg(title, msg):
+        popup = tk.Tk()
+        popup.wm_title(title)
+        label = ttk.Label(popup, text=msg, font = NORM_FONT)
+        label.pack(side="top", fill="x", pady=10)
+        B1 = ttk.Button(popup, text="Okay", command=popup.destroy)
+        B1.pack()
+        popup.mainloop()
+
     # Check if the control gene exist in the input data
-    for gene in cgenes:
-        if gene not in data['Target Name']:
-            print("gene " + gene + " is not in the files")
+    # this needs to be change to check a vector of strings --- an array not each letter
+    # also if no control gene is entered it should not run
+    if cgenes == "":
+        print("You have not entered a control gene")
+        title = "ERROR!"
+        msg = 'You have not entered a control gene.  A control gene must be entered'
+        popupmsg(title,msg)
+
+        # here we need to make it no longer process the data or make it so that it just removes outliers and doesn't normalize
+
+        # here there is a problem
+    print(cgenes)
+    #for gene in cgenes:
+     #   if gene not in data['Target Name']:
+      #      title = 'ERROR!!!'
+       #     message = ("gene " + gene + " is not in the files")
+        #    popupmsg(title, message)
+
     # Marks the Control Genes in a new column in the dataframe
     data['Control'] = data['Target Name'].apply(lambda x: True if str(x) in cgenes else False)
 
