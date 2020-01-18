@@ -171,6 +171,8 @@
                         <br>
                         <input type="radio" name="option" value="stability2">Stability</input>
                         <br>
+                        <div> <p> Have message appear here </p>
+                        </div>
                     </div>
                 </td>
             </tr>
@@ -196,7 +198,7 @@
                     <div class="input-container">
                         Cut-Off:
                         <div class="help-tip">
-                            <p>Techical replicate for a given sample will be removed if the standard deviation (SD)
+                            <p> Techical replicate for a given sample will be removed if the standard deviation (SD)
                                 of those replicates is about 0.3 (or the entered value).
                                 Replicates will be removed until the SD is below the cuttoff.</p>
                         </div>
@@ -207,7 +209,7 @@
                     <div class="input-container">
                        Max Outliers:
                         <div class="help-tip">
-                            <p>How many technical replicates can be removed to reach the standard deviation cut off about?
+                            <p> How many technical replicates can be removed to reach the standard deviation cut off about?
                                 The default of 0.5 means that in 3  technical replicates only one can be removed. </p>
                         </div>
                         <br>
@@ -217,7 +219,7 @@
                     <div class="input-container">
                         Enter sample order: (seperate genes with commas)
                         <div class="help-tip">
-                            <p>Enter the order you would like samples to appear on the plots.</p>
+                            <p> Enter the order you would like samples to appear on the plots.</p>
                         </div>
                         <br>
                         <input type="text" name="sample_sorter" autocomplete="off">
@@ -225,12 +227,14 @@
                     <div class="input-container">
                         Control Sample:
                         <div class="help-tip">
-                            <p>The sample used as calibrator (compare with this sample) for the relative (delta delta CT)
+                            <p> The sample used as calibrator (compare with this sample) for the relative (delta delta CT)
                                 and for the stability models.</p>
                         </div>
                         <br>
                         <input type="text" name="csample" autocomplete="off">
                         <br>
+                        <div> <p> Another error message will appear here... Can we print a string variable? </p>
+                        </div>
                     </div>
                 </td>
             </tr>
