@@ -36,7 +36,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/export02/data/GITHUB/Auto-qPCR/website/virtual"
+set -gx VIRTUAL_ENV "/export02/data/GITHUB/Auto-qPCR/Cloud/website alpha/virtual"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

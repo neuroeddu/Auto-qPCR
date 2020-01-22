@@ -1,0 +1,133 @@
+
+*** These modified files were found in JOE when it aborted on Wed Jan 22 13:46:20 2020
+*** JOE was aborted because the terminal closed
+
+*** File '(Unnamed)'
+
+*** File '(Unnamed)'
+syntax
+
+*** File '(Unnamed)'
+root
+
+*** File '/export02/data/GITHUB/Auto-qPCR/.git/COMMIT_EDITMSG'
+fixed cloud deploy
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Committer: Rhalena Thomas - T. Durcan Lab <rthomas@bic.mni.mcgill.ca>
+#
+# On branch master
+# Your branch is behind 'origin/master' by 3 commits, and can be fast-forwarded.
+#   (use "git pull" to update your local branch)
+#
+# Changes to be committed:
+#	modified:   Cloud/requirements.txt
+#	renamed:    website/.DS_Store -> Cloud/website/.DS_Store
+#	renamed:    website/.gcloudignore -> Cloud/website/.gcloudignore
+#	new file:   Cloud/website/AUTOqPCR.py
+#	renamed:    website/Dockerfile -> Cloud/website/Dockerfile
+#	renamed:    website/absolute.py -> Cloud/website/absolute.py
+#	renamed:    website/app.yaml -> Cloud/website/app.yaml
+#	renamed:    website/appengine_config.py -> Cloud/website/appengine_config.py
+#	renamed:    website/descriptor.json -> Cloud/website/descriptor.json
+#	renamed:    website/intermediate_absolute.csv -> Cloud/website/intermediate_absolute.csv
+#	renamed:    website/main.py -> Cloud/website/main.py
+#	renamed:    website/main_notworking.py -> Cloud/website/main_notworking.py
+#	renamed:    website/main_old.py -> Cloud/website/main_old.py
+#	renamed:    website/plot.py -> Cloud/website/plot.py
+#	renamed:    website/relative.py -> Cloud/website/relative.py
+#	renamed:    website/requirements.txt -> Cloud/website/requirements.txt
+#	renamed:    website/stability.py -> Cloud/website/stability.py
+#	renamed:    website/statistics.py -> Cloud/website/statistics.py
+#	renamed:    website/templates/.DS_Store -> Cloud/website/templates/.DS_Store
+#	renamed:    website/templates/__init__.py -> Cloud/website/templates/__init__.py
+#	renamed:    website/templates/extrastuff -> Cloud/website/templates/extrastuff
+#	renamed:    website/templates/layout.html -> Cloud/website/templates/layout.html
+#	renamed:    website/virtual/bin/activate -> Cloud/website/virtual/bin/activate
+#	renamed:    website/virtual/bin/activate.csh -> Cloud/website/virtual/bin/activate.csh
+#	renamed:    website/virtual/bin/activate.fish -> Cloud/website/virtual/bin/activate.fish
+#	renamed:    website/virtual/bin/activate_this.py -> Cloud/website/virtual/bin/activate_this.py
+#	renamed:    website/virtual/bin/easy_install -> Cloud/website/virtual/bin/easy_install
+#	renamed:    website/virtual/bin/easy_install-2.7 -> Cloud/website/virtual/bin/easy_install-2.7
+#	renamed:    website/virtual/bin/flask -> Cloud/website/virtual/bin/flask
+#	renamed:    website/virtual/bin/pip -> Cloud/website/virtual/bin/pip
+#	renamed:    website/virtual/bin/pip2 -> Cloud/website/virtual/bin/pip2
+#	renamed:    website/virtual/bin/pip2.7 -> Cloud/website/virtual/bin/pip2.7
+#	renamed:    website/virtual/bin/python -> Cloud/website/virtual/bin/python
+#	renamed:    website/virtual/bin/python-config -> Cloud/website/virtual/bin/python-config
+#	renamed:    website/virtual/bin/python2 -> Cloud/website/virtual/bin/python2
+#	renamed:    website/virtual/bin/python2.7 -> Cloud/website/virtual/bin/python2.7
+#	renamed:    website/virtual/bin/wheel -> Cloud/website/virtual/bin/wheel
+#	renamed:    website/virtual/include/python2.7 -> Cloud/website/virtual/include/python2.7
+#	renamed:    website/virtual/local/bin -> Cloud/website/virtual/local/bin
+#	renamed:    website/virtual/local/include -> Cloud/website/virtual/local/include
+#	renamed:    website/virtual/local/lib -> Cloud/website/virtual/local/lib
+#	renamed:    website/virtual/share/python-wheels/CacheControl-0.11.7-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/CacheControl-0.11.7-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/appdirs-1.4.3-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/appdirs-1.4.3-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/certifi-2018.1.18-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/certifi-2018.1.18-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/chardet-3.0.4-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/chardet-3.0.4-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/colorama-0.3.7-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/colorama-0.3.7-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/distlib-0.2.6-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/distlib-0.2.6-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/distro-1.0.1-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/distro-1.0.1-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/html5lib-0.999999999-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/html5lib-0.999999999-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/idna-2.6-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/idna-2.6-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/ipaddress-0.0.0-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/ipaddress-0.0.0-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/lockfile-0.12.2-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/lockfile-0.12.2-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/packaging-17.1-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/packaging-17.1-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/pkg_resources-0.0.0-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/pkg_resources-0.0.0-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/progress-1.2-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/progress-1.2-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/pyparsing-2.2.0-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/pyparsing-2.2.0-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/requests-2.18.4-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/requests-2.18.4-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/retrying-1.3.3-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/retrying-1.3.3-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/setuptools-39.0.1-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/setuptools-39.0.1-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/six-1.11.0-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/six-1.11.0-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/urllib3-1.22-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/urllib3-1.22-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/webencodings-0.5-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/webencodings-0.5-py2.py3-none-any.whl
+#	renamed:    website/virtual/share/python-wheels/wheel-0.30.0-py2.py3-none-any.whl -> Cloud/website/virtual/share/python-wheels/wheel-0.30.0-py2.py3-none-any.whl
+#
+# Changes not staged for commit:
+#	modified:   Cloud/website alpha/virtual/bin/activate
+#	modified:   Cloud/website alpha/virtual/bin/activate.csh
+#	modified:   Cloud/website alpha/virtual/bin/activate.fish
+#	modified:   Cloud/website alpha/virtual/bin/easy_install
+#	modified:   Cloud/website alpha/virtual/bin/easy_install-2.7
+#	modified:   Cloud/website alpha/virtual/bin/flask
+#	modified:   Cloud/website alpha/virtual/bin/pip
+#	modified:   Cloud/website alpha/virtual/bin/pip2
+#	modified:   Cloud/website alpha/virtual/bin/pip2.7
+#	modified:   Cloud/website alpha/virtual/bin/python-config
+#	modified:   Cloud/website alpha/virtual/bin/wheel
+#	modified:   Cloud/website alpha/virtual/local/bin
+#	modified:   Cloud/website alpha/virtual/local/include
+#	modified:   Cloud/website alpha/virtual/local/lib
+#	modified:   Cloud/website/virtual/bin/activate
+#	modified:   Cloud/website/virtual/bin/activate.csh
+#	modified:   Cloud/website/virtual/bin/activate.fish
+#	modified:   Cloud/website/virtual/bin/easy_install
+#	modified:   Cloud/website/virtual/bin/easy_install-2.7
+#	modified:   Cloud/website/virtual/bin/flask
+#	modified:   Cloud/website/virtual/bin/pip
+#	modified:   Cloud/website/virtual/bin/pip2
+#	modified:   Cloud/website/virtual/bin/pip2.7
+#	modified:   Cloud/website/virtual/bin/python-config
+#	modified:   Cloud/website/virtual/bin/wheel
+#	modified:   Cloud/website/virtual/local/bin
+#	modified:   Cloud/website/virtual/local/include
+#	modified:   Cloud/website/virtual/local/lib
+#
+
+*** File '(Unnamed)'
+fixed
+
+*** File '(Unnamed)'
+/export02/data/GITHUB/Auto-qPCR/.git/MERGE_MSG
+/export02/data/GITHUB/Auto-qPCR/.git/COMMIT_EDITMSG
+/export02/data/GITHUB/Auto-qPCR/.git/COMMIT_EDITMSG
+
+*** File '* Startup Log *'
+Processing '/etc/joe/editorrc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/editorrc

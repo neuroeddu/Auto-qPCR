@@ -40,7 +40,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/export02/data/GITHUB/Auto-qPCR/website/virtual"
+VIRTUAL_ENV="/export02/data/GITHUB/Auto-qPCR/Cloud/website alpha/virtual"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

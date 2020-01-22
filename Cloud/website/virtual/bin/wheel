@@ -1,5 +1,6 @@
-#!/export02/data/GITHUB/Auto-qPCR/website/virtual/bin/python2
-
+#!/bin/sh
+'''exec' "/export02/data/GITHUB/Auto-qPCR/Cloud/website alpha/virtual/bin/python2" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys
