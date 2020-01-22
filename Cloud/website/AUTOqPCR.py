@@ -7,14 +7,45 @@ QUALITY = ""
 import pandas
 import numpy as np
 import absolute, relative, stability
+import tkinter as tk
+from tkinter import ttk
 
-
-def process_data(data , model , cgenes , cutoff , max_outliers , sample_sorter=None, csample=None):
+def process_data(data, model, cgenes, cutoff, max_outliers, sample_sorter=None, csample=None):
     """This filters the data and processes the selected model, returning a list of output dataframes"""
 
     # Transforms certain columns from string to numeric
-    cols = ['CT' , 'Quantity']
-    data[cols] = data[cols].apply(pandas.to_numeric , errors='coerce')
+    cols = ['CT', 'Quantity']
+    data[cols] = data[cols].apply(pandas.to_numeric, errors='coerce')
+
+# make a popup
+    NORM_FONT = ("Verdana", 10)
+    def popupmsg(title, msg):
+        popup = tk.Tk()
+        popup.wm_title(title)
+        label = ttk.Label(popup, text=msg, font = NORM_FONT)
+        label.pack(side="top", fill="x", pady=10)
+        B1 = ttk.Button(popup, text="Okay", command=popup.destroy)
+        B1.pack()
+        popup.mainloop()
+
+    # Check if the control gene exist in the input data
+    # this needs to be change to check a vector of strings --- an array not each letter
+    # also if no control gene is entered it should not run
+    if cgenes == "":
+        print("You have not entered a control gene")
+        title = "ERROR!"
+        msg = 'You have not entered a control gene.  A control gene must be entered'
+        popupmsg(title,msg)
+
+        # here we need to make it no longer process the data or make it so that it just removes outliers and doesn't normalize
+
+        # here there is a problem
+    print(cgenes)
+    #for gene in cgenes:
+     #   if gene not in data['Target Name']:
+      #      title = 'ERROR!!!'
+       #     message = ("gene " + gene + " is not in the files")
+        #    popupmsg(title, message)
 
     # Marks the Control Genes in a new column in the dataframe
     data['Control'] = data['Target Name'].apply(lambda x: True if str(x) in cgenes else False)
@@ -22,9 +53,9 @@ def process_data(data , model , cgenes , cutoff , max_outliers , sample_sorter=N
     # Create column 'Ignore' in dataframe to mark rows with NaN values in certain columns
     data['Ignore'] = False
     data['Outliers'] = False
-    cols = ['Sample Name' , 'Target Name' , 'Task' , 'Reporter' , 'CT']
+    cols = ['Sample Name', 'Target Name', 'Task', 'Reporter', 'CT']
     for col in cols:
-        data.loc[data[col].isnull() , 'Ignore'] = True
+        data.loc[data[col].isnull(), 'Ignore'] = True
 
     targets = set(data['Target Name'])
     # define sorter for sample name order based on list
@@ -36,37 +67,37 @@ def process_data(data , model , cgenes , cutoff , max_outliers , sample_sorter=N
         for target in targets:
             sorter_index = dict(zip(sorter, range(len(sorter))))
             data['Sample Order'] = data['Sample Name'].map(sorter_index)
-            data.sort_values(['Sample Order'], inplace = True)
+            data.sort_values(['Sample Order'], inplace=True)
 
     # Calls the different processing models depending on the model argument
     if model == 'absolute':
-        data = cleanup_outliers(data , "Quantity" , cutoff , max_outliers)
+        data = cleanup_outliers(data, "Quantity", cutoff, max_outliers)
         data, data_summary, targets, samples = absolute.process(data)
 
     elif model == 'relative':
-        data = cleanup_outliers(data , "CT" , cutoff , max_outliers)
-        data, data_summary, targets, samples  = relative.process(data)
+        data = cleanup_outliers(data, "CT", cutoff, max_outliers)
+        data, data_summary, targets, samples = relative.process(data)
 
     elif model == 'stability':
-        data = cleanup_outliers(data , "CT" , cutoff , max_outliers)
-        data, data_summary, targets, samples = stability.process(data , csample)
+        data = cleanup_outliers(data, "CT", cutoff, max_outliers)
+        data, data_summary, targets, samples = stability.process(data, csample)
 
     return data, data_summary, targets, samples, sorter
 
 
-def cleanup_outliers(d , feature , cutoff , max_outliers):
+def cleanup_outliers(d, feature, cutoff, max_outliers):
     """Function to remove outliers based on cutoff and maximum number of outliers,
     by removing the furthest data point in each group when the standard deviation
     is higher than the cutoff"""
 
     # Calculate SSD for all sample groups
     f = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN')
-    d1 = d[f].groupby(['Sample Name' , 'Target Name']).agg({'CT': ['std']})
+    d1 = d[f].groupby(['Sample Name', 'Target Name']).agg({'CT': ['std']})
     f = (d1['CT']['std'] > cutoff)
     d2 = d1[f]
     if not d2.empty:
         # Mark all outliers
-        for i , row in enumerate(d2.itertuples(name=None) , 1):
+        for i, row in enumerate(d2.itertuples(name=None), 1):
             f = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') \
                 & (d['Sample Name'] == row[0][0]) & (d['Target Name'] == row[0][1])
             dx_idx = d[f].index
@@ -79,7 +110,7 @@ def cleanup_outliers(d , feature , cutoff , max_outliers):
                 f = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') \
                     & (d['Sample Name'] == row[0][0]) & (d['Target Name'] == row[0][1])
                 dx = d[f].copy()
-                dxg = d[f].groupby(['Sample Name' , 'Target Name']).agg({feature: [np.size , 'std' , 'mean']})
+                dxg = d[f].groupby(['Sample Name', 'Target Name']).agg({feature: [np.size, 'std', 'mean']})
                 if dxg[feature]['std'].iloc[0] <= cutoff:
                     # CT std is under the threshold
                     break
@@ -92,9 +123,8 @@ def cleanup_outliers(d , feature , cutoff , max_outliers):
                     break
                 # Will remove the measurement which is furthest from the mean
                 dx['Distance'] = (dx[feature] - dxg[feature]['mean'].iloc[0]) ** 2
-                j = dx.sort_values(by='Distance' , ascending=False).index[0]
+                j = dx.sort_values(by='Distance', ascending=False).index[0]
                 d['Outliers'].loc[j] = True
                 d['Ignore'].loc[j] = True
 
     return (d[(d['Ignore'].eq(False))])
-

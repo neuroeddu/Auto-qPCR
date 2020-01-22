@@ -10,21 +10,23 @@ def process(data):
     # Calculate CT Mean (Endogenous Control Mean) and SSD for all Controls
 
     control_filter = (data['Control'].eq(True))
-    data_controls_grouped = data[control_filter].groupby(['Target Name' , 'Sample Name']).agg(
+    data_controls_grouped = data[control_filter].groupby(['Target Name' , 'Sample Name', 'filename']).agg(
         {'CT': [np.size , 'mean' , 'std']})
 
     # print("Endogenous Control CT Means and SSD")
     # print(data_controls_grouped)
 
-    data_controls_ct = data[control_filter].groupby(['Sample Name']).agg({'CT': 'mean'})
+    data_controls_ct = data[control_filter].groupby(['Sample Name', 'filename']).agg({'CT': 'mean'})
 
     # print("Combined Endogenous Control CT Means and SSD")
-    # print(data_controls_ct)
-
+    print(data_controls_ct)
+    print(data['filename'])
     # Create rq column
     for i , row in enumerate(data_controls_ct.itertuples(name=None) , 1):
-        name_filter = (data['Sample Name'] == row[0])
-        for j in data[name_filter].index:
+        print(row[0])
+        name_filter = (data['Sample Name'] == row[0][0])
+        file_filter = (data['filename'] == row[0][1])
+        for j in data[name_filter][file_filter].index:
             data.loc[j , 'rq'] = np.power(2 , -(data.loc[j , 'CT'] - row[1]))
 
     # Calculate the SEM for technical replicate groups
@@ -49,12 +51,12 @@ def process(data):
 
     # Making the intermediate dataframe
     data = data.append(outlier_data)
-    cols = ['Sample Name' , 'Target Name' , 'rq' , 'rqSD' , 'rqSEM' , 'Outliers']
+    cols = ['Sample Name' , 'Target Name' , 'filename', 'rq' , 'rqSD' , 'rqSEM' , 'Outliers']
     df = pandas.DataFrame(columns=cols)
     for item in cols:
         df[item] = data[item]
 
-    data_output_summary = data.groupby(['Target Name' , 'Sample Name']).agg(
+    data_output_summary = data.groupby(['Target Name' , 'Sample Name' , 'filename']).agg(
         {'rq': [np.size , 'mean'] , 'rqSD': 'mean' , 'rqSEM': 'mean'})
 
     return df, data_output_summary, targets, samples
