@@ -5,4 +5,4 @@ Numpy
 Plotly
 Pingouin
 Io
-Zipfile
+Zipp

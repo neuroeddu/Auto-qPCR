@@ -3,4 +3,4 @@ pandas
 numpy
 Plotly
 pingouin
-
+zipp
