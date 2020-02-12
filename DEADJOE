@@ -131,3 +131,60 @@ Processing '/etc/joe/editorrc'...
 Processing '/etc/joe/ftyperc'...
 Finished processing /etc/joe/ftyperc
 Finished processing /etc/joe/editorrc
+
+*** These modified files were found in JOE when it aborted on Wed Feb 12 14:07:08 2020
+*** JOE was aborted by UNIX signal 1
+
+*** File '/export02/data/GITHUB/Auto-qPCR/.git/COMMIT_EDITMSG'
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Committer: Rhalena Thomas - T. Durcan Lab <rthomas@bic.mni.mcgill.ca>
+#
+# On branch master
+# Your branch is ahead of 'origin/master' by 3 commits.
+#   (use "git push" to publish your local commits)
+#
+# Changes to be committed:
+#	modified:   Cloud/website/AUTOqPCR.py
+#	deleted:    Cloud/website/Dockerfile
+#	modified:   Cloud/website/app.yaml
+#	new file:   Cloud/website/gunicorn.conf.py
+#	renamed:    Cloud/website/main_old.py -> Cloud/website/main.py
+#	new file:   Cloud/website/main_new.py
+#	modified:   Cloud/website/requirements.txt
+#	modified:   Cloud/website/virtual/bin/activate
+#	modified:   Cloud/website/virtual/bin/activate.csh
+#	modified:   Cloud/website/virtual/bin/activate.fish
+#	deleted:    Cloud/website/virtual/bin/activate_this.py
+#	modified:   Cloud/website/virtual/bin/easy_install
+#	renamed:    Cloud/website/virtual/bin/easy_install-2.7 -> Cloud/website/virtual/bin/easy_install-3.6
+#	deleted:    Cloud/website/virtual/bin/flask
+#	modified:   Cloud/website/virtual/bin/pip
+#	renamed:    Cloud/website/virtual/bin/pip2 -> Cloud/website/virtual/bin/pip3
+#	renamed:    Cloud/website/virtual/bin/pip2.7 -> Cloud/website/virtual/bin/pip3.6
+#	modified:   Cloud/website/virtual/bin/python
+#	deleted:    Cloud/website/virtual/bin/python-config
+#	deleted:    Cloud/website/virtual/bin/python2
+#	deleted:    Cloud/website/virtual/bin/python2.7
+#	new file:   Cloud/website/virtual/bin/python3
+#	deleted:    Cloud/website/virtual/bin/wheel
+#	deleted:    Cloud/website/virtual/include/python2.7
+#	new file:   Cloud/website/virtual/lib64
+#	deleted:    Cloud/website/virtual/local/bin
+#	deleted:    Cloud/website/virtual/local/include
+#	deleted:    Cloud/website/virtual/local/lib
+#	new file:   Cloud/website/virtual/pyvenv.cfg
+#
+Fix cloud deployment
+*** File '(Unnamed)'
+/export02/data/GITHUB/Auto-qPCR/.git/MERGE_MSG
+/export02/data/GITHUB/Auto-qPCR/.git/COMMIT_EDITMSG
+/export02/data/GITHUB/Auto-qPCR/.git/COMMIT_EDITMSG
+
+*** File '* Startup Log *'
+Processing '/etc/joe/editorrc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/editorrc
