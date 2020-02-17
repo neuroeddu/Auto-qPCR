@@ -5,7 +5,6 @@ import AUTOqPCR
 import plot
 import statistics
 from zipfile import ZipFile
-import plotly.graph_objs as go
 
 
 app: Flask = Flask(__name__)
@@ -69,7 +68,8 @@ def transform_view():
     rm = request.form['option2']
     posthoc = request.form['option3']
 
-    data1, summary_data, targets, samples, sorter = AUTOqPCR.process_data(data , model , cgenes , cutoff , max_outliers , sample_sorter , csample)
+    data1, summary_data, targets, samples = AUTOqPCR.process_data(data , model , cgenes , cutoff , max_outliers , sample_sorter , csample)
+    # , sorter
 
     # taking lists of samples, targets and groups in the order user want to plot
     otargets = request.form['otargets'].split()
@@ -91,22 +91,11 @@ def transform_view():
         anova_output = anova_dfs.to_csv(index=False)
         posthoc_output = posthoc_dfs.to_csv(index=False)
 
-    # # online plotly plots
-    # data_list, layout = plot_by_targets(summary_data, model, targets, samples)
-    # for d in data_list:
-    #     fig = go.Figure(data=d , layout=layout)
-    #     fig.update_xaxes(showline=True , linewidth=2 , linecolor='black' , showgrid=False)
-    #     fig.update_yaxes(showline=True , linewidth=2 , linecolor='black' , showgrid=False)
-    #     fig.show()
-    #
-    # if qty is not None:
-    #     data_list1, layout = plot_by_groups(data1, model, ogroups, targets)
-    #     for d in data_list1:
-    #         fig = go.Figure(data=d, layout=layout)
-    #         fig.update_layout(height=600 , width=400 , title_text=t)
-    #         fig.update_xaxes(showline=True , linewidth=2 , linecolor='black' , showgrid=False)
-    #         fig.update_yaxes(showline=True , linewidth=2 , linecolor='black' , showgrid=False)
-    #         fig.show()
+    # online plotly plots
+    # if sorter is not None:
+    #     plots = plot.plot_by_targets(summary_data, model, targets, sorter)
+    # else:
+    plots = plot.plot_by_targets(summary_data , model , targets , samples)
 
     # making summary data csv
     output = summary_data.to_csv()
@@ -119,7 +108,11 @@ def transform_view():
             myzip.writestr(posthoc+'_result.csv' , posthoc_output)
         myzip.writestr('clean_data.csv' , clean_output)
         myzip.writestr('summary_data.csv', output)
-        # myzip.write('image.png', image_bytes)
+        for i in range(len(plots)):
+            buf = io.BytesIO()
+            plots[i].savefig(buf)
+            image_name = 'image {}.jpg'.format(i+1)
+            myzip.writestr(image_name, buf.getvalue())
         myzip.close()
 
     response = make_response(outfile.getvalue())
