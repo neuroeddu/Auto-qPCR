@@ -111,7 +111,7 @@ def transform_view():
         for i in range(len(plots)):
             buf = io.BytesIO()
             plots[i].savefig(buf)
-            image_name = 'image {}.jpg'.format(i+1)
+            image_name = 'image {}.png'.format(i+1)
             myzip.writestr(image_name, buf.getvalue())
         myzip.close()
 
