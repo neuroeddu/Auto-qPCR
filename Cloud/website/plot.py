@@ -41,7 +41,7 @@ def plot_by_targets(dataframe, model, targets, samples):
             plot = plt.figure(figsize=(20, 20))
             sample = list(dataframe.loc[item , 'rq']['mean'])
             x = np.arange(len(sample))
-            plt.bar([i for i in x] , sample , yerr=list(dataframe.loc[item, 'NormSEM']['mean']), align='center',
+            plt.bar([i for i in x] , sample , yerr=list(dataframe.loc[item, 'rqSEM']['mean']), align='center',
                    error_kw=dict(lw=0.9, capsize=2, capthick=0.9), width=0.75, label=item)
 
             plt.xlabel(item , fontweight='bold')
@@ -55,8 +55,9 @@ def plot_by_targets(dataframe, model, targets, samples):
             plot = plt.figure(figsize=(20, 20))
             target = list(dataframe.loc[(slice(None), item) , 'rq']['mean'])
             x = np.arange(len(target))
-            plt.bar([i for i in x] , target , yerr=list(dataframe.loc[item, 'rqSEM']['mean']), align='center',
-                   error_kw=dict(lw=0.9, capsize=2, capthick=0.9), width=0.75 , label=item)
+            plt.bar([i for i in x] , target , yerr=list(dataframe.loc[(slice(None), item), 'rqSEM']['mean']),
+                    align='center', error_kw=dict(lw=0.9, capsize=2, capthick=0.9), width=0.75 , label=item)
+
             plt.xlabel(item , fontweight='bold')
             plt.xticks([i for i in range(len(targets))] , targets , rotation='vertical' , fontsize='20')
             plt.legend(fontsize='20')

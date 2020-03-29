@@ -54,6 +54,7 @@ def transform_view():
 
         # print(filedata)
         data = data.append(filedata , ignore_index=True , sort=True)
+        data['filename'] = item.filename
         #stream.seek(0)
 
     model = request.form['option']
@@ -69,7 +70,6 @@ def transform_view():
     posthoc = request.form['option3']
 
     data1, summary_data, targets, samples = AUTOqPCR.process_data(data , model , cgenes , cutoff , max_outliers , sample_sorter , csample)
-    # , sorter
 
     # taking lists of samples, targets and groups in the order user want to plot
     otargets = request.form['otargets'].split()

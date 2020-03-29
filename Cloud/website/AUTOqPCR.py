@@ -45,13 +45,13 @@ def process_data(data , model , cgenes , cutoff , max_outliers , sample_sorter=N
 
     elif model == 'relative':
         data = cleanup_outliers(data , "CT" , cutoff , max_outliers)
-        data, data_summary, targets, samples  = relative.process(data)
+        data, data_summary, targets, samples = relative.process(data)
 
-    elif model == 'stability':
+    else:
         data = cleanup_outliers(data , "CT" , cutoff , max_outliers)
         data, data_summary, targets, samples = stability.process(data , csample)
 
-    return data, data_summary, targets, samples #, sorter
+    return data, data_summary, targets, samples # , sorter
 
 
 def cleanup_outliers(d , feature , cutoff , max_outliers):
