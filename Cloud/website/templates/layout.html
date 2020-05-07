@@ -183,7 +183,7 @@
                     <br>
                     <br>
                     <div class="input-container">
-                        Enter endogenous control gene(s): (seperate genes with spaces)
+                        Enter endogenous control gene/chromosome(s): (seperate genes/chromosomes with spaces)
                         <div class="help-tip">
                             <p>Endogenous control genes: These are the housekeeping or reference
                             genes you wish to normalize agains. Actin or GADPH are common options.
@@ -217,7 +217,15 @@
                         <br>
                     </div>
                     <div class="input-container">
-                        Enter sample order: (seperate genes with commas)
+                        Enter target order: (seperate target names with spaces)
+                        <div class="help-tip">
+                            <p> Enter the order you would like genes/chromosomes to appear on the plots.</p>
+                        </div>
+                        <br>
+                        <input type="text" name="target_sorter" autocomplete="off">
+                    </div>
+                    <div class="input-container">
+                        Enter sample order: (seperate sample names with spaces)
                         <div class="help-tip">
                             <p> Enter the order you would like samples to appear on the plots.</p>
                         </div>
@@ -284,10 +292,6 @@
             <tr>
                 <td>
                     <b> Plot: </b>
-                    <br>
-                    Input target names in the order you want to appear on the plots (separate with spaces):
-                    <br>
-                    <input type="text" name="otargets" autocomplete="off">
                     <br>
                 </td>
             </tr>

@@ -3,21 +3,20 @@ import AUTOqPCR
 import matplotlib.pyplot as plt
 import numpy as np
 
-
-def main():
-    data = pd.read_csv('Gilles_data_combined.csv',
-                                   skip_blank_lines=True ,
-                                   skipinitialspace=True ,
-                                   engine='python' ,
-                                   encoding="utf-8" ,
-                                   header=46)
-    data1, summary_data, targets, samples = AUTOqPCR.process_data(data, 'absolute', 'GAPDH ACTB', 0.3, 0.5)
-    # targets = ['ACTB', 'GAPDH', 'GRIA1', 'GRIN1', 'KCNJ6', 'SYP']
-    # print(df.loc['ACTB', 'NormQuant']['mean'])
-    # samples = ['AiW001-2', 'AJC001-5', '522-266-2', 'AJG001C4', 'NCRM1']
-    plots = plot_by_targets(summary_data, 'absolute', targets, samples)
-    for i in range(len(plots)):
-        plots[i].savefig('image {}.jpg'.format(i+1))
+# def main():
+#     data = pd.read_csv('Gilles_data_combined.csv',
+#                                    skip_blank_lines=True ,
+#                                    skipinitialspace=True ,
+#                                    engine='python' ,
+#                                    encoding="utf-8" ,
+#                                    header=46)
+#     data1, summary_data, targets, samples = AUTOqPCR.process_data(data, 'absolute', 'GAPDH ACTB', 0.3, 0.5)
+#     # targets = ['ACTB', 'GAPDH', 'GRIA1', 'GRIN1', 'KCNJ6', 'SYP']
+#     # print(df.loc['ACTB', 'NormQuant']['mean'])
+#     # samples = ['AiW001-2', 'AJC001-5', '522-266-2', 'AJG001C4', 'NCRM1']
+#     plots = plot_by_targets(summary_data, 'absolute', targets, samples)
+#     for i in range(len(plots)):
+#         plots[i].savefig('image {}.jpg'.format(i+1))
 
 
 def plot_by_targets(dataframe, model, targets, samples):
