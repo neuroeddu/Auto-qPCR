@@ -76,8 +76,10 @@ def transform_view():
 			gcol = data[request.form['gcol']]
 			data1['Group'] = gcol
 		else:
-			groups = request.form['glist'].split()
+			groups = request.form['glist'].split(',')
 			data1 = statistics.add_groups(data1, groups)
+		print(data1)
+		group_plot = plot.plot_by_groups(data1, model, groups)
 
 		anova_dfs , posthoc_dfs = statistics.stats(model, qty , data1, targets , rm , posthoc)
 		print(anova_dfs)
@@ -89,7 +91,7 @@ def transform_view():
 	# if sorter is not None:
 	#     plots = plot.plot_by_targets(summary_data, model, targets, sorter)
 	# else:
-	plots = plot.plot_by_targets(summary_data , model , targets , samples)
+	plots = plot.plots(summary_data , model , targets , samples)
 
 	# making summary data csv
 	output = summary_data.to_csv()
@@ -100,6 +102,10 @@ def transform_view():
 		if qty is not None:
 			myzip.writestr('anova_result.csv', anova_output)
 			myzip.writestr(posthoc+'_result.csv' , posthoc_output)
+			buf = io.BytesIO()
+			group_plot.savefig(buf)
+			image_name = 'Plot_by_groups.png'
+			myzip.writestr(image_name, buf.getvalue())
 		myzip.writestr('clean_data.csv' , clean_output)
 		myzip.writestr('summary_data.csv', output)
 		for i in range(len(plots)):
