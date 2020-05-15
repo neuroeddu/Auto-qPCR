@@ -5,36 +5,40 @@ from pingouin import pairwise_ttests, multicomp, ttest
 
 def stats(model, quantity, data, targets, rm, posthoc):
 	if model == 'absolute':
-		qty = 'NormQuant'
+		data = data.drop(['NormQuant'], axis=1)
 		mean = 'NormMean'
 	elif model == 'relative':
-		qty = 'rq'
-		mean = 'rqMean'
+		mean = 'rq'
 
 	# prepare data from intermediate dataframe
 	data = data[data['Outliers'].eq(False)]
-	data = data.drop([qty], axis=1)
 	data = data.drop_duplicates(keep='first')
 
 	# write to csv
 	if quantity == 2:
 		# T-Test between 2 groups
+		stats_dfs = pandas.DataFrame()
+		posthoc_dfs = pandas.DataFrame()
 		group = data['Group']
-		group = group.drop_duplicates(keep='first')
+		group = group.drop_duplicates(keep='first').values.tolist()
 		for item in targets:
 			df = data[data['Target Name'].eq(item)]
 			group1 = df[df['Group'].eq(group[0])][mean]
 			group2 = df[df['Group'].eq(group[1])][mean]
-			ttest(group1, group2, paired=bool(rm))
+			t_test = ttest(group1, group2, paired=bool(rm))
+			if stats_dfs is None:
+				stats_dfs = t_test
+			else:
+				stats_dfs = stats_dfs.append(t_test, ignore_index=True)
 	elif quantity >= 3:
 		# ANOVA test
-		anova_dfs = pandas.DataFrame()
+		stats_dfs = pandas.DataFrame()
 		posthoc_dfs = pandas.DataFrame()
 		if rm == 'True':
 			# repeated measure anova
 			aov = pandas.DataFrame(['Repeated measure anova'])
 			aov = aov.append(pg.rm_anova(dv=mean, within='Group', subject='Target Name', data=data))
-			anova_dfs = aov
+			stats_dfs = aov
 			# ph = pandas.DataFrame([posthoc])
 			# ph = ph.append(posthocs_test(posthoc, data=data))
 			# posthoc_dfs = ph
@@ -46,11 +50,11 @@ def stats(model, quantity, data, targets, rm, posthoc):
 				pvals.append(aov['p-unc'][0])
 				aov2 = pandas.DataFrame(['anova_'+item])
 				aov = aov2.append(aov)
-				if anova_dfs is None:
-					anova_dfs = aov
+				if stats_dfs is None:
+					stats_dfs = aov
 				else:
-					anova_dfs = anova_dfs.append(aov, ignore_index=True)
-				print(anova_dfs)
+					stats_dfs = stats_dfs.append(aov, ignore_index=True)
+				print(stats_dfs)
 				print("")
 				if posthoc == 'ttest_fdr':
 					ph = pandas.DataFrame(['T-Test+FDR_'+item])
@@ -73,7 +77,7 @@ def stats(model, quantity, data, targets, rm, posthoc):
 				posthoc_dfs = ph
 				print(ph)
 
-	return anova_dfs, posthoc_dfs
+	return stats_dfs, posthoc_dfs
 
 
 # Extract groups from sample name

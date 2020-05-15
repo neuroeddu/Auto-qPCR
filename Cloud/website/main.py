@@ -78,19 +78,17 @@ def transform_view():
 		else:
 			groups = request.form['glist'].split(',')
 			data1 = statistics.add_groups(data1, groups)
-		print(data1)
-		group_plot = plot.plot_by_groups(data1, model, groups)
+		# print(data1)
+		group_plot = plot.plot_by_groups(data1, model, targets, groups)
 
-		anova_dfs , posthoc_dfs = statistics.stats(model, qty , data1, targets , rm , posthoc)
-		print(anova_dfs)
+		stats_dfs , posthoc_dfs = statistics.stats(model, qty , data1, targets , rm , posthoc)
+		print(stats_dfs)
 		print(posthoc_dfs)
-		anova_output = anova_dfs.to_csv(index=False)
+		stats_output = stats_dfs.to_csv(index=False)
 		posthoc_output = posthoc_dfs.to_csv(index=False)
 
-	# online plotly plots
-	# if sorter is not None:
-	#     plots = plot.plot_by_targets(summary_data, model, targets, sorter)
-	# else:
+	# remove endogenous controls from plots
+	targets = [g for g in targets if g not in cgenes.split(',')]
 	plots = plot.plots(summary_data , model , targets , samples)
 
 	# making summary data csv
@@ -100,8 +98,11 @@ def transform_view():
 	outfile = io.BytesIO()
 	with ZipFile(outfile, 'w') as myzip:
 		if qty is not None:
-			myzip.writestr('anova_result.csv', anova_output)
-			myzip.writestr(posthoc+'_result.csv' , posthoc_output)
+			if qty == 2:
+				myzip.writestr('ttest_result.csv', stats_output)
+			else:
+				myzip.writestr('anova_result.csv' , stats_output)
+				myzip.writestr(posthoc+'_result.csv' , posthoc_output)
 			buf = io.BytesIO()
 			group_plot.savefig(buf)
 			image_name = 'Plot_by_groups.png'

@@ -5,12 +5,10 @@ import numpy as np
 
 
 def plots(dataframe, model, targets, samples):
-
     plots=[]
     # Absolute: bar plots for each gene and a grouped bar plot by genes
     if model == 'absolute':
         grouped_plot = plt.figure(figsize=(40, 20))
-        # barwidth of grouped plot
         barwidth = 0.75
         counter = 0
         for item in targets:
@@ -35,38 +33,23 @@ def plots(dataframe, model, targets, samples):
         plt.legend(fontsize='20')
         plt.close(grouped_plot)
         plots.append(grouped_plot)
-    # Genomic stability: grouped by chromosomes
+
+    # Genomic stability: grouped by chromosomes and by cell lines
     elif model == 'stability2':
-        plot = plt.figure(figsize=(40, 20))
-        # barwidth of grouped plot
-        barwidth = 0.75
-        counter = 0
-        for item in targets:
-            sample = list(dataframe.loc[item , 'rq']['mean'])
-            x = np.arange(len(sample))*len(targets) + barwidth*counter
-            plt.bar(x , sample , yerr=list(dataframe.loc[item, 'rqSEM']['mean']), align='center',
-                   error_kw=dict(lw=0.9, capsize=2, capthick=0.9), width=barwidth, edgecolor='white', label=item)
-            counter += 1
-        plt.xticks([i*len(targets) + barwidth*counter/2 for i in range(len(samples))], samples, rotation='vertical', fontsize='20')
-        plt.xlabel('Targets', fontsize='20', fontweight='bold')
-        plt.legend(fontsize='20')
-        plt.close()
-        plots.append(plot)
-    # relative deltaCT and delta delta CT: grouped by genes and cell lines
-    else:
-        # plot grouped by genes
+        # plot grouped by chromosomes
         plot_by_genes = plt.figure(figsize=(40 , 20))
         barwidth = 0.75
         counter = 0
         for item in targets:
             sample = list(dataframe.loc[item , 'rq']['mean'])
-            x = np.arange(len(sample))*len(targets) + barwidth*counter
-            plt.bar(x , sample , yerr=list(dataframe.loc[item, 'rqSEM']['mean']), align='center',
-                   error_kw=dict(lw=0.9, capsize=2, capthick=0.9), width=barwidth, edgecolor='white', label=item)
+            x = np.arange(len(sample)) * len(targets) + barwidth * counter
+            plt.bar(x , sample , yerr=list(dataframe.loc[item , 'rqSEM']['mean']) , align='center' ,
+                    error_kw=dict(lw=0.9 , capsize=2 , capthick=0.9) , width=barwidth , edgecolor='white' , label=item)
             counter += 1
 
-        plt.xticks([i*len(targets) + barwidth*counter/2 for i in range(len(samples))], samples, rotation='vertical', fontsize='20')
-        plt.xlabel('Targets',fontsize='20', fontweight='bold')
+        plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))] , samples ,
+                   rotation='vertical' , fontsize='20')
+        plt.xlabel('Targets' , fontsize='20' , fontweight='bold')
         plt.legend(fontsize='20')
         plt.close()
         plots.append(plot_by_genes)
@@ -75,56 +58,98 @@ def plots(dataframe, model, targets, samples):
         barwidth = 0.75
         counter = 0
         for item in samples:
-            target = list(dataframe.loc[(slice(None), item) , 'rq']['mean'])
-            x = np.arange(len(target))*len(samples) + barwidth*counter
-            plt.bar(x , target , yerr=list(dataframe.loc[(slice(None), item), 'rqSEM']['mean']), align='center',
-                    error_kw=dict(lw=0.9, capsize=2, capthick=0.9), width=barwidth, edgecolor='white', label=item)
+            target = list(dataframe.loc[(slice(None) , item) , 'rq']['mean'])
+            x = np.arange(len(target)) * len(samples) + barwidth * counter
+            plt.bar(x , target , yerr=list(dataframe.loc[(slice(None) , item) , 'rqSEM']['mean']) , align='center' ,
+                    error_kw=dict(lw=0.9 , capsize=2 , capthick=0.9) , width=barwidth , edgecolor='white' , label=item)
             counter += 1
 
-        plt.xticks([i*len(samples) + barwidth*counter/2 for i in range(len(targets))], targets, rotation='vertical', fontsize='20')
-        plt.xlabel('Samples', fontsize='20', fontweight='bold')
+        plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))] , targets ,
+                   rotation='vertical' , fontsize='20')
+        plt.xlabel('Samples' , fontsize='20' , fontweight='bold')
         plt.legend(fontsize='20')
         plt.close()
         plots.append(plot_by_samples)
 
+    # relative deltaCT and delta delta CT: grouped by genes
+    else:
+        grouped_plot = plt.figure(figsize=(40 , 20))
+        barwidth = 0.75
+        counter = 0
+        for item in targets:
+            plot = plt.figure(figsize=(20 , 20))
+            sample = list(dataframe.loc[item , 'rq']['mean'])
+            x = np.arange(len(sample))
+            x2 = x * len(targets) + barwidth * counter
+            plt.bar(x , sample , yerr=list(dataframe.loc[item , 'rqSEM']['mean']) , align='center' ,
+                    error_kw=dict(lw=0.9 , capsize=2 , capthick=0.9) , width=barwidth , edgecolor='white' , label=item)
+            plt.xlabel(item , fontweight='bold')
+            plt.xticks([i for i in range(len(samples))] , samples , rotation='vertical' , fontsize='20')
+            plt.legend(fontsize='20')
+            plt.close(plot)
+            plots.append(plot)
+            # grouped plot
+            plt.bar(x2 , sample , yerr=list(dataframe.loc[item , 'rqSEM']['mean']) , align='center' ,
+                    error_kw=dict(lw=0.9 , capsize=2 , capthick=0.9) , width=barwidth , edgecolor='white' , label=item)
+            counter += 1
+        plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))] , samples ,
+                   rotation='vertical' , fontsize='20')
+        plt.xlabel('Targets' , fontsize='20' , fontweight='bold')
+        plt.legend(fontsize='20')
+        plt.close()
+        plots.append(grouped_plot)
+
     return plots
 
 
-# If user input groups in the stats section
-def plot_by_groups(df, model, groups=None):
+# plot by user defined groups
+def plot_by_groups(df, model, targets, groups=None):
     if groups is None:
         groups = df['Group'].drop_duplicates(keep='first').values.tolist()
     else:
         groups=groups
-    targets = df['Target Name'].drop_duplicates(keep='first').values.tolist()
 
     if model == 'absolute':
-
-        fig, ax = plt.subplots()
-        width = 0
+        barwidth = 0.75
+        counter = 0
+        fig = plt.figure(figsize=(20,20))
         for t in targets:
             y = []
             st_err = []
-            x = np.arange(len(targets))
+            x = np.arange(len(groups))*len(targets)+barwidth*counter
             for g in groups:
                 sample = df.loc[(df['Target Name'] == t) & (df['Group'] == g)]
                 y.append(sample['NormMean'].mean())
                 st_err.append(sample['NormMean'].sem())
+            plt.bar(x, y, yerr=st_err, error_kw=dict(lw=0.9 , capsize=2 , capthick=0.9), align='center', width=barwidth, edgecolor='white', label=t)
 
-                ax.bar([i + width for i in x] , y , yerr=st_err, align='center')
+            counter += 1
+        plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))] , groups ,
+                   rotation='vertical' , fontsize='20')
+        plt.xlabel('Targets' , fontsize='20' , fontweight='bold')
+        plt.legend(fontsize='20')
+        plt.close()
+
     else:
-        fig, ax = plt.subplots()
-        width = 0
+        barwidth = 0.75
+        counter = 0
+        fig = plt.figure(figsize=(20,20))
         for t in targets:
             y = []
             st_err = []
-            x = np.arange(len(targets))
+            x = np.arange(len(groups))*len(targets)+barwidth*counter
             for g in groups:
                 sample = df.loc[(df['Target Name'] == t) & (df['Group'] == g)]
-                y.append(sample['rqMean'].mean())
-                st_err.append(sample['rqMean'].sem())
+                y.append(sample['rq'].mean())
+                st_err.append(sample['rq'].sem())
+            plt.bar(x , y , yerr=st_err , error_kw=dict(lw=0.9 , capsize=2 , capthick=0.9), align='center', width=barwidth, edgecolor='white', label=t)
 
-                ax.bar([i + width for i in x] , y , yerr=st_err , align='center')
+            counter += 1
+        plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))] , groups ,
+                   rotation='vertical' , fontsize='20')
+        plt.xlabel('Targets' , fontsize='20' , fontweight='bold')
+        plt.legend(fontsize='20')
+        plt.close()
 
     return fig
 
