@@ -109,10 +109,12 @@ def plot_by_groups(df, model, targets, groups=None):
     else:
         groups=groups
 
+    plots = []
     if model == 'absolute':
         barwidth = 0.75
+        # grouped by groups on the x-axis
         counter = 0
-        fig = plt.figure(figsize=(20,20))
+        plot_by_group = plt.figure(figsize=(20,20))
         for t in targets:
             y = []
             st_err = []
@@ -126,14 +128,35 @@ def plot_by_groups(df, model, targets, groups=None):
             counter += 1
         plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))] , groups ,
                    rotation='vertical' , fontsize='20')
+        plt.xlabel('Groups' , fontsize='20' , fontweight='bold')
+        plt.legend(fontsize='20')
+        plt.close()
+        plots.append(plot_by_group)
+        # grouped by targets on the x-axis
+        counter = 0
+        plot_by_target = plt.figure(figsize=(20 , 20))
+        for g in groups:
+            y = []
+            st_err = []
+            x = np.arange(len(targets))*len(groups)+barwidth*counter
+            for t in targets:
+                sample = df.loc[(df['Target Name'] == t) & (df['Group'] == g)]
+                y.append(sample['NormMean'].mean())
+                st_err.append(sample['NormMean'].sem())
+            plt.bar(x, y, yerr=st_err, error_kw=dict(lw=0.9 , capsize=2 , capthick=0.9), align='center', width=barwidth, edgecolor='white', label=g)
+
+            counter += 1
+        plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))] , targets ,
+                   rotation='vertical' , fontsize='20')
         plt.xlabel('Targets' , fontsize='20' , fontweight='bold')
         plt.legend(fontsize='20')
         plt.close()
-
+        plots.append(plot_by_target)
     else:
         barwidth = 0.75
+        # grouped by groups on the x-axis
         counter = 0
-        fig = plt.figure(figsize=(20,20))
+        plot_by_group = plt.figure(figsize=(20,20))
         for t in targets:
             y = []
             st_err = []
@@ -147,11 +170,33 @@ def plot_by_groups(df, model, targets, groups=None):
             counter += 1
         plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))] , groups ,
                    rotation='vertical' , fontsize='20')
+        plt.xlabel('Groups' , fontsize='20' , fontweight='bold')
+        plt.legend(fontsize='20')
+        plt.close()
+        plots.append(plot_by_group)
+        # grouped by groups on the x-axis
+        counter = 0
+        plot_by_target = plt.figure(figsize=(20 , 20))
+        for g in groups:
+            y = []
+            st_err = []
+            x = np.arange(len(targets)) * len(groups) + barwidth * counter
+            for t in targets:
+                sample = df.loc[(df['Target Name'] == t) & (df['Group'] == g)]
+                y.append(sample['rq'].mean())
+                st_err.append(sample['rq'].sem())
+            plt.bar(x , y , yerr=st_err , error_kw=dict(lw=0.9 , capsize=2 , capthick=0.9) , align='center' ,
+                    width=barwidth , edgecolor='white' , label=g)
+
+            counter += 1
+        plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))] , targets ,
+                   rotation='vertical' , fontsize='20')
         plt.xlabel('Targets' , fontsize='20' , fontweight='bold')
         plt.legend(fontsize='20')
         plt.close()
+        plots.append(plot_by_target)
 
-    return fig
+    return plots
 
 
 if __name__=='__main__':

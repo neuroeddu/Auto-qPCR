@@ -70,6 +70,10 @@ def transform_view():
 
 	data1, summary_data, targets, samples = AUTOqPCR.process_data(data, model, cgenes, cutoff, max_outliers, target_sorter, sample_sorter, csample)
 
+	# remove endogenous controls from plots
+	targets = [g for g in targets if g not in cgenes.split(',')]
+	plots = plot.plots(summary_data , model , targets , samples)
+	
 	# making stats csv
 	if qty is not None:
 		if request.form['option4'] != 'False':
@@ -87,10 +91,6 @@ def transform_view():
 		stats_output = stats_dfs.to_csv(index=False)
 		posthoc_output = posthoc_dfs.to_csv(index=False)
 
-	# remove endogenous controls from plots
-	targets = [g for g in targets if g not in cgenes.split(',')]
-	plots = plot.plots(summary_data , model , targets , samples)
-
 	# making summary data csv
 	output = summary_data.to_csv()
 	clean_output = data1.to_csv()
@@ -104,10 +104,14 @@ def transform_view():
 				myzip.writestr('anova_result.csv' , stats_output)
 				myzip.writestr(posthoc+'_result.csv' , posthoc_output)
 			buf = io.BytesIO()
-			group_plot.savefig(buf)
+			group_plot[0].savefig(buf)
 			image_name = 'Plot_by_groups.png'
 			myzip.writestr(image_name, buf.getvalue())
-		myzip.writestr('clean_data.csv' , clean_output)
+			buf2 = io.BytesIO()
+			group_plot[1].savefig(buf2)
+			image_name2 = 'Plot_by_targets.png'
+			myzip.writestr(image_name2, buf2.getvalue())
+		myzip.writestr('clean_data.csv', clean_output)
 		myzip.writestr('summary_data.csv', output)
 		for i in range(len(plots)):
 			buf = io.BytesIO()
