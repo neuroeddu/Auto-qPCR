@@ -1,4 +1,4 @@
-#!/export02/data/GITHUB/Auto-qPCR/Cloud/website/virtual/bin/python3
+#!/home/rhalena/Desktop/GITHUB/Auto-qPCR/Cloud/website/virtual/bin/python2
 
 # -*- coding: utf-8 -*-
 import re

@@ -14,7 +14,7 @@
         top: -.2em;
         right: 0em;
         text-align: center;
-        background-color: #BCDBEA;
+        background-color: #3A1B8C;
         border-radius: 50%;
         width: 24px;
         height: 24px;
@@ -93,21 +93,21 @@
     }
 
     button {
-        background-color: #008CBA; /* Blue */
+        background-color: #55DDE6; /* Blue */
         border: none;
         color: white;
         padding: 15px 32px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 16px;
-        border-radius: 8px;
+        font-size: 20px;
+        border-radius: 12px;
         -webkit-transition-duration: 0.4s; /* Safari */
         transition-duration: 0.4s;
     }
 
     button:hover {
-        background-color: #005987;
+        background-color: #3A1B8C;
     }
 
     table {
@@ -121,7 +121,7 @@
         padding: 15px;
     }
     th {
-        background-color: #008CBA;
+        background-color: #3A1B8C;
 
     }
     </style>
@@ -143,14 +143,14 @@
                         <input id="file-input" type="file" name="file[]" accept=".csv" multiple/>
                         <div class="help-tip" id="file-helptip">
                             <p>Upload your data: Nativage to your folder of raw data csv files. These should be the output files
-                                from you PCR machine.
-                                If you don't have a csv use excel to save a csv file.
-                                You can included multiple spread sheets.  The data will
-                                be combined into a single analysis. For separate analysis
-                                you must separately upload and analyze the data. Be sure to
+                                from you PCR machine. Multiple spread sheets can be included. The data will
+                                be combined into a single analysis. Be sure to
                                 inclue the control genes you want to normalize. </p>    <!--text inside question mark here-->
                         </div>
                     </div>
+                    <br>
+                        <div> <p>  </p>
+                        </div>
                 </td>
             </tr>
             <tr>
@@ -160,7 +160,7 @@
                         <b> Model </b>
                         <br>
                         <div class="help-tip" id="model-helptip">
-                            <p>Choose your model based on the experimental design used in your Q-PCR. See the model descriptions below.</p>
+                            <p>Choose your model based on the experimental design used in your Q-PCR. </p>
                         </div>
                         <br>
                         <input type="radio" name="option" value="absolute" checked>Absolute</input>
@@ -171,7 +171,7 @@
                         <br>
                         <input type="radio" name="option" value="stability2">Stability</input>
                         <br>
-                        <div> <p> Have message appear here </p>
+                        <div> <p>  </p>
                         </div>
                     </div>
                 </td>
@@ -185,11 +185,8 @@
                     <div class="input-container">
                         Enter endogenous control gene/chromosome(s): (seperate genes/chromosomes with commas)
                         <div class="help-tip">
-                            <p>Endogenous control genes: These are the housekeeping or reference
-                            genes you wish to normalize agains. Actin or GADPH are common options.
-                            You must enter the gene names exactly as they appear in your data spread sheet.
-                            You many enter multiple control genes.  Separate the genes with commas.
-                            The average of the techinical replicates will be used to calculate expression values.
+                            <p> Gene or region to to normalize with (Actin, GAPDH, CHR4, B2M).
+                                Must be entered identically to the input spreadsheet.
                             </p>
                         </div>
                         <br>
@@ -198,9 +195,9 @@
                     <div class="input-container">
                         Cut-Off:
                         <div class="help-tip">
-                            <p> Techical replicate for a given sample will be removed if the standard deviation (SD)
-                                of those replicates is about 0.3 (or the entered value).
-                                Replicates will be removed until the SD is below the cuttoff.</p>
+                            <p> Techical replicate for a given sample will be removed if the SD
+                                of a given sample is above the threshold (default 0.3).
+                                </p>
                         </div>
                         <br>
                         <input type="text" name="cutoff" value="0.3" min="0" max="1" step="any" autocomplete="off">
@@ -209,8 +206,8 @@
                     <div class="input-container">
                        Max Outliers:
                         <div class="help-tip">
-                            <p> How many technical replicates can be removed to reach the standard deviation cut off about?
-                                The default of 0.5 means that in 3  technical replicates only one can be removed. </p>
+                            <p> Max proportion of replicates removed to reach the SD cut off.
+                                Default of 0.5 means that in 3 replicates only one can be removed. </p>
                         </div>
                         <br>
                         <input type="number" name="max_outliers" value="0.5" autocomplete="off">
@@ -219,7 +216,8 @@
                     <div class="input-container">
                         Enter target order: (seperate target names with commas)
                         <div class="help-tip">
-                            <p> Enter the order you would like genes/chromosomes to appear on the plots.</p>
+                            <p> Enter the order you would like genes/chromosomes to appear on the plots./
+                            Use the exact names. </p>
                         </div>
                         <br>
                         <input type="text" name="target_sorter" autocomplete="off">
@@ -227,7 +225,8 @@
                     <div class="input-container">
                         Enter sample order: (seperate sample names with commas)
                         <div class="help-tip">
-                            <p> Enter the order you would like samples to appear on the plots.</p>
+                            <p> Enter the order you would like samples to appear on the plots./
+                            Use exact names.</p>
                         </div>
                         <br>
                         <input type="text" name="sample_sorter" autocomplete="off">
@@ -241,7 +240,7 @@
                         <br>
                         <input type="text" name="csample" autocomplete="off">
                         <br>
-                        <div> <p> Another error message will appear here... Can we print a string variable? </p>
+                        <div> <p>  </p>
                         </div>
                     </div>
                 </td>
@@ -253,7 +252,8 @@
                     <br>
                     How many groups do you have?
                     <div class="help-tip">
-                            <p>Groups can be either different genes, time points, animals, treatments or any conditions you wish to compare.
+                            <p>Groups can be different genes, time points, animals, treatments or any conditions
+                                you wish to compare. Must be entered as they appear in the spreadsheet.
                             </p>
                     </div>
                     <br>
@@ -276,6 +276,13 @@
                     <input type="radio" name="option2" value="False" checked>No</input>
                     <input type="radio" name="option2" value="True">Yes</input>
                     <br>
+                    <br>
+                    <br>
+                    Is your data normally distributed? If not then a non-parametric test will be selected.
+                    <br>
+                    <input type="radio" name="option2" value="False" checked>No</input>
+                    <input type="radio" name="option2" value="True">Yes</input>
+                    <br>
                 </td>
             </tr>
             <tr>
@@ -291,7 +298,7 @@
             </tr>
             <tr>
                 <td>
-                    <b> Plot: </b>
+                    <b> Plot will be automatically generated. </b>
                     <br>
                 </td>
             </tr>

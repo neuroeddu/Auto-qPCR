@@ -1,4 +1,4 @@
-#!/export02/data/GITHUB/Auto-qPCR/Cloud/website alpha/virtual/bin/python
+#!/home/rhalena/Desktop/GITHUB/Auto-qPCR/Cloud/website/virtual/bin/python
 
 import sys
 import getopt
