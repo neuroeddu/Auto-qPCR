@@ -1,0 +1,2 @@
+gcloud app deploy --project auto-q-pcr
+
