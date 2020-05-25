@@ -126,7 +126,6 @@
     }
     </style>
 </head>
-
 <body>
     <table border = 1 width = 50%>
         <tbody>
@@ -137,6 +136,14 @@
             <tr>
                 <td >
                     <div class="input-container">
+                        <br>
+                        <div class="flashes">
+                            {% for message in get_flashed_messages()%}
+                            {{ message }}
+                            {% endfor %}
+                        </div>
+                        <br>
+                        <br>
                         <b> Upload your data (.csv): </b>
                         <br>
                         <br>
