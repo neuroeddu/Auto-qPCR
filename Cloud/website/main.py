@@ -4,6 +4,7 @@ import pandas as pd
 import AUTOqPCR
 import plot
 import statistics
+import re
 from zipfile import ZipFile
 
 
@@ -66,13 +67,12 @@ def transform_view():
 	sample_sorter = request.form['sample_sorter']
 	qty = request.form.get('quantity', type=int)
 	rm = request.form['option2']
+	dstr = request.form['option5']
 	posthoc = request.form['option3']
 
 	data1, summary_data, targets, samples = AUTOqPCR.process_data(data, model, cgenes, cutoff, max_outliers, target_sorter, sample_sorter, csample)
 
-	# remove endogenous controls from plots
-	targets = [g for g in targets if g not in cgenes.split(',')]
-	plots = plot.plots(summary_data , model , targets , samples)
+	plots = plot.plots(summary_data , model , targets , samples, cgenes)
 	
 	# making stats csv
 	if qty is not None:
@@ -85,7 +85,7 @@ def transform_view():
 		# print(data1)
 		group_plot = plot.plot_by_groups(data1, model, targets, groups)
 
-		stats_dfs , posthoc_dfs = statistics.stats(model, qty , data1, targets , rm , posthoc)
+		stats_dfs , posthoc_dfs = statistics.stats(model, qty, data1, targets, rm, dstr, posthoc)
 		print(stats_dfs)
 		print(posthoc_dfs)
 		stats_output = stats_dfs.to_csv(index=False)
@@ -94,6 +94,9 @@ def transform_view():
 	# making summary data csv
 	output = summary_data.to_csv()
 	clean_output = data1.to_csv()
+
+	# remove cgenes from targets
+	targets2 = [g for g in targets if g.lower() not in cgenes.lower().split(',')]
 
 	outfile = io.BytesIO()
 	with ZipFile(outfile, 'w') as myzip:
@@ -107,22 +110,36 @@ def transform_view():
 			group_plot[0].savefig(buf)
 			image_name = 'Plot_by_groups.png'
 			myzip.writestr(image_name, buf.getvalue())
-			buf2 = io.BytesIO()
-			group_plot[1].savefig(buf2)
+			buf.close()
+			buf = io.BytesIO()
+			group_plot[1].savefig(buf)
 			image_name2 = 'Plot_by_targets.png'
-			myzip.writestr(image_name2, buf2.getvalue())
+			myzip.writestr(image_name2, buf.getvalue())
+			buf.close()
 		myzip.writestr('clean_data.csv', clean_output)
 		myzip.writestr('summary_data.csv', output)
-		for i in range(len(plots)):
+		for i in range(len(plots)-2):
 			buf = io.BytesIO()
 			plots[i].savefig(buf)
-			image_name = 'image {}.png'.format(i+1)
+			if model != 'stability2':
+				image_name = targets2[i]+'.png'
 			myzip.writestr(image_name, buf.getvalue())
+		buf = io.BytesIO()
+		plots[len(plots) - 2].savefig(buf)
+		image_name = 'All_Genes.png'
+		myzip.writestr(image_name , buf.getvalue())
+		buf.close()
+		buf = io.BytesIO()
+		plots[len(plots) - 1].savefig(buf)
+		image_name = 'Sample_Groups.png'
+		myzip.writestr(image_name , buf.getvalue())
+		buf.close()
 		myzip.close()
 
 	response = make_response(outfile.getvalue())
 	response.headers['Content-Type'] = 'application/actet-stream'
 	response.headers['Content-Disposition'] = 'attachment; filename=outputs_'+model+'.zip'
+	outfile.close()
 
 	return response
 

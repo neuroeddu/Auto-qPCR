@@ -1,14 +1,17 @@
 import pandas
 import pingouin as pg
 from pingouin import pairwise_ttests, multicomp, ttest
+import scipy.stats
 
 
-def stats(model, quantity, data, targets, rm, posthoc):
+def stats(model, quantity, data, targets, rm, dstr, posthoc):
+
 	if model == 'absolute':
 		data = data.drop(['NormQuant'], axis=1)
 		mean = 'NormMean'
 	elif model == 'relative':
-		mean = 'rq'
+		data = data.drop(['rq'] , axis=1)
+		mean = 'rqMean'
 
 	# prepare data from intermediate dataframe
 	data = data[data['Outliers'].eq(False)]
