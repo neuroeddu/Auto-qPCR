@@ -31,17 +31,18 @@ def process_data(data , model , cgenes , cutoff , max_outliers , target_sorter=N
 	targets = data['Target Name'].drop_duplicates(keep='first').values
 	if target_sorter != '':
 		targets = [sorter.strip() for sorter in target_sorter.split(',')]
+		# remove nan from list
+	targets = [t for t in targets if type(t) is not float]
 	# Add sorter to dataframe to order Target Names in output files
-	print(targets)
 	sorter_index = dict(zip([g.lower() for g in targets], range(len(targets))))
-	print(sorter_index)
 	data['Target Order'] = data['Target Name'].str.lower().map(sorter_index)
 	data.sort_values(['Target Order'], inplace=True)
 
 	# define sorter for sample name order based on list
 	if sample_sorter != '':
 		sorter = [sorter.strip() for sorter in sample_sorter.split(',')]
-		print(sorter)
+		# remove nan from list
+		sorter = [s for s in sorter if type(s) is not float]
 		# Add sorter to dataframe to order Sample Names in output files
 		sorter_index = dict(zip([s.lower() for s in sorter], range(len(sorter))))
 		data['Sample Name Key'] = data['Sample Name'].str.extract(re.compile('('+'|'.join(sorter)+')', re.IGNORECASE), expand=False).fillna('')

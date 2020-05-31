@@ -27,7 +27,7 @@ def process(data , csample):
 			data.loc[j , 'deltaCT'] = data.loc[j , 'CT'] - row[1]
 
 	# Mark the Control Samples
-	data['ControlSample'] = data['Sample Name'].apply(lambda x: True if x in csample else False)
+	data['ControlSample'] = data['Sample Name'].apply(lambda x: True if x.lower() in csample.lower() else False)
 	filter_sample = (data['ControlSample'].eq(True))
 	data_sampled = data[filter_sample].groupby(['Target Name']).agg({('deltaCT'): 'mean'})
 
@@ -59,11 +59,12 @@ def process(data , csample):
 			data.at[i_row , 'rqSD'] = mean_sem_result[data.at[i_row , 'Target Name']][data.at[i_row , 'Sample Name']][1]
 			data.at[i_row , 'rqSEM'] = mean_sem_result[data.at[i_row , 'Target Name']][data.at[i_row , 'Sample Name']][
 				2]
-	print(data['rq'])
+	# indel column: threshold=0.3
+	data['Indel'] = data['rq'].apply(lambda x: 'Insertion' if x > 1.3 else ('Deletion' if x < 0.7 else 'Normal'))
 
 	# Making the intermediate dataframe
 	data = data.append(outlier_data)
-	cols = ['Target Name', 'Sample Name', 'rq', 'rqMean', 'rqSD', 'rqSEM', 'Outliers', ]
+	cols = ['Target Name', 'Sample Name', 'rq', 'rqMean', 'rqSD', 'rqSEM', 'Outliers', 'Indel']
 	df = pandas.DataFrame(columns=cols)
 	for item in cols:
 		df[item] = data[item]

@@ -62,12 +62,12 @@ def transform_view():
 	cgenes = request.form['cgenes']
 	cutoff = request.form.get('cutoff' , type=float)
 	max_outliers = request.form.get('max_outliers', type=float)
-	csample = request.form['csample']
 	target_sorter = request.form['target_sorter']
 	sample_sorter = request.form['sample_sorter']
+	csample = request.form['csample']
 	qty = request.form.get('quantity', type=int)
 	rm = request.form['option2']
-	dstr = request.form['option5']
+	nd = request.form['option5']
 	posthoc = request.form['option3']
 
 	data1, summary_data, targets, samples = AUTOqPCR.process_data(data, model, cgenes, cutoff, max_outliers, target_sorter, sample_sorter, csample)
@@ -85,9 +85,7 @@ def transform_view():
 		# print(data1)
 		group_plot = plot.plot_by_groups(data1, model, targets, groups)
 
-		stats_dfs , posthoc_dfs = statistics.stats(model, qty, data1, targets, rm, dstr, posthoc)
-		print(stats_dfs)
-		print(posthoc_dfs)
+		stats_dfs, posthoc_dfs = statistics.stats(model, qty, data1, targets, rm, nd, posthoc)
 		stats_output = stats_dfs.to_csv(index=False)
 		posthoc_output = posthoc_dfs.to_csv(index=False)
 
@@ -102,10 +100,17 @@ def transform_view():
 	with ZipFile(outfile, 'w') as myzip:
 		if qty is not None:
 			if qty == 2:
-				myzip.writestr('ttest_result.csv', stats_output)
+				if nd == 'False':
+					myzip.writestr('ttest_result.csv', stats_output)
+				else:
+					myzip.writestr('MannWhitneyUTest_result.csv' , stats_output)
 			else:
-				myzip.writestr('anova_result.csv' , stats_output)
+				if nd == 'False':
+					myzip.writestr('anova_result.csv' , stats_output)
+				else:
+					myzip.writestr('KruskalWallisTest_result.csv' , stats_output)
 				myzip.writestr(posthoc+'_result.csv' , posthoc_output)
+
 			buf = io.BytesIO()
 			group_plot[0].savefig(buf)
 			image_name = 'Plot_by_groups.png'
