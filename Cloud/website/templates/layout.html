@@ -51,6 +51,7 @@
         color: #FFF;
         font-size: 13px;
         line-height: 1.4;
+        z-index: 2;
     }
 
     .help-tip p:before{ /* The pointer of the tooltip */
@@ -257,15 +258,17 @@
                     <b> Compare your samples with one way ANOVA or t-test  </b>
                     <br>
                     <br>
-                    How many groups do you have?
-                    <div class="help-tip">
-                            <p>Groups can be different genes, time points, animals, treatments or any conditions
-                                you wish to compare. Must be entered as they appear in the spreadsheet.
-                            </p>
+                    <div class="input-container">
+                        How many groups do you have?
+                        <div class="help-tip">
+                                <p>Groups can be different genes, time points, animals, treatments or any conditions
+                                    you wish to compare. Must be entered as they appear in the spreadsheet.
+                                </p>
+                        </div>
+                        <br>
+                        <input type="number"  name="quantity" min="1">
+                        <br>
                     </div>
-                    <br>
-                    <input type="number"  name="quantity" min="1">
-                    <br>
                     <br>
                     How are your groups defined?
                     <br>
