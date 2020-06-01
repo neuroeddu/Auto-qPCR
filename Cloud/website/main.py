@@ -6,7 +6,7 @@ import plot
 import statistics
 import re
 from zipfile import ZipFile
-import datetime
+
 
 app: Flask = Flask(__name__)
 
@@ -53,7 +53,7 @@ def transform_view():
 							   encoding="utf-8" ,
 							   header= i)
 
-		# print(filedata)	
+		# print(filedata)
 		data = data.append(filedata , ignore_index=True , sort=True)
 		data['filename'] = item.filename
 		#stream.seek(0)
@@ -83,11 +83,10 @@ def transform_view():
 			groups = request.form['glist'].split(',')
 			data1 = statistics.add_groups(data1, groups)
 		# print(data1)
-		group_plot = plot.plot_by_groups(data1, model, targets, groups)
+		group_plot = plot.plot_by_groups(data1, model, targets)
 
 		stats_dfs, posthoc_dfs = statistics.stats(model, qty, data1, targets, rm, nd, posthoc)
 		stats_output = stats_dfs.to_csv(index=False)
-		posthoc_output = posthoc_dfs.to_csv(index=False)
 
 	# making summary data csv
 	output = summary_data.to_csv()
@@ -96,28 +95,31 @@ def transform_view():
 	# remove cgenes from targets
 	targets2 = [g for g in targets if g.lower() not in cgenes.lower().split(',')]
 
-	# get current machine time
-	now = datetime.datetime.now()
-	date_string = now.strftime("%m-%d-%Y")
-
-	#get name for output
-	model_map = {'absolute':'absolute', 'relative':'relative_dCT', 'stability':'relative_ddCT', 'stability2':'genomic_stability'}
-	model_name = model_map[model]
-
 	outfile = io.BytesIO()
 	with ZipFile(outfile, 'w') as myzip:
 		if qty is not None:
 			if qty == 2:
-				if nd == 'False':
+				if nd == 'True':
 					myzip.writestr('ttest_result.csv', stats_output)
 				else:
 					myzip.writestr('MannWhitneyUTest_result.csv' , stats_output)
 			else:
-				if nd == 'False':
-					myzip.writestr('anova_result.csv' , stats_output)
+				if nd == 'True':
+					if rm == 'True':
+						myzip.writestr('rm_anova_result.csv', stats_output)
+					else:
+						myzip.writestr('anova_result.csv' , stats_output)
+						if not posthoc_dfs.empty:
+							posthoc_output = posthoc_dfs.to_csv(index=False)
+							myzip.writestr(posthoc+'_result.csv', posthoc_output)
 				else:
-					myzip.writestr('KruskalWallisTest_result.csv' , stats_output)
-				myzip.writestr(posthoc+'_result.csv' , posthoc_output)
+					if rm == 'True':
+						myzip.writestr('friedman_result.csv' , stats_output)
+					else:
+						myzip.writestr('KruskalWallisTest_result.csv' , stats_output)
+						if not posthoc_dfs.empty:
+							posthoc_output = posthoc_dfs.to_csv(index=False)
+							myzip.writestr(posthoc + '_result.csv', posthoc_output)
 
 			buf = io.BytesIO()
 			group_plot[0].savefig(buf)
@@ -151,7 +153,7 @@ def transform_view():
 
 	response = make_response(outfile.getvalue())
 	response.headers['Content-Type'] = 'application/actet-stream'
-	response.headers['Content-Disposition'] = 'attachment; filename=outputs_'+model_name+'_' + date_string + '.zip'
+	response.headers['Content-Disposition'] = 'attachment; filename=outputs_'+model+'.zip'
 	outfile.close()
 
 	return response

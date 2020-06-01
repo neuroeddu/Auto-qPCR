@@ -2,6 +2,7 @@ import pandas
 import pingouin as pg
 from pingouin import pairwise_ttests, multicomp, ttest
 from scipy.stats import mannwhitneyu, kruskal
+import re
 
 
 def stats(model, quantity, data, targets, rm, nd, posthoc):
@@ -86,50 +87,52 @@ def stats(model, quantity, data, targets, rm, nd, posthoc):
 				print(stats_dfs)
 
 		elif quantity >= 3:
-			# Kruskal-Wallis H test
-			pvals = []
 			stats_dfs = pandas.DataFrame()
 			posthoc_dfs = pandas.DataFrame()
-			group = data['Group']
-			group = group.drop_duplicates(keep='first').values.tolist()
-			for item in targets:
-				t = pandas.DataFrame(['Kruskal-Wallis_'+item])
-				df = data[data['Target Name'].eq(item)]
-				groups=[]
-				for i in range(len(group)):
-					groups.append(df[df['Group'].eq(group[i])][mean])
-				kw_test = kruskal(*groups)
-				pvals.append(kw_test.pvalue)
-				kw_test = t.append(pandas.DataFrame({'statistic': kw_test.statistic, 'pvalue': kw_test.pvalue}, index=[1]))
-				if stats_dfs is None:
-					stats_dfs = kw_test
-				else:
-					stats_dfs = stats_dfs.append(kw_test, ignore_index=True)
-			# FDR_BH tests (?)
-			ph = pandas.DataFrame(['FDR_BH'])
-			reject , pvals_corr = pg.multicomp(pvals , alpha=0.05 , method='fdr_bh')
-			print(reject , pvals_corr)
-			post_hocs = pandas.DataFrame({'reject': reject , 'pvals_corr': pvals_corr}, index=range(len(pvals)))
-			ph = ph.append(post_hocs)
-			posthoc_dfs = ph
-		# bonferroni test
-		if posthoc == 'bonferroni':
-			ph = pandas.DataFrame(['Bonferroni'])
-			reject, pvals_corr = pg.multicomp(pvals, alpha=0.05, method='bonf')
-			print(reject, pvals_corr)
-			post_hocs = pandas.DataFrame({'reject': reject, 'pvals_corr': pvals_corr}, index=range(len(pvals)))
-			ph = ph.append(post_hocs)
-			posthoc_dfs = ph
+			if rm == 'True':
+				# friedman test for repeated measurements
+				f = pandas.DataFrame(['Friedman test'])
+				f = f.append(pg.friedman(dv=mean , within='Group' , subject='Target Name' , data=data))
+				stats_dfs = f
+			else:
+				# Kruskal-Wallis H test
+				pvals = []
+				group = data['Group']
+				group = group.drop_duplicates(keep='first').values.tolist()
+				for item in targets:
+					df = data[data['Target Name'].eq(item)]
+					groups=[]
+					for i in range(len(group)):
+						groups.append(df[df['Group'].eq(group[i])][mean])
+					kw_test = kruskal(*groups)
+					pvals.append(kw_test.pvalue)
+					t = pandas.DataFrame(['Kruskal-Wallis_' + item])
+					kw_test = t.append(pandas.DataFrame({'statistic': kw_test.statistic, 'pvalue': kw_test.pvalue}, index=[1]))
+					if stats_dfs is None:
+						stats_dfs = kw_test
+					else:
+						stats_dfs = stats_dfs.append(kw_test, ignore_index=True)
+					# bonferroni test
+					if posthoc == 'bonferroni':
+						ph = pandas.DataFrame(['Bonferroni'])
+						reject, pvals_corr = pg.multicomp(pvals, alpha=0.05, method='bonf')
+						post_hocs = pandas.DataFrame({'reject': reject, 'pvals_corr': pvals_corr}, index=range(len(pvals)))
+						ph = ph.append(post_hocs)
+						posthoc_dfs = ph
+					else:
+						# FDR_BH tests
+						ph = pandas.DataFrame(['FDR_BH'])
+						reject, pvals_corr = pg.multicomp(pvals , alpha=0.05 , method='fdr_bh')
+						post_hocs = pandas.DataFrame({'reject': reject , 'pvals_corr': pvals_corr}, index=range(len(pvals)))
+						ph = ph.append(post_hocs)
+						posthoc_dfs = ph
 
 	return stats_dfs, posthoc_dfs
 
 
 # Extract groups from sample name
 def add_groups(df, groups):
-	for i_row , row in df.iterrows():
-		for group in groups:
-			if group in df.at[i_row , 'Sample Name']:
-				df.at[i_row , 'Group'] = group
-				df.at[i_row , 'Sample Name'] = df.at[i_row , 'Sample Name'].replace(group , '')
+	df['Group'] = df['Sample Name'].str.extract(re.compile('(' + '|'.join(groups) + ')', re.IGNORECASE), expand=False).fillna('')
+	df['Sample Name'] = df['Sample Name'].str.replace(re.compile('(' + '|'.join(groups) + ')', re.IGNORECASE), '')
 
 	return df

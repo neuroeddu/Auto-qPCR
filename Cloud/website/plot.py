@@ -124,11 +124,8 @@ def plots(dataframe, model, targets, samples, cgenes):
 
 
 # plot by user defined groups
-def plot_by_groups(df, model, targets, groups=None):
-    if groups is None:
-        groups = df['Group'].drop_duplicates(keep='first').values.tolist()
-    else:
-        groups=groups
+def plot_by_groups(df, model, targets):
+    groups = df['Group'].drop_duplicates(keep='first').values.tolist()
 
     plots = []
     if model == 'absolute':
@@ -167,7 +164,7 @@ def plot_by_groups(df, model, targets, groups=None):
             plt.bar(x, y, yerr=st_err, error_kw=dict(lw=0.9, capsize=2, capthick=0.9), align='center', width=barwidth, edgecolor='white', label=g)
 
             counter += 1
-        plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))] , targets ,
+        plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))], targets,
                    rotation='vertical', fontsize='20')
         plt.xlabel('Targets', fontsize='20', fontweight='bold')
         plt.legend(fontsize='20')
@@ -186,10 +183,10 @@ def plot_by_groups(df, model, targets, groups=None):
                 sample = df.loc[(df['Target Name'] == t) & (df['Group'] == g)]
                 y.append(sample['rqMean'].mean())
                 st_err.append(sample['rqMean'].sem())
-            plt.bar(x , y , yerr=st_err , error_kw=dict(lw=0.9 , capsize=2 , capthick=0.9), align='center', width=barwidth, edgecolor='white', label=t)
+            plt.bar(x , y , yerr=st_err , error_kw=dict(lw=0.9, capsize=2, capthick=0.9), align='center', width=barwidth, edgecolor='white', label=t)
 
             counter += 1
-        plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))] , groups ,
+        plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))], groups,
                    rotation='vertical' , fontsize='20')
         plt.xlabel('Groups' , fontsize='20', fontweight='bold')
         plt.legend(fontsize='20')

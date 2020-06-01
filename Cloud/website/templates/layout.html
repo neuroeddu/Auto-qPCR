@@ -51,7 +51,6 @@
         color: #FFF;
         font-size: 13px;
         line-height: 1.4;
-        z-index: 2;
     }
 
     .help-tip p:before{ /* The pointer of the tooltip */
@@ -258,17 +257,15 @@
                     <b> Compare your samples with one way ANOVA or t-test  </b>
                     <br>
                     <br>
-                    <div class="input-container">
-                        How many groups do you have?
-                        <div class="help-tip">
-                                <p>Groups can be different genes, time points, animals, treatments or any conditions
-                                    you wish to compare. Must be entered as they appear in the spreadsheet.
-                                </p>
-                        </div>
-                        <br>
-                        <input type="number"  name="quantity" min="1">
-                        <br>
+                    How many groups do you have?
+                    <div class="help-tip">
+                            <p>Groups can be different genes, time points, animals, treatments or any conditions
+                                you wish to compare. Must be entered as they appear in the spreadsheet.
+                            </p>
                     </div>
+                    <br>
+                    <input type="number"  name="quantity" min="1">
+                    <br>
                     <br>
                     How are your groups defined?
                     <br>
@@ -290,20 +287,34 @@
                     <br>
                     Is your data normally distributed? If not then a non-parametric test will be selected.
                     <br>
-                    <input type="radio" name="option5" value="False" checked>No</input>
-                    <input type="radio" name="option5" value="True">Yes</input>
+                    <input id="normalno" type="radio" name="option5" value="False" checked oninput="toggleView(false)">No</input>
+                    <input id="normalyes" type="radio" name="option5" value="True" oninput="toggleView(true)">Yes</input>
                     <br>
                 </td>
             </tr>
             <tr>
                 <td >
                     <b> Model for Post-hoc test: </b>
+
+                    <div id="parametric" style="display: none">
+                        <br>
+                    Parametric:
                     <br>
+                        <input id="p1" type="radio" name="option3" value="ttest_fdr">Pairwise t-test and FDR</input>
                     <br>
-                    <input type="radio" name="option3" value="ttest_fdr" checked>Pairwise t-test and FDR</input>
+                    <input id="p2" type="radio" name="option3" value="bonferroni">Bonferroni</input>
                     <br>
-                    <input type="radio" name="option3" value="bonferroni">Bonferroni</input>
+                    </div>
+                    <div id="nonparametric">
+                                            <br>
+                    Non-parametric:
                     <br>
+                    <input id="p3" type="radio" name="option3" value="fdr" checked>FDR</input>
+                    <br>
+                    <input id="p4" type="radio" name="option3" value="bonferroni">Bonferroni</input>
+                    <br>
+                    </div>
+
                 </td>
             </tr>
             <tr>
@@ -322,5 +333,27 @@
         </tbody>
     </table>
 </body>
+
+<footer>
+    <script>
+        function toggleView(bool) {
+            if (bool==true) {
+                document.getElementById('p2').checked = false
+                document.getElementById('p3').checked = false
+                document.getElementById('p1').checked = true
+
+                document.getElementById('parametric').style.display = 'block'
+                document.getElementById('nonparametric').style.display = 'none'
+            } else {
+                document.getElementById('p1').checked = false
+                document.getElementById('p2').checked = false
+                document.getElementById('p3').checked = true
+
+                document.getElementById('parametric').style.display = 'none'
+                document.getElementById('nonparametric').style.display  = 'block'
+            }
+        }
+    </script>
+</footer>
 
 </html>
