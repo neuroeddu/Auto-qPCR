@@ -11,7 +11,7 @@ def stats(model, quantity, data, targets, rm, nd, posthoc):
 		data = data.drop(['NormQuant'], axis=1)
 		mean = 'NormMean'
 	elif model == 'relative':
-		data = data.drop(['rq'] , axis=1)
+		data = data.drop(['rq'], axis=1)
 		mean = 'rqMean'
 
 	# prepare data from intermediate dataframe
@@ -80,11 +80,13 @@ def stats(model, quantity, data, targets, rm, nd, posthoc):
 				group1 = df[df['Group'].eq(group[0])][mean]
 				group2 = df[df['Group'].eq(group[1])][mean]
 				mwu_test = mannwhitneyu(group1, group2)
+				t = pandas.DataFrame(['MannWhitney_' + item])
+				mwu_test = t.append(
+					pandas.DataFrame({'statistic': mwu_test.statistic , 'pvalue': mwu_test.pvalue} , index=[1]))
 				if stats_dfs is None:
 					stats_dfs = mwu_test
 				else:
 					stats_dfs = stats_dfs.append(mwu_test , ignore_index=True)
-				print(stats_dfs)
 
 		elif quantity >= 3:
 			stats_dfs = pandas.DataFrame()
