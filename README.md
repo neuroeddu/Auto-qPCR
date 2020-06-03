@@ -15,9 +15,9 @@ run: python main.py
 either a local browers will open or you will have the link in your terminal click open link and the GUI will open in a browser.
 
 
-# Orginal python script instructions
+# Command Line python script instructions
 
-The python script to run the RNA seq data processing from the terminal is still avialable in "simplified program"
+The python script to run the RNA seq data processing from the terminal is still avialable in "command line program"
 
 Step to run a qPCR analysis
 
