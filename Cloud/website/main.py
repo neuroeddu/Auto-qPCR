@@ -72,7 +72,8 @@ def transform_view():
 
 	data1, summary_data, targets, samples = AUTOqPCR.process_data(data, model, cgenes, cutoff, max_outliers, target_sorter, sample_sorter, csample)
 
-	plots = plot.plots(summary_data , model , targets , samples, cgenes)
+	plots = plot.plots(summary_data , model , targets , samples)
+	plots2 = plot.plots_wo_controls(summary_data , model , targets , samples, cgenes)
 	
 	# making stats csv
 	if qty is not None:
@@ -83,7 +84,7 @@ def transform_view():
 			groups = request.form['glist'].split(',')
 			data1 = statistics.add_groups(data1, groups)
 		# print(data1)
-		group_plot = plot.plot_by_groups(data1, model, targets)
+		group_plot = plot.plot_by_groups(data1, model, targets, cgenes)
 
 		stats_dfs, posthoc_dfs = statistics.stats(model, qty, data1, targets, rm, nd, posthoc)
 		stats_output = stats_dfs.to_csv(index=False)
@@ -91,9 +92,6 @@ def transform_view():
 	# making summary data csv
 	output = summary_data.to_csv()
 	clean_output = data1.to_csv()
-
-	# remove cgenes from targets
-	targets2 = [g for g in targets if g.lower() not in cgenes.lower().split(',')]
 
 	outfile = io.BytesIO()
 	with ZipFile(outfile, 'w') as myzip:
@@ -114,13 +112,12 @@ def transform_view():
 							myzip.writestr(posthoc+'_result.csv', posthoc_output)
 				else:
 					if rm == 'True':
-						myzip.writestr('friedman_result.csv' , stats_output)
+						myzip.writestr('Friedman_result.csv' , stats_output)
 					else:
 						myzip.writestr('KruskalWallisTest_result.csv' , stats_output)
 						if not posthoc_dfs.empty:
 							posthoc_output = posthoc_dfs.to_csv(index=False)
 							myzip.writestr(posthoc + '_result.csv', posthoc_output)
-
 			buf = io.BytesIO()
 			group_plot[0].savefig(buf)
 			image_name = 'Plot_by_groups.png'
@@ -133,23 +130,37 @@ def transform_view():
 			buf.close()
 		myzip.writestr('clean_data.csv', clean_output)
 		myzip.writestr('summary_data.csv', output)
+		# individual plots
 		for i in range(len(plots)-2):
 			buf = io.BytesIO()
 			plots[i].savefig(buf)
 			if model != 'stability2':
-				image_name = targets2[i]+'.png'
+				image_name = targets[i]+'.png'
 			myzip.writestr(image_name, buf.getvalue())
+		# grouped plots by sample and by genes
 		buf = io.BytesIO()
 		plots[len(plots) - 2].savefig(buf)
-		image_name = 'All_Genes.png'
+		image_name = 'Sample_Groups.png'
 		myzip.writestr(image_name , buf.getvalue())
 		buf.close()
 		buf = io.BytesIO()
 		plots[len(plots) - 1].savefig(buf)
-		image_name = 'Sample_Groups.png'
+		image_name = 'All_Targets.png'
 		myzip.writestr(image_name , buf.getvalue())
 		buf.close()
-		myzip.close()
+		if model != 'stability2':
+			# plots with endogeneous controls removed
+			buf = io.BytesIO()
+			plots2[0].savefig(buf)
+			image_name = 'Sample_Groups (without endogenous controls).png'
+			myzip.writestr(image_name, buf.getvalue())
+			buf.close()
+			buf = io.BytesIO()
+			plots2[1].savefig(buf)
+			image_name = 'All_Targets (without endogenous controls).png'
+			myzip.writestr(image_name, buf.getvalue())
+			buf.close()
+			myzip.close()
 
 	response = make_response(outfile.getvalue())
 	response.headers['Content-Type'] = 'application/actet-stream'
