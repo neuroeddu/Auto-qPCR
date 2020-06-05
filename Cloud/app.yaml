@@ -1,18 +1,12 @@
-service: auto-qpcr
-runtime: python37
-api_version: 1
-threadsafe: true
+# runtime: python37
+runtime: python
+env: flex
+entrypoint: gunicorn -c gunicorn.conf.py --graceful-timeout 90 --timeout 90 -b :$PORT main:app
+runtime_config:
+  python_version: 3.6
 
-handlers: 
+handlers:
 - url: /static
   static_dir: static
 - url: /.*
-  script: main.app
-  upload: /.*\.(csv)$
-
-libraries:
-- name: ssl
-  version: latest
-
-
-
+  script: auto
