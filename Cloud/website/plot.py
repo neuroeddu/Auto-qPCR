@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # figure format: font size, bar width, error bar
-fs = 30
+fs = 40
 barwidth = 0.75
 error_kw = dict(lw=2, capsize=5, capthick=2)
 

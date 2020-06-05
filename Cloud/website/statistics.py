@@ -65,6 +65,13 @@ def stats(model, quantity, data, targets, rm, nd, posthoc):
 							posthoc_dfs = ph
 						else:
 							posthoc_dfs = posthoc_dfs.append(ph, ignore_index=True)
+					# bonferroni test
+					else:
+						ph = pandas.DataFrame(['Bonferroni'])
+						reject, pvals_corr = pg.multicomp(pvals, alpha=0.05, method='bonf')
+						post_hocs = pandas.DataFrame({'reject': reject, 'pvals_corr': pvals_corr}, index=range(len(pvals)))
+						ph = ph.append(post_hocs)
+						posthoc_dfs = ph
 
 	# nonparametric tests for not normally distributed data
 	else:
