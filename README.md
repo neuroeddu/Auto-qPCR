@@ -1,7 +1,7 @@
 # Auto-qPCR web app in development
 
 
-Currently the "Cloub" folder contains "website" folder contains python scripts using flask to create a local server which works to process qPCR data and perform statistics. 
+Currently the "Cloud" folder contains "website" folder contains python scripts using flask to create a local server which works to process qPCR data and perform statistics. 
 
 We are deploying that program using google cloud computing and the scripts for that process are in the "cloud" folder. The work is in inprogress.
 
