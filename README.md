@@ -1,10 +1,10 @@
-# Auto-qPCR local server - Clone this repository and run locally
+# Auto-qPCR local server - Clone this repository and run to analyze qPCR data with an graphical user interface (GUI) 
 
 Navigate to the directory 'auto-q-pcr-local_GUI'
 
 open the local server using: python main.py 
 
-either a local browers will open or you will have the link in your terminal click open link and the GUI will open in a browser.
+either a local browers will open or you will have the link in your terminal click open link and the GUI will open in your webbrowser (firefox, chrome).
 
 All the source scripts are available. Python scripts using flask to create a local server which works to process qPCR data and perform statistics.  
 
