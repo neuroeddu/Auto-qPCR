@@ -1,4 +1,4 @@
-# Auto-qPCR local server - Clone this repository and run to analyze qPCR data with an graphical user interface (GUI) 
+# Auto-qPCR local server - Clone this repository and run to analyze qPCR data with a graphical user interface (GUI) 
 
 Navigate to the directory 'auto-q-pcr-local_GUI'
 
