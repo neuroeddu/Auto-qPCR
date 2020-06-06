@@ -1,25 +1,32 @@
+# Auto-qPCR local server - Clone this repository and run locally
+
+Navigate to the directory 'auto-q-pcr-local_GUI'
+
+open the local server using: python main.py 
+
+either a local browers will open or you will have the link in your terminal click open link and the GUI will open in a browser.
+
+All the source scripts are available. Python scripts using flask to create a local server which works to process qPCR data and perform statistics.  
+
+The file requirments.txt list packages needed to run the local server. 
+
+A user guide is in progress.
+
 # Auto-qPCR web app in development
 
-
-Currently the "Cloud" folder contains "website" folder contains python scripts using flask to create a local server which works to process qPCR data and perform statistics. 
-
-We are deploying that program using google cloud computing and the scripts for that process are in the "cloud" folder. The work is in inprogress.
+Currently the "Cloud" folder contains files to launch the server using google cloud computing. We are in the processes of finding a different solution to host the web app. The work is in inprogress.
 
 A user guide will be available when the web app is complete.
 
-
-# Auto-qPCR local server - also still in development
-
-In terminal navigate to the "cloud/website"
-run: python main.py
-either a local browers will open or you will have the link in your terminal click open link and the GUI will open in a browser.
-
-
 # Command Line python script instructions
+
+The initial version of this analysis program using command line can be found in the folder 'auto-q-pcr-command_line.
+
+The document 'Perpare your computer pythonScript.docx' details how to install the required packages.
 
 The python script to run the RNA seq data processing from the terminal is still avialable in "command line program"
 
-Step to run a qPCR analysis
+Steps to run a qPCR analysis
 
 1. a) save the raw qPCR output data as a .csv file. Place the file(s) in a data folder.
 
