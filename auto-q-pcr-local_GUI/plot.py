@@ -3,10 +3,11 @@ import AUTOqPCR
 import matplotlib.pyplot as plt
 import numpy as np
 
-# figure format: font size, bar width, error bar
-fs = 40
+# figure format: font size, bar width, error bar, facecolor
+fs = 60
 barwidth = 0.75
-error_kw = dict(lw=2, capsize=5, capthick=2)
+error_kw = dict(lw=4, capsize=7, capthick=4)
+fc = '#F0F0F0'
 
 
 def plots(dataframe, model, targets, samples):
@@ -23,14 +24,17 @@ def plots(dataframe, model, targets, samples):
 			# set color, width, edgecolor, etc.
 			plt.bar(x, sample, yerr=list(dataframe.loc[item, 'NormSEM']['mean']), align='center',
 					error_kw=error_kw, width=barwidth, label=item)
-			plt.xlabel(item, fontweight='bold', fontsize=fs+5, labelpad=20)
+			plt.xlabel(item, fontweight='bold', fontsize=fs+10, labelpad=20)
 			plt.xticks([i for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
-			plt.ylabel('Normalized Expression Level', fontsize=fs+5, fontweight='bold', labelpad=20)
+			plt.ylabel('Normalized Expression Level', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 			# set axes width
-			plt.gca().spines['bottom'].set_linewidth(3)
-			plt.gca().spines['left'].set_linewidth(3)
-			plt.gca().tick_params(width=3)
+			plt.gca().spines['bottom'].set_linewidth(5)
+			plt.gca().spines['left'].set_linewidth(5)
+			plt.gca().spines['top'].set_visible(False)
+			plt.gca().spines['right'].set_visible(False)
+			plt.gca().set_facecolor(fc)
+			plt.gca().tick_params(width=5)
 			plt.tight_layout()
 			plt.close(plot)
 			plots.append(plot)
@@ -39,13 +43,16 @@ def plots(dataframe, model, targets, samples):
 					error_kw=error_kw, width=barwidth, edgecolor='white', label=item)
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
-		plt.xlabel('Samples', fontsize=fs+5, fontweight='bold', labelpad=20)
-		plt.ylabel('Normalized Expression Level', fontsize=fs+5, fontweight='bold', labelpad=20)
+		plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
+		plt.ylabel('Normalized Expression Level', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
-		plt.gca().spines['bottom'].set_linewidth(3)
-		plt.gca().spines['left'].set_linewidth(3)
-		plt.gca().tick_params(width=3)
+		plt.gca().spines['bottom'].set_linewidth(5)
+		plt.gca().spines['left'].set_linewidth(5)
+		plt.gca().spines['top'].set_visible(False)
+		plt.gca().spines['right'].set_visible(False)
+		plt.gca().set_facecolor(fc)
+		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close(plot_by_samples)
 		plots.append(plot_by_samples)
@@ -60,13 +67,16 @@ def plots(dataframe, model, targets, samples):
 			counter += 1
 
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
-		plt.xlabel('Targets', fontsize=fs+5, fontweight='bold', labelpad=20)
-		plt.ylabel('Normalized Expression Level', fontsize=fs+5, fontweight='bold', labelpad=20)
+		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
+		plt.ylabel('Normalized Expression Level', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
-		plt.gca().spines['bottom'].set_linewidth(3)
-		plt.gca().spines['left'].set_linewidth(3)
-		plt.gca().tick_params(width=3)
+		plt.gca().spines['bottom'].set_linewidth(5)
+		plt.gca().spines['left'].set_linewidth(5)
+		plt.gca().spines['top'].set_visible(False)
+		plt.gca().spines['right'].set_visible(False)
+		plt.gca().set_facecolor(fc)
+		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_genes)
@@ -84,13 +94,16 @@ def plots(dataframe, model, targets, samples):
 			counter += 1
 
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
-		plt.xlabel('DNA Regions', fontsize=fs+5, fontweight='bold', labelpad=20)
-		plt.ylabel('Copy Number per Chromosome', fontsize=fs+5, fontweight='bold', labelpad=20)
+		plt.xlabel('DNA Regions', fontsize=fs+10, fontweight='bold', labelpad=20)
+		plt.ylabel('Copy Number per Chromosome', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
-		plt.gca().spines['bottom'].set_linewidth(3)
-		plt.gca().spines['left'].set_linewidth(3)
-		plt.gca().tick_params(width=3)
+		plt.gca().spines['bottom'].set_linewidth(5)
+		plt.gca().spines['left'].set_linewidth(5)
+		plt.gca().spines['top'].set_visible(False)
+		plt.gca().spines['right'].set_visible(False)
+		plt.gca().set_facecolor(fc)
+		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_samples)
@@ -105,13 +118,16 @@ def plots(dataframe, model, targets, samples):
 			counter += 1
 
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
-		plt.xlabel('Targets', fontsize=fs+5, fontweight='bold', labelpad=20)
-		plt.ylabel('Copy Number per Chromosome', fontsize=fs+5, fontweight='bold', labelpad=20)
+		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
+		plt.ylabel('Copy Number per Chromosome', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
-		plt.gca().spines['bottom'].set_linewidth(3)
-		plt.gca().spines['left'].set_linewidth(3)
-		plt.gca().tick_params(width=3)
+		plt.gca().spines['bottom'].set_linewidth(5)
+		plt.gca().spines['left'].set_linewidth(5)
+		plt.gca().spines['top'].set_visible(False)
+		plt.gca().spines['right'].set_visible(False)
+		plt.gca().set_facecolor(fc)
+		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_chrs)
@@ -127,17 +143,20 @@ def plots(dataframe, model, targets, samples):
 			x2 = x * len(targets) + barwidth * counter
 			plt.bar(x, sample, yerr=list(dataframe.loc[item, 'rqSEM']['mean']), align='center',
 					error_kw=error_kw, width=barwidth, edgecolor='white', label=item)
-			plt.xlabel(item, fontsize=fs+5, fontweight='bold', labelpad=20)
+			plt.xlabel(item, fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.xticks([i for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 			if model == 'relative':
-				plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+5, fontweight='bold', labelpad=20)
+				plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 			else:
-				plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+5, fontweight='bold', labelpad=20)
+				plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 			# set axes width
-			plt.gca().spines['bottom'].set_linewidth(3)
-			plt.gca().spines['left'].set_linewidth(3)
-			plt.gca().tick_params(width=3)
+			plt.gca().spines['bottom'].set_linewidth(5)
+			plt.gca().spines['left'].set_linewidth(5)
+			plt.gca().spines['top'].set_visible(False)
+			plt.gca().spines['right'].set_visible(False)
+			plt.gca().set_facecolor(fc)
+			plt.gca().tick_params(width=5)
 			plt.tight_layout()
 			plt.close(plot)
 			plots.append(plot)
@@ -146,16 +165,19 @@ def plots(dataframe, model, targets, samples):
 					error_kw=error_kw, width=barwidth, edgecolor='white', label=item)
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
-		plt.xlabel('Samples', fontsize=fs+5, fontweight='bold', labelpad=20)
+		plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative':
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+5, fontweight='bold', labelpad=20)
+			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+5, fontweight='bold', labelpad=20)
+			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
-		plt.gca().spines['bottom'].set_linewidth(3)
-		plt.gca().spines['left'].set_linewidth(3)
-		plt.gca().tick_params(width=3)
+		plt.gca().spines['bottom'].set_linewidth(5)
+		plt.gca().spines['left'].set_linewidth(5)
+		plt.gca().spines['top'].set_visible(False)
+		plt.gca().spines['right'].set_visible(False)
+		plt.gca().set_facecolor(fc)
+		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_samples)
@@ -170,16 +192,19 @@ def plots(dataframe, model, targets, samples):
 			counter += 1
 
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
-		plt.xlabel('Targets', fontsize=fs+5, fontweight='bold', labelpad=20)
+		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative':
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+5, fontweight='bold', labelpad=20)
+			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+5, fontweight='bold', labelpad=20)
+			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
-		plt.gca().spines['bottom'].set_linewidth(3)
-		plt.gca().spines['left'].set_linewidth(3)
-		plt.gca().tick_params(width=3)
+		plt.gca().spines['bottom'].set_linewidth(5)
+		plt.gca().spines['left'].set_linewidth(5)
+		plt.gca().spines['top'].set_visible(False)
+		plt.gca().spines['right'].set_visible(False)
+		plt.gca().set_facecolor(fc)
+		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_genes)
@@ -208,13 +233,16 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 			counter += 1
 
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
-		plt.xlabel('Samples', fontsize=fs+5, fontweight='bold', labelpad=20)
-		plt.ylabel('Normalized Expression Level', fontsize=fs+5, fontweight='bold', labelpad=20)
+		plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
+		plt.ylabel('Normalized Expression Level', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
-		plt.gca().spines['bottom'].set_linewidth(3)
-		plt.gca().spines['left'].set_linewidth(3)
-		plt.gca().tick_params(width=3)
+		plt.gca().spines['bottom'].set_linewidth(5)
+		plt.gca().spines['left'].set_linewidth(5)
+		plt.gca().spines['top'].set_visible(False)
+		plt.gca().spines['right'].set_visible(False)
+		plt.gca().set_facecolor(fc)
+		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_samples)
@@ -230,13 +258,16 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 			counter += 1
 
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
-		plt.xlabel('Targets', fontsize=fs+5, fontweight='bold', labelpad=20)
-		plt.ylabel('Normalized Expression Level', fontsize=fs+5, fontweight='bold', labelpad=20)
+		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
+		plt.ylabel('Normalized Expression Level', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
-		plt.gca().spines['bottom'].set_linewidth(3)
-		plt.gca().spines['left'].set_linewidth(3)
-		plt.gca().tick_params(width=3)
+		plt.gca().spines['bottom'].set_linewidth(5)
+		plt.gca().spines['left'].set_linewidth(5)
+		plt.gca().spines['top'].set_visible(False)
+		plt.gca().spines['right'].set_visible(False)
+		plt.gca().set_facecolor(fc)
+		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_genes)
@@ -253,16 +284,19 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 					label=item)
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
-		plt.xlabel('Samples', fontsize=fs+5, fontweight='bold', labelpad=20)
+		plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative':
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+5, fontweight='bold', labelpad=20)
+			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+5, fontweight='bold', labelpad=20)
+			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
-		plt.gca().spines['bottom'].set_linewidth(3)
-		plt.gca().spines['left'].set_linewidth(3)
-		plt.gca().tick_params(width=3)
+		plt.gca().spines['bottom'].set_linewidth(5)
+		plt.gca().spines['left'].set_linewidth(5)
+		plt.gca().spines['top'].set_visible(False)
+		plt.gca().spines['right'].set_visible(False)
+		plt.gca().set_facecolor(fc)
+		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_samples)
@@ -279,16 +313,19 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 			counter += 1
 
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
-		plt.xlabel('Targets', fontsize=fs+5, fontweight='bold', labelpad=20)
+		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative':
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+5, fontweight='bold', labelpad=20)
+			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+5, fontweight='bold', labelpad=20)
+			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
-		plt.gca().spines['bottom'].set_linewidth(3)
-		plt.gca().spines['left'].set_linewidth(3)
-		plt.gca().tick_params(width=3)
+		plt.gca().spines['bottom'].set_linewidth(5)
+		plt.gca().spines['left'].set_linewidth(5)
+		plt.gca().spines['top'].set_visible(False)
+		plt.gca().spines['right'].set_visible(False)
+		plt.gca().set_facecolor(fc)
+		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_genes)
@@ -322,13 +359,16 @@ def plot_by_groups(df, model, targets, cgenes):
 
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))], groups, rotation='vertical', fontsize=fs)
-		plt.xlabel('Groups', fontsize=fs+5, fontweight='bold', labelpad=20)
-		plt.ylabel('Normalized Expression Level', fontsize=fs+5, fontweight='bold', labelpad=20)
+		plt.xlabel('Groups', fontsize=fs+10, fontweight='bold', labelpad=20)
+		plt.ylabel('Normalized Expression Level', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
-		plt.gca().spines['bottom'].set_linewidth(3)
-		plt.gca().spines['left'].set_linewidth(3)
-		plt.gca().tick_params(width=3)
+		plt.gca().spines['bottom'].set_linewidth(5)
+		plt.gca().spines['left'].set_linewidth(5)
+		plt.gca().spines['top'].set_visible(False)
+		plt.gca().spines['right'].set_visible(False)
+		plt.gca().set_facecolor(fc)
+		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_group)
@@ -347,13 +387,16 @@ def plot_by_groups(df, model, targets, cgenes):
 					width=barwidth, edgecolor='white', label=g)
 			counter += 1
 		plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
-		plt.xlabel('Targets', fontsize=fs+5, fontweight='bold', labelpad=20)
-		plt.ylabel('Normalized Expression Level', fontsize=fs+5, fontweight='bold', labelpad=20)
+		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
+		plt.ylabel('Normalized Expression Level', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
-		plt.gca().spines['bottom'].set_linewidth(3)
-		plt.gca().spines['left'].set_linewidth(3)
-		plt.gca().tick_params(width=3)
+		plt.gca().spines['bottom'].set_linewidth(5)
+		plt.gca().spines['left'].set_linewidth(5)
+		plt.gca().spines['top'].set_visible(False)
+		plt.gca().spines['right'].set_visible(False)
+		plt.gca().set_facecolor(fc)
+		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_target)
@@ -374,13 +417,16 @@ def plot_by_groups(df, model, targets, cgenes):
 
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))], groups, rotation='horizontal', fontsize=fs)
-		plt.xlabel('Groups', fontsize=fs+5, fontweight='bold', labelpad=20)
-		plt.ylabel('Copy Number per Chromosome', fontsize=fs+5, fontweight='bold', labelpad=20)
+		plt.xlabel('Groups', fontsize=fs+10, fontweight='bold', labelpad=20)
+		plt.ylabel('Copy Number per Chromosome', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
-		plt.gca().spines['bottom'].set_linewidth(3)
-		plt.gca().spines['left'].set_linewidth(3)
-		plt.gca().tick_params(width=3)
+		plt.gca().spines['bottom'].set_linewidth(5)
+		plt.gca().spines['left'].set_linewidth(5)
+		plt.gca().spines['top'].set_visible(False)
+		plt.gca().spines['right'].set_visible(False)
+		plt.gca().set_facecolor(fc)
+		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_group)
@@ -400,13 +446,16 @@ def plot_by_groups(df, model, targets, cgenes):
 
 			counter += 1
 		plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
-		plt.xlabel('Targets', fontsize=fs+5, fontweight='bold', labelpad=20)
-		plt.ylabel('Copy Number per Chromosome', fontsize=fs+5, fontweight='bold', labelpad=20)
+		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
+		plt.ylabel('Copy Number per Chromosome', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
-		plt.gca().spines['bottom'].set_linewidth(3)
-		plt.gca().spines['left'].set_linewidth(3)
-		plt.gca().tick_params(width=3)
+		plt.gca().spines['bottom'].set_linewidth(5)
+		plt.gca().spines['left'].set_linewidth(5)
+		plt.gca().spines['top'].set_visible(False)
+		plt.gca().spines['right'].set_visible(False)
+		plt.gca().set_facecolor(fc)
+		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_target)
@@ -429,16 +478,19 @@ def plot_by_groups(df, model, targets, cgenes):
 
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))], groups, rotation='horizontal', fontsize=fs)
-		plt.xlabel('Groups', fontsize=fs+5, fontweight='bold', labelpad=20)
+		plt.xlabel('Groups', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative':
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+5, fontweight='bold', labelpad=20)
+			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+5, fontweight='bold', labelpad=20)
+			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
-		plt.gca().spines['bottom'].set_linewidth(3)
-		plt.gca().spines['left'].set_linewidth(3)
-		plt.gca().tick_params(width=3)
+		plt.gca().spines['bottom'].set_linewidth(5)
+		plt.gca().spines['left'].set_linewidth(5)
+		plt.gca().spines['top'].set_visible(False)
+		plt.gca().spines['right'].set_visible(False)
+		plt.gca().set_facecolor(fc)
+		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_group)
@@ -458,16 +510,19 @@ def plot_by_groups(df, model, targets, cgenes):
 
 			counter += 1
 			plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
-		plt.xlabel('Targets', fontsize=fs+5, fontweight='bold', labelpad=20)
+		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative':
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+5, fontweight='bold', labelpad=20)
+			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+5, fontweight='bold', labelpad=20)
+			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
-		plt.gca().spines['bottom'].set_linewidth(3)
-		plt.gca().spines['left'].set_linewidth(3)
-		plt.gca().tick_params(width=3)
+		plt.gca().spines['bottom'].set_linewidth(5)
+		plt.gca().spines['left'].set_linewidth(5)
+		plt.gca().spines['top'].set_visible(False)
+		plt.gca().spines['right'].set_visible(False)
+		plt.gca().set_facecolor(fc)
+		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_target)

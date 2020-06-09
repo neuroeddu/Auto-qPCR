@@ -67,8 +67,7 @@ def transform_view():
 	csample = request.form['csample']
 	qty = request.form.get('quantity', type=int)
 	rm = request.form['option2']
-	nd = request.form['option5']
-	posthoc = request.form['option3']
+	nd = request.form['option4']
 
 	data1, summary_data, targets, samples = AUTOqPCR.process_data(data, model, cgenes, cutoff, max_outliers, target_sorter, sample_sorter, csample)
 
@@ -77,17 +76,20 @@ def transform_view():
 	
 	# making stats csv
 	if qty is not None:
-		if request.form['option4'] != 'False':
-			gcol = data[request.form['gcol']]
-			data1['Group'] = gcol
+		if request.form['option3'] != 'False':
+			gcol = request.form['gcol']
+			if gcol.lower() in data.columns.str.lower():
+				col = gcol
+			data1['Group'] = data[col]
 		else:
 			groups = request.form['glist'].split(',')
 			data1 = statistics.add_groups(data1, groups)
 		# print(data1)
 		group_plot = plot.plot_by_groups(data1, model, targets, cgenes)
 
-		stats_dfs, posthoc_dfs = statistics.stats(model, qty, data1, targets, rm, nd, posthoc)
+		stats_dfs, posthoc_dfs = statistics.stats(model, qty, data1, targets, rm, nd)
 		stats_output = stats_dfs.to_csv(index=False)
+		posthoc_output = posthoc_dfs.to_csv(index=False)
 
 	# making summary data csv
 	output = summary_data.to_csv()
@@ -100,24 +102,21 @@ def transform_view():
 				if nd == 'True':
 					myzip.writestr('ttest_result.csv', stats_output)
 				else:
-					myzip.writestr('MannWhitneyUTest_result.csv' , stats_output)
+					if rm == 'True':
+						myzip.writestr('MannWhitneyUTest_result.csv' , stats_output)
+					else:
+						myzip.writestr('WilcoxonTest_result.csv', stats_output)
 			else:
 				if nd == 'True':
-					if rm == 'True':
-						myzip.writestr('rm_anova_result.csv', stats_output)
-					else:
-						myzip.writestr('anova_result.csv' , stats_output)
-						if not posthoc_dfs.empty:
-							posthoc_output = posthoc_dfs.to_csv(index=False)
-							myzip.writestr(posthoc+'_result.csv', posthoc_output)
+					myzip.writestr('ANOVA_result.csv' , stats_output)
+					myzip.writestr('Posthoc_result.csv', posthoc_output)
 				else:
 					if rm == 'True':
 						myzip.writestr('Friedman_result.csv' , stats_output)
 					else:
 						myzip.writestr('KruskalWallisTest_result.csv' , stats_output)
-						if not posthoc_dfs.empty:
-							posthoc_output = posthoc_dfs.to_csv(index=False)
-							myzip.writestr(posthoc + '_result.csv', posthoc_output)
+					myzip.writestr('Posthoc_result.csv', posthoc_output)
+
 			buf = io.BytesIO()
 			group_plot[0].savefig(buf)
 			image_name = 'Plot_by_groups.png'

@@ -277,53 +277,28 @@
                     <br>
                     How are your groups defined?
                     <br>
-                    <input type="radio" name="option4" value="True" checked>I have a group column. Enter the name of your group column</input>
+                    <input type="radio" name="option3" value="True" checked>I have a group column. Enter the name of your group column</input>
                     <input type="text" name="gcol" autocomplete="off">
                      <br>
                      <br>
-                    <input type="radio" name="option4" value="False">Group names are within the sample name.
+                    <input type="radio" name="option3" value="False">Group names are within the sample name.
                     Enter your group names as they are indicated in your sample names (separate with commas)</input>
                     <input type="text" name="glist" autocomplete="off">
                     <br>
                     <br>
                     Is it a time series or repeated measures?
                     <br>
-                    <input type="radio" name="option2" value="False" checked>No  --- measures are independent </input>
-                    <br>
                     <input type="radio" name="option2" value="True">Yes --- measures are dependent </input>
+                    <br>
+                    <input type="radio" name="option2" value="False" checked>No  --- measures are independent </input>
                     <br>
                     <br>
                     Is your data normally distributed?
                     <br>
-                    <input id="normalno" type="radio" name="option5" value="False" checked oninput="toggleView(false)">No  --- Non-parametric tests</input>
+                    <input id="normalyes" type="radio" name="option4" value="True" checked>Yes --- Parametric tests</input>
                     <br>
-                    <input id="normalyes" type="radio" name="option5" value="True" oninput="toggleView(true)">Yes --- Parametric tests</input>
+                    <input id="normalno" type="radio" name="option4" value="False">No  --- Non-parametric tests</input>
                     <br>
-
-                </td>
-            </tr>
-            <tr>
-                <td >
-                    <b> Model for Post-hoc test: </b>
-
-                    <div id="parametric" style="display: none">
-                        <br>
-                    Parametric:
-                    <br>
-                        <input id="p1" type="radio" name="option3" value="ttest_fdr">Pairwise t-test and FDR</input>
-                    <br>
-                    <input id="p2" type="radio" name="option3" value="bonferroni">Bonferroni</input>
-                    <br>
-                    </div>
-                    <div id="nonparametric">
-                                            <br>
-                    Non-parametric:
-                    <br>
-                    <input id="p3" type="radio" name="option3" value="fdr" checked>FDR</input>
-                    <br>
-                    <input id="p4" type="radio" name="option3" value="bonferroni">Bonferroni</input>
-                    <br>
-                    </div>
 
                 </td>
             </tr>
@@ -345,25 +320,7 @@
 </body>
 
 <footer>
-    <script>
-        function toggleView(bool) {
-            if (bool==true) {
-                document.getElementById('p2').checked = false
-                document.getElementById('p3').checked = false
-                document.getElementById('p1').checked = true
 
-                document.getElementById('parametric').style.display = 'block'
-                document.getElementById('nonparametric').style.display = 'none'
-            } else {
-                document.getElementById('p1').checked = false
-                document.getElementById('p2').checked = false
-                document.getElementById('p3').checked = true
-
-                document.getElementById('parametric').style.display = 'none'
-                document.getElementById('nonparametric').style.display  = 'block'
-            }
-        }
-    </script>
 </footer>
 
 </html>
