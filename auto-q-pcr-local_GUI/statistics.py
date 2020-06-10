@@ -1,12 +1,11 @@
 import pandas
 import pingouin as pg
 from pingouin import pairwise_ttests, multicomp, ttest
-from scipy.stats import mannwhitneyu, kruskal
+from scipy.stats import mannwhitneyu, wilcoxon
 import re
 
 
-def stats(model, quantity, data, targets, rm, nd, posthoc):
-
+def stats(model, quantity, data, targets, rm, nd):
 	if model == 'absolute':
 		data = data.drop(['NormQuant'], axis=1)
 		mean = 'NormMean'
@@ -31,117 +30,162 @@ def stats(model, quantity, data, targets, rm, nd, posthoc):
 				group1 = df[df['Group'].eq(group[0])][mean]
 				group2 = df[df['Group'].eq(group[1])][mean]
 				t_test = ttest(group1, group2, paired=bool(rm))
+				if rm == 'True':
+					t_test['paired'] = 'TRUE'
+				else:
+					t_test['paired'] = 'FALSE'
+				t_test['Target Name'] = item
 				if stats_dfs is None:
 					stats_dfs = t_test
 				else:
 					stats_dfs = stats_dfs.append(t_test, ignore_index=True)
+			# reformat output table
+			stats_dfs = stats_dfs.rename(columns={'cohen-d': 'effect size', 'BF10': 'Bayes factor', 'dof': 'DF'})
+			stats_dfs = stats_dfs.drop(['T'], axis=1)
+			cols = ['Target Name', 'DF', 'tail', 'paired', 'p-val', 'effect size', 'power', 'Bayes factor']
+			stats_dfs = stats_dfs.reindex(columns=cols)
 		elif quantity >= 3:
 			# ANOVA test
 			stats_dfs = pandas.DataFrame()
 			posthoc_dfs = pandas.DataFrame()
-			if rm == 'True':
-				# repeated measure anova
-				aov = pandas.DataFrame(['Repeated measure anova'])
-				aov = aov.append(pg.rm_anova(dv=mean, within='Group', subject='Target Name', data=data))
-				stats_dfs = aov
-
-			else:
-				# anova
-				pvals=[]
-				for item in targets:
-					aov = pg.anova(dv=mean, between='Group', data=data[data['Target Name'].eq(item)], detailed=True)
+			pvals = []
+			for item in targets:
+				if rm == 'True':
+					# repeated measure anova
+					aov = pg.rm_anova(dv=mean, data=data[data['Target Name'].eq(item)], within='Group', subject='Sample Name', detailed=True)
+					aov = aov.drop([1])
+					aov.drop(['eps'], axis=1)
 					pvals.append(aov['p-unc'][0])
-					aov2 = pandas.DataFrame(['anova_'+item])
-					aov = aov2.append(aov)
-					if stats_dfs is None:
-						stats_dfs = aov
-					else:
-						stats_dfs = stats_dfs.append(aov, ignore_index=True)
-					if posthoc == 'ttest_fdr':
-						ph = pandas.DataFrame(['T-Test+FDR_'+item])
-						ph = ph.append(pairwise_ttests(data=data[data['Target Name'].eq(item)], dv=mean, between='Group',
-													   padjust='fdr_bh'))
-						if posthoc_dfs is None:
-							posthoc_dfs = ph
-						else:
-							posthoc_dfs = posthoc_dfs.append(ph, ignore_index=True)
-					# bonferroni test
-					else:
-						ph = pandas.DataFrame(['Bonferroni'])
-						reject, pvals_corr = pg.multicomp(pvals, alpha=0.05, method='bonf')
-						post_hocs = pandas.DataFrame({'reject': reject, 'pvals_corr': pvals_corr}, index=range(len(pvals)))
-						ph = ph.append(post_hocs)
-						posthoc_dfs = ph
+					aov['measures'] = ['dependent']
+					ph = pairwise_ttests(data=data[data['Target Name'].eq(item)], dv=mean, within='Group',
+										 subject='Sample Name', padjust='fdr_bh')
+					ph['Target Name'] = item
+				else:
+					aov = pg.anova(dv=mean, between='Group', data=data[data['Target Name'].eq(item)], detailed=True)
+					aov = aov.drop([1])
+					pvals.append(aov['p-unc'][0])
+					aov['measures'] = ['independent']
+					ph = pairwise_ttests(data=data[data['Target Name'].eq(item)], dv=mean, between='Group', padjust='fdr_bh')
+					ph['Target Name'] = item
+				if stats_dfs is None:
+					stats_dfs = aov
+				else:
+					stats_dfs = stats_dfs.append(aov, ignore_index=True)
+				if posthoc_dfs is None:
+					posthoc_dfs = ph
+				else:
+					posthoc_dfs = posthoc_dfs.append(ph, ignore_index=True)
+			reject, pvals_corr = pg.multicomp(pvals, alpha=0.05, method='bonf')
+			# reformat output tables
+			stats_dfs = stats_dfs.drop(['F', 'Source'], axis=1)
+			stats_dfs = stats_dfs.rename(columns={'p-unc': 'p-value', 'np2': 'effect size'})
+			stats_dfs['Target Name'] = targets
+			stats_dfs['p-value corrected'] = pvals_corr
+			stats_dfs['distribution'] = ['parametric'] * len(targets)
+			stats_dfs['test'] = ['ANOVA'] * len(targets)
+			stats_dfs['statistics'] = ['NA'] * len(targets)
+			cols = ['Target Name', 'DF', 'MS', 'SS', 'p-value', 'p-value corrected', 'measures', 'distribution', 'test',
+					'statistics', 'effect size']
+			stats_dfs = stats_dfs.reindex(columns=cols)
+
+			posthoc_dfs = posthoc_dfs.drop(['Contrast', 'T'], axis=1)
+			posthoc_dfs = posthoc_dfs.rename(columns={'hedges': 'effect size', 'p-corr': 'p-value corrected', 'p-unc': 'p-value',
+													  'p-adjust': 'correction method', 'BF10': 'Bayes factor', 'dof': 'DF'})
+			cols2 = ['Target Name', 'A', 'B', 'DF', 'p-value corrected', 'p-value', 'correction method', 'Paired', 'Parametric', 'effect size', 'Bayes factor']
+			posthoc_dfs = posthoc_dfs.reindex(columns=cols2)
 
 	# nonparametric tests for not normally distributed data
 	else:
 		if quantity == 2:
-			# Mann-Whitney U test
 			stats_dfs = pandas.DataFrame()
 			posthoc_dfs = pandas.DataFrame()
-			# posthoc_dfs = pandas.DataFrame()
 			group = data['Group']
 			group = group.drop_duplicates(keep='first').values.tolist()
 			for item in targets:
 				df = data[data['Target Name'].eq(item)]
 				group1 = df[df['Group'].eq(group[0])][mean]
 				group2 = df[df['Group'].eq(group[1])][mean]
-				mwu_test = mannwhitneyu(group1, group2)
-				t = pandas.DataFrame(['MannWhitney_' + item])
-				mwu_test = t.append(
-					pandas.DataFrame({'statistic': mwu_test.statistic , 'pvalue': mwu_test.pvalue} , index=[1]))
-				if stats_dfs is None:
-					stats_dfs = mwu_test
+				if rm == 'True':
+					# Mann-Whitney U test
+					test = mannwhitneyu(group1, group2)
+					test = pandas.DataFrame({'Target Name': item, 'pvalue': test.pvalue, 'statistic': test.statistic}, index=[0])
 				else:
-					stats_dfs = stats_dfs.append(mwu_test , ignore_index=True)
+					test = wilcoxon(group1, group2)
+					test = pandas.DataFrame({'Target Name': item, 'pvalue': test.pvalue, 'statistic': test.statistic}, index=[0])
+				if stats_dfs is None:
+					stats_dfs = test
+				else:
+					stats_dfs = stats_dfs.append(test, ignore_index=True)
 
 		elif quantity >= 3:
 			stats_dfs = pandas.DataFrame()
 			posthoc_dfs = pandas.DataFrame()
-			if rm == 'True':
-				# friedman test for repeated measurements
-				f = pandas.DataFrame(['Friedman test'])
-				f = f.append(pg.friedman(dv=mean , within='Group' , subject='Target Name' , data=data))
-				stats_dfs = f
-			else:
-				# Kruskal-Wallis H test
-				pvals = []
-				group = data['Group']
-				group = group.drop_duplicates(keep='first').values.tolist()
-				for item in targets:
-					df = data[data['Target Name'].eq(item)]
-					groups=[]
-					for i in range(len(group)):
-						groups.append(df[df['Group'].eq(group[i])][mean])
-					kw_test = kruskal(*groups)
-					pvals.append(kw_test.pvalue)
-					t = pandas.DataFrame(['Kruskal-Wallis_' + item])
-					kw_test = t.append(pandas.DataFrame({'statistic': kw_test.statistic, 'pvalue': kw_test.pvalue}, index=[1]))
-					if stats_dfs is None:
-						stats_dfs = kw_test
-					else:
-						stats_dfs = stats_dfs.append(kw_test, ignore_index=True)
-					# bonferroni test
-					if posthoc == 'bonferroni':
-						ph = pandas.DataFrame(['Bonferroni'])
-						reject, pvals_corr = pg.multicomp(pvals, alpha=0.05, method='bonf')
-						post_hocs = pandas.DataFrame({'reject': reject, 'pvals_corr': pvals_corr}, index=range(len(pvals)))
-						ph = ph.append(post_hocs)
-						posthoc_dfs = ph
-					else:
-						# FDR_BH tests
-						ph = pandas.DataFrame(['FDR_BH'])
-						reject, pvals_corr = pg.multicomp(pvals , alpha=0.05 , method='fdr_bh')
-						post_hocs = pandas.DataFrame({'reject': reject , 'pvals_corr': pvals_corr}, index=range(len(pvals)))
-						ph = ph.append(post_hocs)
-						posthoc_dfs = ph
+
+			pvals = []
+			for item in targets:
+				if rm == 'True':
+					# friedman test for repeated measurements
+					df = pg.friedman(dv=mean, within='Group', subject='Sample Name', data=data[data['Target Name'].eq(item)])
+					pvals.append(df['p-unc'][0])
+					df['test'] = ['Friedman Q']
+					df['measures'] = ['dependent']
+					df = df.rename(columns={'Q': 'statistics'})
+					df['Target Name'] = item
+					df['DF'] = 'NA'
+					ph = pairwise_ttests(data=data[data['Target Name'].eq(item)], dv=mean, within='Group',
+										 subject='Sample Name', padjust='fdr_bh', parametric=False)
+					ph['Target Name'] = item
+					ph['DF'] = 'NA'
+					ph['Bayes factor'] = 'NA'
+				else:
+					# Kruskal-Wallis H test
+					df = pg.kruskal(dv=mean, between='Group', data=data[data['Target Name'].eq(item)])
+					pvals.append(df['p-unc'][0])
+					df['test'] = ['Kruskal-Wallis H']
+					df['measures'] = ['independent']
+					df = df.rename(columns={'H': 'statistics'})
+					df['Target Name'] = item
+					df['DF'] = 'NA'
+					ph = pairwise_ttests(data=data[data['Target Name'].eq(item)], dv=mean, between='Group',
+										 padjust='fdr_bh', parametric=False)
+					ph['Target Name'] = item
+					ph['DF'] = 'NA'
+					ph['Bayes factor'] = 'NA'
+				if stats_dfs is None:
+					stats_dfs = df
+				else:
+					stats_dfs = stats_dfs.append(df, ignore_index=True)
+				if posthoc_dfs is None:
+					posthoc_dfs = ph
+				else:
+					posthoc_dfs = posthoc_dfs.append(ph, ignore_index=True)
+
+			reject, pvals_corr = pg.multicomp(pvals, alpha=0.05, method='bonf')
+			# reformat output tables
+			stats_dfs = stats_dfs.rename(columns={'dof': 'DF', 'p-unc': 'p-value'})
+			stats_dfs['p-value corrected'] = pvals_corr
+			stats_dfs['distribution'] = ['non-parametric'] * len(targets)
+			stats_dfs['MS'] = ['NA'] * len(targets)
+			stats_dfs['SS'] = ['NA'] * len(targets)
+			stats_dfs['effect size'] = ['NA'] * len(targets)
+			cols = ['Target Name', 'DF', 'MS', 'SS', 'p-value', 'p-value corrected', 'measures', 'distribution',
+					'test', 'statistics', 'effect size']
+			stats_dfs = stats_dfs.reindex(columns=cols)
+
+			posthoc_dfs = posthoc_dfs.drop(['Contrast'], axis=1)
+			posthoc_dfs = posthoc_dfs.rename(columns={'hedges': 'effect size', 'p-corr': 'p-value corrected', 'p-unc': 'p-value',
+								'p-adjust': 'correction method', 'BF10': 'Bayes factor'})
+			cols2 = ['Target Name', 'A', 'B', 'DF', 'p-value corrected', 'p-value', 'correction method', 'Paired', 'Parametric',
+					 'effect size', 'Bayes factor']
+			posthoc_dfs = posthoc_dfs.reindex(columns=cols2)
 
 	return stats_dfs, posthoc_dfs
 
 
 # Extract groups from sample name
 def add_groups(df, groups):
-	df['Group'] = df['Sample Name'].str.extract(re.compile('(' + '|'.join(groups) + ')', re.IGNORECASE), expand=False).fillna('')
+	df['Group'] = df['Sample Name'].str.extract(re.compile('(' + '|'.join(groups) + ')', re.IGNORECASE),
+												expand=False).fillna('')
 	df['Sample Name'] = df['Sample Name'].str.replace(re.compile('(' + '|'.join(groups) + ')', re.IGNORECASE), '')
 
 	return df
