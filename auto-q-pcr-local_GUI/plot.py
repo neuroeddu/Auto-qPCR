@@ -26,7 +26,7 @@ def plots(dataframe, model, targets, samples):
 					error_kw=error_kw, width=barwidth, label=item)
 			plt.xlabel(item, fontweight='bold', fontsize=fs+10, labelpad=20)
 			plt.xticks([i for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
-			plt.ylabel('Normalized Expression Level', fontsize=fs+10, fontweight='bold', labelpad=20)
+			plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 			# set axes width
 			plt.gca().spines['bottom'].set_linewidth(5)
@@ -44,7 +44,7 @@ def plots(dataframe, model, targets, samples):
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.ylabel('Normalized Expression Level', fontsize=fs+10, fontweight='bold', labelpad=20)
+		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
@@ -68,7 +68,7 @@ def plots(dataframe, model, targets, samples):
 
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.ylabel('Normalized Expression Level', fontsize=fs+10, fontweight='bold', labelpad=20)
+		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
@@ -82,7 +82,7 @@ def plots(dataframe, model, targets, samples):
 		plots.append(plot_by_genes)
 
 	# Genomic stability: grouped by chromosomes and by cell lines
-	elif model == 'stability2':
+	elif model == 'stability':
 		# plot grouped by chromosomes
 		plot_by_samples = plt.figure(figsize=(40, 25))
 		counter = 0
@@ -145,7 +145,7 @@ def plots(dataframe, model, targets, samples):
 					error_kw=error_kw, width=barwidth, edgecolor='white', label=item)
 			plt.xlabel(item, fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.xticks([i for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
-			if model == 'relative':
+			if model == 'relative_dCT':
 				plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 			else:
 				plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
@@ -166,7 +166,7 @@ def plots(dataframe, model, targets, samples):
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
-		if model == 'relative':
+		if model == 'relative_dCT':
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
@@ -193,7 +193,7 @@ def plots(dataframe, model, targets, samples):
 
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
-		if model == 'relative':
+		if model == 'relative_dCT':
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
@@ -234,7 +234,7 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.ylabel('Normalized Expression Level', fontsize=fs+10, fontweight='bold', labelpad=20)
+		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
@@ -259,7 +259,7 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.ylabel('Normalized Expression Level', fontsize=fs+10, fontweight='bold', labelpad=20)
+		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
@@ -272,7 +272,7 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 		plt.close()
 		plots.append(plot_by_genes)
 
-	elif model != 'stability2':
+	elif model != 'stability':
 		plot_by_samples = plt.figure(figsize=(40, 30))
 		counter = 0
 		for item in targets:
@@ -314,7 +314,7 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
-		if model == 'relative':
+		if model == 'relative_dCT':
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
@@ -360,7 +360,7 @@ def plot_by_groups(df, model, targets, cgenes):
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))], groups, rotation='vertical', fontsize=fs)
 		plt.xlabel('Groups', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.ylabel('Normalized Expression Level', fontsize=fs+10, fontweight='bold', labelpad=20)
+		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
@@ -388,7 +388,7 @@ def plot_by_groups(df, model, targets, cgenes):
 			counter += 1
 		plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.ylabel('Normalized Expression Level', fontsize=fs+10, fontweight='bold', labelpad=20)
+		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
@@ -400,7 +400,7 @@ def plot_by_groups(df, model, targets, cgenes):
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_target)
-	elif model == 'stability2':
+	elif model == 'stability':
 		# grouped by groups on the x-axis
 		counter = 0
 		plot_by_group = plt.figure(figsize=(20, 25))
@@ -479,7 +479,7 @@ def plot_by_groups(df, model, targets, cgenes):
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))], groups, rotation='horizontal', fontsize=fs)
 		plt.xlabel('Groups', fontsize=fs+10, fontweight='bold', labelpad=20)
-		if model == 'relative':
+		if model == 'relative_dCT':
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
@@ -511,7 +511,7 @@ def plot_by_groups(df, model, targets, cgenes):
 			counter += 1
 			plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
-		if model == 'relative':
+		if model == 'relative_dCT':
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)

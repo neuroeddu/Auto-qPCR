@@ -51,18 +51,18 @@ def process_data(data , model , cgenes , cutoff , max_outliers , target_sorter=N
 
 	# Calls the different processing models depending on the model argument
 	if model == 'absolute':
-		data = cleanup_outliers(data , "Quantity" , cutoff , max_outliers)
-		data , data_summary , targets , samples = absolute.process(data)
+		data = cleanup_outliers(data, "Quantity", cutoff, max_outliers)
+		data, data_summary, targets, samples = absolute.process(data)
 
-	elif model == 'relative':
-		data = cleanup_outliers(data , "CT" , cutoff , max_outliers)
-		data , data_summary , targets , samples = relative.process(data)
+	elif model == 'relative_dCT' or 'relative_ddCT':
+		data = cleanup_outliers(data, "CT", cutoff, max_outliers)
+		data, data_summary, targets, samples = relative.process(data)
 
 	else:
-		data = cleanup_outliers(data , "CT" , cutoff , max_outliers)
-		data , data_summary , targets , samples = stability.process(data , csample)
+		data = cleanup_outliers(data, "CT", cutoff, max_outliers)
+		data, data_summary, targets, samples = stability.process(data, csample)
 
-	return data , data_summary , targets , samples
+	return data, data_summary, targets, samples
 
 
 def cleanup_outliers(d , feature , cutoff , max_outliers):
@@ -107,4 +107,4 @@ def cleanup_outliers(d , feature , cutoff , max_outliers):
 				d['Outliers'].loc[j] = True
 				d['Ignore'].loc[j] = True
 
-	return (d[(d['Ignore'].eq(False))])
+	return d[(d['Ignore'].eq(False))]

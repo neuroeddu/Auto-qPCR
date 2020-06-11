@@ -7,7 +7,6 @@ import statistics
 import re
 from zipfile import ZipFile
 
-
 app: Flask = Flask(__name__)
 
 
@@ -18,7 +17,6 @@ def form():
 
 @app.route('/download', methods=["POST"])
 def transform_view():
-
 	files = request.files.getlist('file[]')
 	if len(files) == 0:
 		return "No file"
@@ -33,8 +31,8 @@ def transform_view():
 			if not h:
 				i = -1
 				break
-			#if not h.replace(",",""):
-			#i += 1
+			# if not h.replace(",",""):
+			# i += 1
 			if h.upper().startswith("WELL"):
 				break
 			i += 1
@@ -43,46 +41,48 @@ def transform_view():
 			continue
 		else:
 			print("Header found at {} in '{}'".format(i, item))
-		#print(i)
+		# print(i)
 
 		stream.seek(0)
-		filedata = pd.read_csv(stream ,
-							   skip_blank_lines=True ,
-							   skipinitialspace=True ,
-							   engine='python' ,
-							   encoding="utf-8" ,
-							   header= i)
+		filedata = pd.read_csv(stream,
+							   skip_blank_lines=True,
+							   skipinitialspace=True,
+							   engine='python',
+							   encoding="utf-8",
+							   header=i)
 
 		# print(filedata)
-		data = data.append(filedata , ignore_index=True , sort=True)
+		data = data.append(filedata, ignore_index=True, sort=True)
 		data['filename'] = item.filename
-		#stream.seek(0)
+	# stream.seek(0)
 
 	model = request.form['option']
 	cgenes = request.form['cgenes']
-	cutoff = request.form.get('cutoff' , type=float)
+	cutoff = request.form.get('cutoff', type=float)
 	max_outliers = request.form.get('max_outliers', type=float)
 	target_sorter = request.form['target_sorter']
 	sample_sorter = request.form['sample_sorter']
 	csample = request.form['csample']
 	qty = request.form.get('quantity', type=int)
+	gcol = request.form['gcol']
+	glist = request.form['glist']
 	rm = request.form['option2']
 	nd = request.form['option4']
 
-	data1, summary_data, targets, samples = AUTOqPCR.process_data(data, model, cgenes, cutoff, max_outliers, target_sorter, sample_sorter, csample)
+	data1, summary_data, targets, samples = AUTOqPCR.process_data(data, model, cgenes, cutoff, max_outliers,
+																  target_sorter, sample_sorter, csample)
 
-	plots = plot.plots(summary_data , model , targets , samples)
-	plots2 = plot.plots_wo_controls(summary_data , model , targets , samples, cgenes)
-	
+	plots = plot.plots(summary_data, model, targets, samples)
+	plots2 = plot.plots_wo_controls(summary_data, model, targets, samples, cgenes)
+
 	# making stats csv
 	if qty is not None:
 		if request.form['option3'] != 'False':
-			gcol = request.form['gcol']
 			if gcol.lower() in data.columns.str.lower():
 				col = gcol
 			data1['Group'] = data[col]
 		else:
-			groups = request.form['glist'].split(',')
+			groups = glist.split(',')
 			data1 = statistics.add_groups(data1, groups)
 		# print(data1)
 		group_plot = plot.plot_by_groups(data1, model, targets, cgenes)
@@ -95,6 +95,12 @@ def transform_view():
 	output = summary_data.to_csv()
 	clean_output = data1.to_csv()
 
+	# making log.txt file
+	log = 'Model: '+model+'\nEndogenous control genes: '+cgenes+'\nCut-off: '+str(cutoff)+'\nMaximum Outliers: '+\
+		  str(max_outliers)+'\nTarget Order: '+target_sorter+'\nSample Order: '+sample_sorter+'\nControl Sample: '+\
+		  csample+'\nNumber of groups: '+str(qty)+'\nGroup column name: '+gcol+'\nGroup name: '+glist+'\nRepeated measures: '+\
+		  rm+'\n'+'Normal distribution: '+nd+'\n'
+
 	outfile = io.BytesIO()
 	with ZipFile(outfile, 'w') as myzip:
 		if qty is not None:
@@ -103,18 +109,18 @@ def transform_view():
 					myzip.writestr('ttest_result.csv', stats_output)
 				else:
 					if rm == 'True':
-						myzip.writestr('MannWhitneyUTest_result.csv' , stats_output)
+						myzip.writestr('MannWhitneyUTest_result.csv', stats_output)
 					else:
 						myzip.writestr('WilcoxonTest_result.csv', stats_output)
 			else:
 				if nd == 'True':
-					myzip.writestr('ANOVA_result.csv' , stats_output)
+					myzip.writestr('ANOVA_result.csv', stats_output)
 					myzip.writestr('Posthoc_result.csv', posthoc_output)
 				else:
 					if rm == 'True':
-						myzip.writestr('Friedman_result.csv' , stats_output)
+						myzip.writestr('Friedman_result.csv', stats_output)
 					else:
-						myzip.writestr('KruskalWallisTest_result.csv' , stats_output)
+						myzip.writestr('KruskalWallisTest_result.csv', stats_output)
 					myzip.writestr('Posthoc_result.csv', posthoc_output)
 
 			buf = io.BytesIO()
@@ -129,25 +135,26 @@ def transform_view():
 			buf.close()
 		myzip.writestr('clean_data.csv', clean_output)
 		myzip.writestr('summary_data.csv', output)
+		myzip.writestr('log.txt', log)
 		# individual plots
-		for i in range(len(plots)-2):
+		for i in range(len(plots) - 2):
 			buf = io.BytesIO()
 			plots[i].savefig(buf)
-			if model != 'stability2':
-				image_name = targets[i]+'.png'
+			if model != 'instability':
+				image_name = targets[i] + '.png'
 			myzip.writestr(image_name, buf.getvalue())
 		# grouped plots by sample and by genes
 		buf = io.BytesIO()
 		plots[len(plots) - 2].savefig(buf)
 		image_name = 'Sample_Groups.png'
-		myzip.writestr(image_name , buf.getvalue())
+		myzip.writestr(image_name, buf.getvalue())
 		buf.close()
 		buf = io.BytesIO()
 		plots[len(plots) - 1].savefig(buf)
 		image_name = 'All_Targets.png'
-		myzip.writestr(image_name , buf.getvalue())
+		myzip.writestr(image_name, buf.getvalue())
 		buf.close()
-		if model != 'stability2':
+		if model != 'instability':
 			# plots with endogeneous controls removed
 			buf = io.BytesIO()
 			plots2[0].savefig(buf)
@@ -163,13 +170,12 @@ def transform_view():
 
 	response = make_response(outfile.getvalue())
 	response.headers['Content-Type'] = 'application/actet-stream'
-	response.headers['Content-Disposition'] = 'attachment; filename=outputs_'+model+'.zip'
+	response.headers['Content-Disposition'] = 'attachment; filename=outputs_' + model + '.zip'
 	outfile.close()
 
 	return response
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
 	app.debug = True
-	app.run(host = '0.0.0.0', port=5000)
-
+	app.run(host='0.0.0.0', port=5000)

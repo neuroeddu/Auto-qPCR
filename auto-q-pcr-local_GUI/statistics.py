@@ -83,9 +83,9 @@ def stats(model, quantity, data, targets, rm, nd):
 			stats_dfs['p-value corrected'] = pvals_corr
 			stats_dfs['distribution'] = ['parametric'] * len(targets)
 			stats_dfs['test'] = ['ANOVA'] * len(targets)
-			stats_dfs['statistics'] = ['NA'] * len(targets)
+			stats_dfs['statistic'] = ['NA'] * len(targets)
 			cols = ['Target Name', 'DF', 'MS', 'SS', 'p-value', 'p-value corrected', 'measures', 'distribution', 'test',
-					'statistics', 'effect size']
+					'statistic', 'effect size']
 			stats_dfs = stats_dfs.reindex(columns=cols)
 
 			posthoc_dfs = posthoc_dfs.drop(['Contrast', 'T'], axis=1)
@@ -129,7 +129,7 @@ def stats(model, quantity, data, targets, rm, nd):
 					pvals.append(df['p-unc'][0])
 					df['test'] = ['Friedman Q']
 					df['measures'] = ['dependent']
-					df = df.rename(columns={'Q': 'statistics'})
+					df = df.rename(columns={'Q': 'statistic'})
 					df['Target Name'] = item
 					df['DF'] = 'NA'
 					ph = pairwise_ttests(data=data[data['Target Name'].eq(item)], dv=mean, within='Group',
@@ -143,7 +143,7 @@ def stats(model, quantity, data, targets, rm, nd):
 					pvals.append(df['p-unc'][0])
 					df['test'] = ['Kruskal-Wallis H']
 					df['measures'] = ['independent']
-					df = df.rename(columns={'H': 'statistics'})
+					df = df.rename(columns={'H': 'statistic'})
 					df['Target Name'] = item
 					df['DF'] = 'NA'
 					ph = pairwise_ttests(data=data[data['Target Name'].eq(item)], dv=mean, between='Group',
@@ -169,7 +169,7 @@ def stats(model, quantity, data, targets, rm, nd):
 			stats_dfs['SS'] = ['NA'] * len(targets)
 			stats_dfs['effect size'] = ['NA'] * len(targets)
 			cols = ['Target Name', 'DF', 'MS', 'SS', 'p-value', 'p-value corrected', 'measures', 'distribution',
-					'test', 'statistics', 'effect size']
+					'test', 'statistic', 'effect size']
 			stats_dfs = stats_dfs.reindex(columns=cols)
 
 			posthoc_dfs = posthoc_dfs.drop(['Contrast'], axis=1)

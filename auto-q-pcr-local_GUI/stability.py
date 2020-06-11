@@ -60,7 +60,7 @@ def process(data , csample):
 			data.at[i_row , 'rqSEM'] = mean_sem_result[data.at[i_row , 'Target Name']][data.at[i_row , 'Sample Name']][
 				2]
 	# indel column: threshold=0.3
-	data['Indel'] = data['rq'].apply(lambda x: 'Insertion' if x > 1.3 else ('Deletion' if x < 0.7 else 'Normal'))
+	data['Indel'] = data['rqMean'].apply(lambda x: 'Insertion' if x > 1.3 else ('Deletion' if x < 0.7 else 'Normal'))
 
 	# Making the intermediate dataframe
 	data = data.append(outlier_data)
@@ -70,7 +70,7 @@ def process(data , csample):
 		df[item] = data[item]
 	df.reset_index(drop=True , inplace=True)
 
-	data_output_summary = data.groupby(['Target Name' , 'Sample Name'], sort=False).agg(
+	data_output_summary = data.groupby(['Target Name' , 'Sample Name', 'Indel'], sort=False).agg(
 		{'rq': [np.size , 'mean'] , 'rqSD': 'mean' , 'rqSEM': 'mean'})
 
 	return df, data_output_summary, targets, samples
