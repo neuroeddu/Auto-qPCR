@@ -5,6 +5,7 @@ import AUTOqPCR
 import plot
 import statistics
 import re
+import datetime
 from zipfile import ZipFile
 
 app: Flask = Flask(__name__)
@@ -168,9 +169,13 @@ def transform_view():
 			buf.close()
 			myzip.close()
 
+	# get current machine time
+	now = datetime.datetime.now()
+	date_string = now.strftime("%m-%d-%Y")
+
 	response = make_response(outfile.getvalue())
 	response.headers['Content-Type'] = 'application/actet-stream'
-	response.headers['Content-Disposition'] = 'attachment; filename=outputs_' + model + '.zip'
+	response.headers['Content-Disposition'] = 'attachment; filename=outputs_' + model + '_'+ date_string + '.zip'
 	outfile.close()
 
 	return response
