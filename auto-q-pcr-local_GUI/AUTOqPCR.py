@@ -54,7 +54,7 @@ def process_data(data , model , cgenes , cutoff , max_outliers , target_sorter=N
 		data = cleanup_outliers(data, "Quantity", cutoff, max_outliers)
 		data, data_summary, targets, samples = absolute.process(data)
 
-	elif model == 'relative_dCT' or 'relative_ddCT':
+	elif model == 'relative_dCT':
 		data = cleanup_outliers(data, "CT", cutoff, max_outliers)
 		data, data_summary, targets, samples = relative.process(data)
 
