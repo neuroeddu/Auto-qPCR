@@ -9,7 +9,7 @@ def stats(model, quantity, data, targets, rm, nd):
 	if model == 'absolute':
 		data = data.drop(['NormQuant'], axis=1)
 		mean = 'NormMean'
-	elif model == 'relative':
+	else:
 		data = data.drop(['rq'], axis=1)
 		mean = 'rqMean'
 
