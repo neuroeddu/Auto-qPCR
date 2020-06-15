@@ -5,8 +5,8 @@ Maximum Outliers: 0.5
 Target Order: PAX6,CAMK2A,GRIN1
 Sample Order: AiW002-2-D0, AiW002-2-D7,KYOU-D0,KYOU-D7
 Control Sample: 
-Number of groups: None
+Number of groups: 2
 Group column name: 
-Group name: 
-Repeated measures: False
+Group name: D0,D7
+Repeated measures: True
 Normal distribution: True
