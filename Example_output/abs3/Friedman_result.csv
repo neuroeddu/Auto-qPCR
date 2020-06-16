@@ -1,0 +1,6 @@
+Target Name,DF,MS,SS,p-value,p-value corrected,measures,distribution,test,statistic,effect size
+GAPDH,NA,NA,NA,0.01409765951310594,0.0704882975655297,dependent,non-parametric,Friedman Q,10.6,NA
+ACTB,NA,NA,NA,0.01409765951310594,0.0704882975655297,dependent,non-parametric,Friedman Q,10.6,NA
+KCNJ6,NA,NA,NA,0.002192438137306533,0.010962190686532664,dependent,non-parametric,Friedman Q,14.6,NA
+SYP,NA,NA,NA,0.002192438137306533,0.010962190686532664,dependent,non-parametric,Friedman Q,14.6,NA
+GRIA1,NA,NA,NA,0.0038467943048894966,0.019233971524447484,dependent,non-parametric,Friedman Q,13.4,NA

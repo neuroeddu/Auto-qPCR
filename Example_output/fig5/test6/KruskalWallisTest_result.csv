@@ -1,6 +1,0 @@
-Target Name,DF,MS,SS,p-value,p-value corrected,measures,distribution,test,statistic,effect size
-B2M,NA,NA,NA,0.2913611078947288,1.0,independent,non-parametric,Kruskal-Wallis H,3.736,NA
-NLGN1,NA,NA,NA,0.021296405690978532,0.10648202845489266,independent,non-parametric,Kruskal-Wallis H,9.7,NA
-NLGN2,NA,NA,NA,0.00039889991224027586,0.0019944995612013795,independent,non-parametric,Kruskal-Wallis H,18.206,NA
-NLGN3,NA,NA,NA,0.00039889991224027586,0.0019944995612013795,independent,non-parametric,Kruskal-Wallis H,18.206,NA
-NRXN2,NA,NA,NA,0.2913611078947288,1.0,independent,non-parametric,Kruskal-Wallis H,3.736,NA
