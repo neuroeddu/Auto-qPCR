@@ -3,7 +3,7 @@ Endogenous control genes: ACTB,GAPDH
 Cut-off: 0.3
 Maximum Outliers: 0.5
 Target Order: 
-Sample Order: 
+Sample Order: AiW002-2-D0, AiW002-2-D7,KYOU-D0,KYOU-D7, FX8-1-D0,FX8-1-D7,FX11-7-D0, FX11-7-D7
 Control Sample: 
 Number of groups: 2
 Group column name: 
