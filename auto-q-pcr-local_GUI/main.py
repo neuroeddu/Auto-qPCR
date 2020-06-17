@@ -53,9 +53,10 @@ def transform_view():
 							   header=i)
 
 		# print(filedata)
+		filedata.rename(columns=rx_rename, inplace=True)
 		data = data.append(filedata, ignore_index=True, sort=True)
 		data['filename'] = item.filename
-		data.rename(columns=rx_rename, inplace=True)
+
 	# stream.seek(0)
 
 	model = request.form['option']
