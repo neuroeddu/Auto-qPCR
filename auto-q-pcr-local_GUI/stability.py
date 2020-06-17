@@ -2,7 +2,7 @@ import pandas
 import numpy as np
 
 
-def process(model, data , csample):
+def process(model, data , csample, colnames=None):
 	outlier_data = data[data['Outliers'].eq(True)]
 	data = data[data['Outliers'].eq(False)]
 
@@ -66,7 +66,16 @@ def process(model, data , csample):
 		# indel column: threshold=0.3
 		data['Indel'] = data['rqMean'].apply(
 			lambda x: 'Insertion' if x > 1.3 else ('Deletion' if x < 0.7 else 'Normal'))
-		cols = ['Target Name', 'Sample Name', 'rq', 'rqMean', 'rqSD', 'rqSEM', 'Outliers', 'Indel']
+		if colnames is not None:
+			cnames = [c.strip().lower() for c in colnames.split(',')]
+			clist = []
+			for c in data.columns.values.tolist():
+				if c.lower() in cnames:
+					clist.append(c)
+			cols = ['Target Name', 'Sample Name', 'rq', 'rqMean', 'rqSD', 'rqSEM', 'Outliers', 'Indel'].append(
+				clist)
+		else:
+			cols = ['Target Name', 'Sample Name', 'rq', 'rqMean', 'rqSD', 'rqSEM', 'Outliers', 'Indel']
 		df = pandas.DataFrame(columns=cols)
 		for item in cols:
 			df[item] = data[item]
@@ -75,7 +84,15 @@ def process(model, data , csample):
 		data_output_summary = data.groupby(['Target Name' , 'Sample Name', 'Indel'], sort=False).agg(
 			{'rq': [np.size , 'mean'] , 'rqSD': 'mean' , 'rqSEM': 'mean'})
 	else:
-		cols = ['Target Name', 'Sample Name', 'rq', 'rqMean', 'rqSD', 'rqSEM', 'Outliers']
+		if colnames is not None:
+			cnames = [c.strip().lower() for c in colnames.split(',')]
+			clist = []
+			for c in data.columns.values.tolist():
+				if c.lower() in cnames:
+					clist.append(c)
+			cols = ['Target Name', 'Sample Name', 'rq', 'rqMean', 'rqSD', 'rqSEM', 'Outliers']+clist
+		else:
+			cols = ['Target Name', 'Sample Name', 'rq', 'rqMean', 'rqSD', 'rqSEM', 'Outliers']
 		df = pandas.DataFrame(columns=cols)
 		for item in cols:
 			df[item] = data[item]
@@ -83,6 +100,5 @@ def process(model, data , csample):
 
 		data_output_summary = data.groupby(['Target Name', 'Sample Name'], sort=False).agg(
 			{'rq': [np.size, 'mean'], 'rqSD': 'mean', 'rqSEM': 'mean'})
-
 
 	return df, data_output_summary, targets, samples

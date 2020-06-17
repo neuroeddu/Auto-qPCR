@@ -23,13 +23,14 @@ def stats(model, quantity, data, targets, rm, nd):
 			# T-Test between 2 groups
 			stats_dfs = pandas.DataFrame()
 			posthoc_dfs = pandas.DataFrame()
-			group = data['Group']
+			group = data['Group'].dropna()
 			group = group.drop_duplicates(keep='first').values.tolist()
 			for item in targets:
 				df = data[data['Target Name'].eq(item)]
 				group1 = df[df['Group'].eq(group[0])][mean]
 				group2 = df[df['Group'].eq(group[1])][mean]
 				t_test = ttest(group1, group2, paired=bool(rm))
+
 				if rm == 'True':
 					t_test['paired'] = 'TRUE'
 				else:
@@ -41,8 +42,7 @@ def stats(model, quantity, data, targets, rm, nd):
 					stats_dfs = stats_dfs.append(t_test, ignore_index=True)
 			# reformat output table
 			stats_dfs = stats_dfs.rename(columns={'cohen-d': 'effect size', 'BF10': 'Bayes factor', 'dof': 'DF'})
-			stats_dfs = stats_dfs.drop(['T'], axis=1)
-			cols = ['Target Name', 'DF', 'tail', 'paired', 'p-val', 'effect size', 'power', 'Bayes factor']
+			cols = ['Target Name', 'DF', 'T', 'tail', 'paired', 'p-val', 'effect size', 'power', 'Bayes factor']
 			stats_dfs = stats_dfs.reindex(columns=cols)
 		elif quantity >= 3:
 			# ANOVA test
@@ -60,6 +60,7 @@ def stats(model, quantity, data, targets, rm, nd):
 					ph = pairwise_ttests(data=data[data['Target Name'].eq(item)], dv=mean, within='Group',
 										 subject='Sample Name', padjust='fdr_bh')
 					ph['Target Name'] = item
+					ph['Test'] = 'T-Test'
 				else:
 					aov = pg.anova(dv=mean, between='Group', data=data[data['Target Name'].eq(item)], detailed=True)
 					aov = aov.drop([1])
@@ -67,6 +68,7 @@ def stats(model, quantity, data, targets, rm, nd):
 					aov['measures'] = ['independent']
 					ph = pairwise_ttests(data=data[data['Target Name'].eq(item)], dv=mean, between='Group', padjust='fdr_bh')
 					ph['Target Name'] = item
+					ph['Test'] = 'T-Test'
 				if stats_dfs is None:
 					stats_dfs = aov
 				else:
@@ -77,21 +79,22 @@ def stats(model, quantity, data, targets, rm, nd):
 					posthoc_dfs = posthoc_dfs.append(ph, ignore_index=True)
 			reject, pvals_corr = pg.multicomp(pvals, alpha=0.05, method='bonf')
 			# reformat output tables
-			stats_dfs = stats_dfs.drop(['F', 'Source'], axis=1)
+			stats_dfs = stats_dfs.drop(['Source'], axis=1)
 			stats_dfs = stats_dfs.rename(columns={'p-unc': 'p-value', 'np2': 'effect size'})
 			stats_dfs['Target Name'] = targets
 			stats_dfs['p-value corrected'] = pvals_corr
 			stats_dfs['distribution'] = ['parametric'] * len(targets)
 			stats_dfs['test'] = ['ANOVA'] * len(targets)
 			stats_dfs['statistic'] = ['NA'] * len(targets)
-			cols = ['Target Name', 'DF', 'MS', 'SS', 'p-value', 'p-value corrected', 'measures', 'distribution', 'test',
+			cols = ['Target Name', 'DF', 'F', 'MS', 'SS', 'p-value', 'p-value corrected', 'measures', 'distribution', 'test',
 					'statistic', 'effect size']
 			stats_dfs = stats_dfs.reindex(columns=cols)
 
 			posthoc_dfs = posthoc_dfs.drop(['Contrast', 'T'], axis=1)
 			posthoc_dfs = posthoc_dfs.rename(columns={'hedges': 'effect size', 'p-corr': 'p-value corrected', 'p-unc': 'p-value',
 													  'p-adjust': 'correction method', 'BF10': 'Bayes factor', 'dof': 'DF'})
-			cols2 = ['Target Name', 'A', 'B', 'DF', 'p-value corrected', 'p-value', 'correction method', 'Paired', 'Parametric', 'effect size', 'Bayes factor']
+			cols2 = ['Target Name', 'A', 'B', 'DF', 'p-value corrected', 'p-value', 'correction method', 'Paired',
+					 'Parametric', 'Test', 'effect size', 'Bayes factor']
 			posthoc_dfs = posthoc_dfs.reindex(columns=cols2)
 
 	# nonparametric tests for not normally distributed data
@@ -99,7 +102,7 @@ def stats(model, quantity, data, targets, rm, nd):
 		if quantity == 2:
 			stats_dfs = pandas.DataFrame()
 			posthoc_dfs = pandas.DataFrame()
-			group = data['Group']
+			group = data['Group'].dropna(inplace=True)
 			group = group.drop_duplicates(keep='first').values.tolist()
 			for item in targets:
 				df = data[data['Target Name'].eq(item)]
@@ -137,6 +140,7 @@ def stats(model, quantity, data, targets, rm, nd):
 					ph['Target Name'] = item
 					ph['DF'] = 'NA'
 					ph['Bayes factor'] = 'NA'
+					ph['Test'] = 'Wilcoxon'
 				else:
 					# Kruskal-Wallis H test
 					df = pg.kruskal(dv=mean, between='Group', data=data[data['Target Name'].eq(item)])
@@ -151,6 +155,7 @@ def stats(model, quantity, data, targets, rm, nd):
 					ph['Target Name'] = item
 					ph['DF'] = 'NA'
 					ph['Bayes factor'] = 'NA'
+					ph['Test'] = 'Mann-Whitney U'
 				if stats_dfs is None:
 					stats_dfs = df
 				else:
@@ -175,8 +180,8 @@ def stats(model, quantity, data, targets, rm, nd):
 			posthoc_dfs = posthoc_dfs.drop(['Contrast'], axis=1)
 			posthoc_dfs = posthoc_dfs.rename(columns={'hedges': 'effect size', 'p-corr': 'p-value corrected', 'p-unc': 'p-value',
 								'p-adjust': 'correction method', 'BF10': 'Bayes factor'})
-			cols2 = ['Target Name', 'A', 'B', 'DF', 'p-value corrected', 'p-value', 'correction method', 'Paired', 'Parametric',
-					 'effect size', 'Bayes factor']
+			cols2 = ['Target Name', 'A', 'B', 'DF', 'p-value corrected', 'p-value', 'correction method', 'Paired',
+					 'Parametric', 'Test', 'effect size', 'Bayes factor']
 			posthoc_dfs = posthoc_dfs.reindex(columns=cols2)
 
 	return stats_dfs, posthoc_dfs

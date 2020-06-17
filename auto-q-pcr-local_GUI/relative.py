@@ -2,7 +2,7 @@ import pandas
 import numpy as np
 
 
-def process(data):
+def process(data, colnames=None):
 
 	outlier_data = data[data['Outliers'].eq(True)]
 	data = data[data['Outliers'].eq(False)]
@@ -52,7 +52,16 @@ def process(data):
 
 	# Making the intermediate dataframe
 	data = data.append(outlier_data)
-	cols = ['Target Name', 'Sample Name',  'filename', 'rq', 'rqMean', 'rqSD', 'rqSEM', 'Outliers']
+	if colnames is not None:
+		cnames = [c.strip().lower() for c in colnames.split(',')]
+		clist = []
+		for c in data.columns.values.tolist():
+			if c.lower() in cnames:
+				clist.append(c)
+		cols = ['Target Name', 'Sample Name',  'filename', 'rq', 'rqMean', 'rqSD', 'rqSEM', 'Outliers']+clist
+	else:
+		cols = ['Target Name', 'Sample Name',  'filename', 'rq', 'rqMean', 'rqSD', 'rqSEM', 'Outliers']
+
 	df = pandas.DataFrame(columns=cols)
 	for item in cols:
 		df[item] = data[item]

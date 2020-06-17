@@ -10,7 +10,7 @@ import absolute , relative , stability
 import re
 
 
-def process_data(data , model , cgenes , cutoff , max_outliers , target_sorter=None , sample_sorter=None , csample=None):
+def process_data(data , model , cgenes , cutoff , max_outliers , target_sorter=None , sample_sorter=None , csample=None, colnames=None):
 	"""This filters the data and processes the selected model, returning a list of output dataframes"""
 
 	# Transforms certain columns from string to numeric
@@ -52,15 +52,15 @@ def process_data(data , model , cgenes , cutoff , max_outliers , target_sorter=N
 	# Calls the different processing models depending on the model argument
 	if model == 'absolute':
 		data = cleanup_outliers(data, "Quantity", cutoff, max_outliers)
-		data, data_summary, targets, samples = absolute.process(data)
+		data, data_summary, targets, samples = absolute.process(data, colnames)
 
 	elif model == 'relative_dCT':
 		data = cleanup_outliers(data, "CT", cutoff, max_outliers)
-		data, data_summary, targets, samples = relative.process(data)
+		data, data_summary, targets, samples = relative.process(data, colnames)
 
 	else:
 		data = cleanup_outliers(data, "CT", cutoff, max_outliers)
-		data, data_summary, targets, samples = stability.process(model, data, csample)
+		data, data_summary, targets, samples = stability.process(model, data, csample, colnames)
 
 	return data, data_summary, targets, samples
 

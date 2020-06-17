@@ -55,11 +55,8 @@ def transform_view():
 		# print(filedata)
 		data = data.append(filedata, ignore_index=True, sort=True)
 		data['filename'] = item.filename
-	#print(list(data))
-		data.rename(columns=rx_rename, inplace = True)
-		#print('-------------------------------------------------------------')
-		#print(list(data))
-        #stream.seek(0)
+		data.rename(columns=rx_rename, inplace=True)
+	# stream.seek(0)
 
 	model = request.form['option']
 	cgenes = request.form['cgenes']
@@ -68,14 +65,15 @@ def transform_view():
 	target_sorter = request.form['target_sorter']
 	sample_sorter = request.form['sample_sorter']
 	csample = request.form['csample']
+	colnames = request.form['colnames']
 	qty = request.form.get('quantity', type=int)
 	gcol = request.form['gcol']
 	glist = request.form['glist']
 	rm = request.form['option2']
 	nd = request.form['option4']
 
-	data1, summary_data, targets, samples = AUTOqPCR.process_data(data, model, cgenes, cutoff, max_outliers,
-																  target_sorter, sample_sorter, csample)
+	clean_data, summary_data, targets, samples = AUTOqPCR.process_data(data, model, cgenes, cutoff, max_outliers,
+																  target_sorter, sample_sorter, csample, colnames)
 
 	plots = plot.plots(summary_data, model, targets, samples)
 	plots2 = plot.plots_wo_controls(summary_data, model, targets, samples, cgenes)
@@ -83,28 +81,28 @@ def transform_view():
 	# making stats csv
 	if qty is not None:
 		if request.form['option3'] != 'False':
-			if gcol.lower() in data.columns.str.lower():
+			if gcol.lower() in clean_data.columns.str.lower():
 				col = gcol
-			data1['Group'] = data[col]
+			clean_data['Group'] = clean_data[col]
 		else:
 			groups = glist.split(',')
-			data1 = statistics.add_groups(data1, groups)
-		# print(data1)
-		group_plot = plot.plot_by_groups(data1, model, targets, cgenes)
+			clean_data = statistics.add_groups(clean_data, groups)
 
-		stats_dfs, posthoc_dfs = statistics.stats(model, qty, data1, targets, rm, nd)
+		group_plot = plot.plot_by_groups(clean_data, model, targets, cgenes)
+
+		stats_dfs, posthoc_dfs = statistics.stats(model, qty, clean_data, targets, rm, nd)
 		stats_output = stats_dfs.to_csv(index=False)
 		posthoc_output = posthoc_dfs.to_csv(index=False)
 
 	# making summary data csv
 	output = summary_data.to_csv()
-	clean_output = data1.to_csv()
+	clean_output = clean_data.to_csv()
 
 	# making log.txt file
 	log = 'Model: '+model+'\nEndogenous control genes: '+cgenes+'\nCut-off: '+str(cutoff)+'\nMaximum Outliers: '+\
 		  str(max_outliers)+'\nTarget Order: '+target_sorter+'\nSample Order: '+sample_sorter+'\nControl Sample: '+\
-		  csample+'\nNumber of groups: '+str(qty)+'\nGroup column name: '+gcol+'\nGroup name: '+glist+'\nRepeated measures: '+\
-		  rm+'\n'+'Normal distribution: '+nd+'\n'
+		  csample+'\nAdditional column names: '+colnames+'\nNumber of groups: '+str(qty)+'\nGroup column name: '+gcol+\
+		  '\nGroup name: '+glist+'\nRepeated measures: '+rm+'\n'+'Normal distribution: '+nd+'\n'
 
 	outfile = io.BytesIO()
 	with ZipFile(outfile, 'w') as myzip:
@@ -184,29 +182,30 @@ def transform_view():
 
 	return response
 
+
 def rx_rename(col_name):
-    # compiles regular expressions
-    rct = re.compile('((?<![\w _])[(]*c[()ycle ]*t[)hreshold]*(?![\w\W]))', re.IGNORECASE)
-    rquant = re.compile('((?<![\w _])[(]*quant[ity) ]*\Z(?! sd)(?! mean))', re.IGNORECASE)
-    rsamp = re.compile('(samp)+|(chrom)+|(desc)+', re.IGNORECASE)
-    rtarg = re.compile('(targ)+|(gene)+', re.IGNORECASE)
-    rdye = re.compile('(repor)+|(dye)+|(fluor)+', re.IGNORECASE)
-    rtask = re.compile('(task)+|(role)+|(content)+', re.IGNORECASE)
-    
-    if re.match(rct, col_name):
-        return str('CT')
-    if re.match(rquant, col_name):
-        return str('Quantity')
-    if re.match(rsamp, col_name):
-        return str('Sample Name')
-    if re.match(rtarg, col_name):
-        return str('Target Name')
-    if re.match(rdye, col_name):
-        return str('Reporter')
-    if re.match(rtask, col_name):
-        return str('Task')
-    else:
-        return col_name
+	# compiles regular expressions
+	rct = re.compile('((?<![\w _])[(]*c[()ycle ]*t[)hreshold]*(?![\w\W]))', re.IGNORECASE)
+	rquant = re.compile('((?<![\w _])[(]*quant[ity) ]*\Z(?! sd)(?! mean))', re.IGNORECASE)
+	rsamp = re.compile('(samp)+|(chrom)+|(desc)+', re.IGNORECASE)
+	rtarg = re.compile('(targ)+|(gene)+', re.IGNORECASE)
+	rdye = re.compile('(repor)+|(dye)+|(fluor)+', re.IGNORECASE)
+	rtask = re.compile('(task)+|(role)+|(content)+', re.IGNORECASE)
+
+	if re.match(rct, col_name):
+		return str('CT')
+	if re.match(rquant, col_name):
+		return str('Quantity')
+	if re.match(rsamp, col_name):
+		return str('Sample Name')
+	if re.match(rtarg, col_name):
+		return str('Target Name')
+	if re.match(rdye, col_name):
+		return str('Reporter')
+	if re.match(rtask, col_name):
+		return str('Task')
+	else:
+		return col_name
 
 
 if __name__ == '__main__':

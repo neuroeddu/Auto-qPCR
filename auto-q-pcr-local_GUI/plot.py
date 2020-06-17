@@ -11,16 +11,27 @@ fc = '#F0F0F0'
 
 
 def plots(dataframe, model, targets, samples):
+
+	if len(samples)*len(targets)*1.2 < 40:
+		figsize = (len(samples)*len(targets)*2.5, 35)
+	else:
+		figsize = (len(samples)*len(targets)*1.2, 35)
+
+	if len(samples) < 20:
+		sfigsize = (len(samples)*3.5, 25)
+	else:
+		sfigsize = (len(samples) * 1.5, 25)
+
 	plots = []
 	# Absolute: bar plot for each gene, a grouped bar plot by samples and a grouped bar plot by genes
 	if model == 'absolute':
-		plot_by_samples = plt.figure(figsize=(len(samples)*len(targets)*1.2, 30))
+		plot_by_samples = plt.figure(figsize=figsize)
 		counter = 0
 		for item in targets:
 			sample = list(dataframe.loc[item, 'NormQuant']['mean'])
 			x = np.arange(len(sample))
 			x2 = x * len(targets) + barwidth * counter
-			plot = plt.figure(figsize=(len(sample)*1.5, 25))
+			plot = plt.figure(figsize=sfigsize)
 			# set color, width, edgecolor, etc.
 			plt.bar(x, sample, yerr=list(dataframe.loc[item, 'NormSEM']['mean']), align='center',
 					error_kw=error_kw, width=barwidth, label=item)
@@ -59,7 +70,7 @@ def plots(dataframe, model, targets, samples):
 		plt.close(plot_by_samples)
 		plots.append(plot_by_samples)
 
-		plot_by_genes = plt.figure(figsize=(len(targets) * len(samples)*1.2, 30))
+		plot_by_genes = plt.figure(figsize=figsize)
 		counter = 0
 		for item in samples:
 			target = list(dataframe.loc[(slice(None), item), 'NormQuant']['mean'])
@@ -87,7 +98,7 @@ def plots(dataframe, model, targets, samples):
 	# Genomic stability: grouped by chromosomes and by cell lines
 	elif model == 'stability':
 		# plot grouped by chromosomes
-		plot_by_samples = plt.figure(figsize=(len(samples)*len(targets)*1.2, 30))
+		plot_by_samples = plt.figure(figsize=figsize)
 		counter = 0
 		for item in targets:
 			sample = list(dataframe.loc[item, 'rq']['mean'])
@@ -112,7 +123,7 @@ def plots(dataframe, model, targets, samples):
 		plt.close()
 		plots.append(plot_by_samples)
 		# plot grouped by chromosomes
-		plot_by_chrs = plt.figure()
+		plot_by_chrs = plt.figure(figsize=figsize)
 		counter = 0
 		for item in samples:
 			target = list(dataframe.loc[(slice(None), item), 'rq']['mean'])
@@ -139,10 +150,10 @@ def plots(dataframe, model, targets, samples):
 
 	# relative deltaCT and delta delta CT: plots for each gene and grouped plots by samples and genes
 	else:
-		plot_by_samples = plt.figure(figsize=(len(targets) * len(samples)*1.2, 30))
+		plot_by_samples = plt.figure(figsize=figsize)
 		counter = 0
 		for item in targets:
-			plot = plt.figure(figsize=(len(sample)*1.5, 25))
+			plot = plt.figure(figsize=sfigsize)
 			sample = list(dataframe.loc[item, 'rq']['mean'])
 			x = np.arange(len(sample))
 			x2 = x * len(targets) + barwidth * counter
@@ -190,7 +201,7 @@ def plots(dataframe, model, targets, samples):
 		plt.close()
 		plots.append(plot_by_samples)
 		# grouped by genes
-		plot_by_genes = plt.figure(figsize=(len(targets) * len(samples)*1.2, 30))
+		plot_by_genes = plt.figure(figsize=figsize)
 		counter = 0
 		for item in samples:
 			target = list(dataframe.loc[(slice(None), item), 'rq']['mean'])
@@ -226,11 +237,17 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 	targets = [t for t in targets if t.lower() not in cgenes.lower().split(',')]
 	dataframe = dataframe.loc[targets, slice(None), :]
 
+	#set figure size
+	if len(targets) * len(samples)*1.2 < 40:
+		figsize = (len(targets) * len(samples)*2.5, 35)
+	else:
+		figsize = (len(targets) * len(samples)*1.2, 35)
+
 	plots = []
 
 	# Absolute: a grouped bar plot by genes and a grouped bar plot by cell lines
 	if model == 'absolute':
-		plot_by_samples = plt.figure(figsize=(len(targets) * len(samples)*1.2, 30))
+		plot_by_samples = plt.figure(figsize=figsize)
 		counter = 0
 		for item in targets:
 			sample = list(dataframe.loc[item, 'NormQuant']['mean'])
@@ -257,7 +274,7 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 		plt.close()
 		plots.append(plot_by_samples)
 
-		plot_by_genes = plt.figure(figsize=(len(targets) * len(samples)*1.2, 30))
+		plot_by_genes = plt.figure(figsize=figsize)
 		counter = 0
 		for item in samples:
 			target = list(dataframe.loc[(slice(None), item), 'NormQuant']['mean'])
@@ -284,7 +301,7 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 		plots.append(plot_by_genes)
 
 	elif model != 'stability':
-		plot_by_samples = plt.figure(figsize=(len(targets) * len(samples)*1.2, 30))
+		plot_by_samples = plt.figure(figsize=figsize)
 		counter = 0
 		for item in targets:
 			sample = list(dataframe.loc[item, 'rq']['mean'])
@@ -314,7 +331,7 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 		plots.append(plot_by_samples)
 
 		# grouped by genes
-		plot_by_genes = plt.figure(figsize=(len(targets) * len(samples)*1.2, 30))
+		plot_by_genes = plt.figure(figsize=figsize)
 		counter = 0
 		for item in samples:
 			target = list(dataframe.loc[(slice(None), item), 'rq']['mean'])
@@ -352,13 +369,19 @@ def plot_by_groups(df, model, targets, cgenes):
 	# list of groups
 	groups = df['Group'].drop_duplicates(keep='first').values.tolist()
 
+	# set figure size:
+	if len(groups) * len(targets) * 2 < 20:
+		figsize = (len(groups) * len(targets) * 3, 20)
+	else:
+		figsize = (len(groups) * len(targets) * 2, 20)
+
 	plots = []
 	if model == 'absolute':
 		# remove endogeneous control genes
 		targets = [t for t in targets if t.lower() not in cgenes.lower().split(',')]
 		# grouped by groups on the x-axis
 		counter = 0
-		plot_by_group = plt.figure(figsize=(len(groups)*len(targets)*2, 20))
+		plot_by_group = plt.figure(figsize=figsize)
 		for t in targets:
 			y = []
 			st_err = []
@@ -388,7 +411,7 @@ def plot_by_groups(df, model, targets, cgenes):
 		plots.append(plot_by_group)
 		# grouped by targets on the x-axis
 		counter = 0
-		plot_by_target = plt.figure(figsize=(len(groups)*len(targets)*2, 20))
+		plot_by_target = plt.figure(figsize=figsize)
 		for g in groups:
 			y = []
 			st_err = []
@@ -418,7 +441,7 @@ def plot_by_groups(df, model, targets, cgenes):
 	elif model == 'stability':
 		# grouped by groups on the x-axis
 		counter = 0
-		plot_by_group = plt.figure(figsize=(len(groups)*len(targets)*2, 2))
+		plot_by_group = plt.figure(figsize=figsize)
 		for t in targets:
 			y = []
 			st_err = []
@@ -448,7 +471,7 @@ def plot_by_groups(df, model, targets, cgenes):
 		plots.append(plot_by_group)
 		# grouped by groups on the x-axis
 		counter = 0
-		plot_by_target = plt.figure(figsize=(len(groups)*len(targets)*2, 20))
+		plot_by_target = plt.figure(figsize=figsize)
 		for g in groups:
 			y = []
 			st_err = []
@@ -481,7 +504,7 @@ def plot_by_groups(df, model, targets, cgenes):
 		targets = [t for t in targets if t.lower() not in cgenes.lower().split(',')]
 		# grouped by groups on the x-axis
 		counter = 0
-		plot_by_group = plt.figure(figsize=(len(groups)*len(targets)*2, 20))
+		plot_by_group = plt.figure(figsize=figsize)
 		for t in targets:
 			y = []
 			st_err = []
@@ -514,7 +537,7 @@ def plot_by_groups(df, model, targets, cgenes):
 		plots.append(plot_by_group)
 		# grouped by groups on the x-axis
 		counter = 0
-		plot_by_target = plt.figure(figsize=(len(groups)*len(targets)*2, 20))
+		plot_by_target = plt.figure(figsize=figsize)
 		for g in groups:
 			y = []
 			st_err = []
