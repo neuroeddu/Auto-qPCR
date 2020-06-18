@@ -12,7 +12,7 @@ import re
 
 def process_data(data , model , cgenes , cutoff , max_outliers , target_sorter=None , sample_sorter=None , csample=None, colnames=None):
 	"""This filters the data and processes the selected model, returning a list of output dataframes"""
-
+	data.to_csv('input.csv')
 	# Transforms certain columns from string to numeric
 	cols = ['CT' , 'Quantity']
 	data[cols] = data[cols].apply(pandas.to_numeric , errors='coerce')

@@ -6,19 +6,11 @@ def process(model, data , csample, colnames=None):
 	outlier_data = data[data['Outliers'].eq(True)]
 	data = data[data['Outliers'].eq(False)]
 
-	# Calculate CT Mean (Endogenous Control Mean) and SSD for all Controls
-
 	control_filter = (data['Control'].eq(True))
 	data_controls_grouped = data[control_filter].groupby(['Target Name' , 'Sample Name'], sort=False).agg(
 		{'CT': [np.size , 'mean' , 'std']})
 
-	# print("Endogenous Control CT Means and SSD")
-	# print(data_controls_grouped)
-
 	data_controls_ct = data[control_filter].groupby(['Sample Name'], sort=False).agg({'CT': 'mean'})
-
-	# print("Combined Endogenous Control CT Means and SSD")
-	# print(data_controls_ct)
 
 	# Create deltaCT column
 	for i , row in enumerate(data_controls_ct.itertuples(name=None) , 1):
@@ -30,9 +22,6 @@ def process(model, data , csample, colnames=None):
 	data['ControlSample'] = data['Sample Name'].apply(lambda x: True if x.lower() in csample.lower() else False)
 	filter_sample = (data['ControlSample'].eq(True))
 	data_sampled = data[filter_sample].groupby(['Target Name']).agg({('deltaCT'): 'mean'})
-
-	# print("Mean Control Sample Delta CT")
-	# print(data_sampled)
 
 	for i , row in enumerate(data_sampled.itertuples(name=None) , 1):
 		target_filter = (data['Target Name'] == row[0])
@@ -66,16 +55,12 @@ def process(model, data , csample, colnames=None):
 		# indel column: threshold=0.3
 		data['Indel'] = data['rqMean'].apply(
 			lambda x: 'Insertion' if x > 1.3 else ('Deletion' if x < 0.7 else 'Normal'))
-		if colnames is not None:
-			cnames = [c.strip().lower() for c in colnames.split(',')]
-			clist = []
-			for c in data.columns.values.tolist():
-				if c.lower() in cnames:
-					clist.append(c)
-			cols = ['Target Name', 'Sample Name', 'rq', 'rqMean', 'rqSD', 'rqSEM', 'Outliers', 'Indel'].append(
-				clist)
-		else:
-			cols = ['Target Name', 'Sample Name', 'rq', 'rqMean', 'rqSD', 'rqSEM', 'Outliers', 'Indel']
+		cnames = [c.strip().lower() for c in colnames.split(',')]
+		clist = []
+		for c in data.columns.values.tolist():
+			if c.lower() in cnames:
+				clist.append(c)
+		cols = ['Target Name', 'Sample Name', 'rq', 'rqMean', 'rqSD', 'rqSEM', 'Outliers', 'Indel'] + clist
 		df = pandas.DataFrame(columns=cols)
 		for item in cols:
 			df[item] = data[item]
@@ -84,15 +69,12 @@ def process(model, data , csample, colnames=None):
 		data_output_summary = data.groupby(['Target Name' , 'Sample Name', 'Indel'], sort=False).agg(
 			{'rq': [np.size , 'mean'] , 'rqSD': 'mean' , 'rqSEM': 'mean'})
 	else:
-		if colnames is not None:
-			cnames = [c.strip().lower() for c in colnames.split(',')]
-			clist = []
-			for c in data.columns.values.tolist():
-				if c.lower() in cnames:
-					clist.append(c)
-			cols = ['Target Name', 'Sample Name', 'rq', 'rqMean', 'rqSD', 'rqSEM', 'Outliers']+clist
-		else:
-			cols = ['Target Name', 'Sample Name', 'rq', 'rqMean', 'rqSD', 'rqSEM', 'Outliers']
+		cnames = [c.strip().lower() for c in colnames.split(',')]
+		clist = []
+		for c in data.columns.values.tolist():
+			if c.lower() in cnames:
+				clist.append(c)
+		cols = ['Target Name', 'Sample Name', 'rq', 'rqMean', 'rqSD', 'rqSEM', 'Outliers'] + clist
 		df = pandas.DataFrame(columns=cols)
 		for item in cols:
 			df[item] = data[item]

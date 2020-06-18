@@ -146,7 +146,7 @@ def transform_view():
 			plots[i].savefig(buf)
 			if model != 'instability':
 				image_name = targets[i] + '.png'
-			myzip.writestr(image_name, buf.getvalue())
+				myzip.writestr(image_name, buf.getvalue())
 		# grouped plots by sample and by genes
 		buf = io.BytesIO()
 		plots[len(plots) - 2].savefig(buf)

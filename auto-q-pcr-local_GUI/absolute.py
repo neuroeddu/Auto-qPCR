@@ -52,15 +52,12 @@ def process(data, colnames=None):
 	#
 	# Making the intermediate dataframe
 	data = data.append(outlier_data)
-	if colnames is not None:
-		cnames = [c.strip().lower() for c in colnames.split(',')]
-		clist=[]
-		for c in data.columns.values.tolist():
-			if c.lower() in cnames:
-				clist.append(c)
-		cols = ['Target Name', 'Sample Name', 'NormQuant', 'NormMean', 'NormSD', 'NormSEM', 'Outliers']+clist
-	else:
-		cols = ['Target Name', 'Sample Name', 'NormQuant', 'NormMean', 'NormSD', 'NormSEM', 'Outliers']
+	cnames = [c.strip().lower() for c in colnames.split(',')]
+	clist = []
+	for c in data.columns.values.tolist():
+		if c.lower() in cnames:
+			clist.append(c)
+	cols = ['Target Name', 'Sample Name', 'NormQuant', 'NormMean', 'NormSD', 'NormSEM', 'Outliers'] + clist
 	df = pandas.DataFrame(columns=cols)
 	for item in cols:
 		df[item] = data[item]
