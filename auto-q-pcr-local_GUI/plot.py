@@ -4,23 +4,27 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # figure format: font size, bar width, error bar, facecolor
-fs = 60
+fs = 70
 barwidth = 0.75
 error_kw = dict(lw=4, capsize=7, capthick=4)
-fc = '#F0F0F0'
+# fc = '#F0F0F0'
 
 
 def plots(dataframe, model, targets, samples):
 
-	if len(samples)*len(targets)*1.2 < 40:
-		figsize = (len(samples)*len(targets)*2.5, 35)
+	if len(samples)*len(targets)*1.4 < 40:
+		figsize = (len(samples)*len(targets)*2.7, 35)
 	else:
-		figsize = (len(samples)*len(targets)*1.2, 35)
+		figsize = (len(samples)*len(targets)*1.4, 35)
 
 	if len(samples) < 20:
-		sfigsize = (len(samples)*3.5, 25)
+		sfigsize = (len(samples)*3.8, 25)
 	else:
-		sfigsize = (len(samples) * 1.5, 25)
+		sfigsize = (len(samples) * 1.8, 25)
+
+	# number of columns in the legend
+	ncol_s = len(samples) // 10 + 1
+	ncol_t = len(targets) // 10 + 1
 
 	plots = []
 	# Absolute: bar plot for each gene, a grouped bar plot by samples and a grouped bar plot by genes
@@ -35,7 +39,7 @@ def plots(dataframe, model, targets, samples):
 			# set color, width, edgecolor, etc.
 			plt.bar(x, sample, yerr=list(dataframe.loc[item, 'NormSEM']['mean']), align='center',
 					error_kw=error_kw, width=barwidth, label=item)
-			plt.xlabel(item, fontweight='bold', fontsize=fs+10, labelpad=20)
+			# plt.xlabel(item, fontweight='bold', fontsize=fs+10, labelpad=20)
 			plt.xticks([i for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 			plt.yticks(fontsize=fs)
 			plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
@@ -45,7 +49,7 @@ def plots(dataframe, model, targets, samples):
 			plt.gca().spines['left'].set_linewidth(5)
 			plt.gca().spines['top'].set_visible(False)
 			plt.gca().spines['right'].set_visible(False)
-			plt.gca().set_facecolor(fc)
+			# plt.gca().set_facecolor(fc)
 			plt.gca().tick_params(width=5)
 			plt.tight_layout()
 			plt.close(plot)
@@ -56,15 +60,15 @@ def plots(dataframe, model, targets, samples):
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
+		# plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
+		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_t)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		plt.gca().set_facecolor(fc)
+		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close(plot_by_samples)
@@ -81,15 +85,15 @@ def plots(dataframe, model, targets, samples):
 
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
+		# plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
+		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_s)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		plt.gca().set_facecolor(fc)
+		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -97,7 +101,7 @@ def plots(dataframe, model, targets, samples):
 
 	# Genomic stability: grouped by chromosomes and by cell lines
 	elif model == 'stability':
-		# plot grouped by chromosomes
+		# plot grouped by DNA regions
 		plot_by_samples = plt.figure(figsize=figsize)
 		counter = 0
 		for item in targets:
@@ -109,15 +113,15 @@ def plots(dataframe, model, targets, samples):
 
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		plt.xlabel('DNA Regions', fontsize=fs+10, fontweight='bold', labelpad=20)
+		# plt.xlabel('DNA Regions', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.ylabel('Copy Number per Chromosome', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
+		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_t)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		plt.gca().set_facecolor(fc)
+		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -134,15 +138,15 @@ def plots(dataframe, model, targets, samples):
 
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
+		# plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.ylabel('Copy Number per Chromosome', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
+		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_s)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		plt.gca().set_facecolor(fc)
+		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -159,7 +163,7 @@ def plots(dataframe, model, targets, samples):
 			x2 = x * len(targets) + barwidth * counter
 			plt.bar(x, sample, yerr=list(dataframe.loc[item, 'rqSEM']['mean']), align='center',
 					error_kw=error_kw, width=barwidth, edgecolor='white', label=item)
-			plt.xlabel(item, fontsize=fs+10, fontweight='bold', labelpad=20)
+			# plt.xlabel(item, fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.xticks([i for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 			plt.yticks(fontsize=fs)
 
@@ -173,7 +177,7 @@ def plots(dataframe, model, targets, samples):
 			plt.gca().spines['left'].set_linewidth(5)
 			plt.gca().spines['top'].set_visible(False)
 			plt.gca().spines['right'].set_visible(False)
-			plt.gca().set_facecolor(fc)
+			# plt.gca().set_facecolor(fc)
 			plt.gca().tick_params(width=5)
 			plt.tight_layout()
 			plt.close(plot)
@@ -184,18 +188,18 @@ def plots(dataframe, model, targets, samples):
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
+		# plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative_dCT':
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
+		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_t)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		plt.gca().set_facecolor(fc)
+		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -212,18 +216,18 @@ def plots(dataframe, model, targets, samples):
 
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
+		# plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative_dCT':
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
+		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_s)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		plt.gca().set_facecolor(fc)
+		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -237,11 +241,15 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 	targets = [t for t in targets if t.lower() not in cgenes.lower().split(',')]
 	dataframe = dataframe.loc[targets, slice(None), :]
 
+	# number of columns in the legend
+	ncol_s = len(samples) // 10 + 1
+	ncol_t = len(targets) // 10 + 1
+
 	#set figure size
-	if len(targets) * len(samples)*1.2 < 40:
-		figsize = (len(targets) * len(samples)*2.5, 35)
+	if len(targets) * len(samples)*1.4 < 40:
+		figsize = (len(targets) * len(samples)*2.7, 35)
 	else:
-		figsize = (len(targets) * len(samples)*1.2, 35)
+		figsize = (len(targets) * len(samples)*1.4, 35)
 
 	plots = []
 
@@ -260,15 +268,15 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
+		# plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
+		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_t)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		plt.gca().set_facecolor(fc)
+		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -286,15 +294,15 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
+		# plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
+		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_s)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		plt.gca().set_facecolor(fc)
+		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -313,18 +321,18 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
+		# plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative':
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
+		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_t)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		plt.gca().set_facecolor(fc)
+		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -343,18 +351,18 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
+		# plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative_dCT':
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
+		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_s)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		plt.gca().set_facecolor(fc)
+		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -371,9 +379,13 @@ def plot_by_groups(df, model, targets, cgenes):
 
 	# set figure size:
 	if len(groups) * len(targets) * 2 < 20:
-		figsize = (len(groups) * len(targets) * 3, 20)
+		figsize = (len(groups) * len(targets) * 3.2, 20)
 	else:
-		figsize = (len(groups) * len(targets) * 2, 20)
+		figsize = (len(groups) * len(targets) * 2.2, 20)
+
+	# number of columns in the legend
+	ncol_t = len(targets) // 10 + 1
+	ncol_g = len(groups) // 10 + 1
 
 	plots = []
 	if model == 'absolute':
@@ -396,15 +408,15 @@ def plot_by_groups(df, model, targets, cgenes):
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))], groups, rotation='vertical', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		plt.xlabel('Groups', fontsize=fs+10, fontweight='bold', labelpad=20)
+		# plt.xlabel('Groups', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
+		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_t)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		plt.gca().set_facecolor(fc)
+		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -425,15 +437,15 @@ def plot_by_groups(df, model, targets, cgenes):
 			counter += 1
 		plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
+		# plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
+		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_g)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		plt.gca().set_facecolor(fc)
+		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -456,15 +468,15 @@ def plot_by_groups(df, model, targets, cgenes):
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))], groups, rotation='horizontal', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		plt.xlabel('Groups', fontsize=fs+10, fontweight='bold', labelpad=20)
+		# plt.xlabel('Groups', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.ylabel('Copy Number per Chromosome', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
+		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_t)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		plt.gca().set_facecolor(fc)
+		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -486,15 +498,15 @@ def plot_by_groups(df, model, targets, cgenes):
 			counter += 1
 		plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
+		# plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.ylabel('Copy Number per Chromosome', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
+		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_g)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		plt.gca().set_facecolor(fc)
+		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -519,18 +531,18 @@ def plot_by_groups(df, model, targets, cgenes):
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))], groups, rotation='horizontal', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		plt.xlabel('Groups', fontsize=fs+10, fontweight='bold', labelpad=20)
+		# plt.xlabel('Groups', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative_dCT':
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
+		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_t)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		plt.gca().set_facecolor(fc)
+		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -552,18 +564,18 @@ def plot_by_groups(df, model, targets, cgenes):
 			counter += 1
 			plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 			plt.yticks(fontsize=fs)
-		plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
+		# plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative_dCT':
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
 			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
-		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
+		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_g)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		plt.gca().set_facecolor(fc)
+		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
