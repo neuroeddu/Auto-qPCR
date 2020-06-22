@@ -8,9 +8,11 @@ import re
 def stats(model, quantity, data, targets, rm, nd):
 	if model == 'absolute':
 		data = data.drop(['NormQuant'], axis=1)
+		data['NormMean'] = data['NormMean'].astype(float)
 		mean = 'NormMean'
 	else:
 		data = data.drop(['rq'], axis=1)
+		data['rqMean'] = data['rqMean'].astype(float)
 		mean = 'rqMean'
 
 	# prepare data from intermediate dataframe
@@ -102,7 +104,7 @@ def stats(model, quantity, data, targets, rm, nd):
 		if quantity == 2:
 			stats_dfs = pandas.DataFrame()
 			posthoc_dfs = pandas.DataFrame()
-			group = data['Group'].dropna(inplace=True)
+			group = data['Group'].dropna()
 			group = group.drop_duplicates(keep='first').values.tolist()
 			for item in targets:
 				df = data[data['Target Name'].eq(item)]
@@ -113,6 +115,7 @@ def stats(model, quantity, data, targets, rm, nd):
 					test = mannwhitneyu(group1, group2)
 					test = pandas.DataFrame({'Target Name': item, 'pvalue': test.pvalue, 'statistic': test.statistic}, index=[0])
 				else:
+					# Wilcoxon
 					test = wilcoxon(group1, group2)
 					test = pandas.DataFrame({'Target Name': item, 'pvalue': test.pvalue, 'statistic': test.statistic}, index=[0])
 				if stats_dfs is None:
