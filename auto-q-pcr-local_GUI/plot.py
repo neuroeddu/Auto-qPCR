@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # figure format: font size, bar width, error bar, facecolor
-fs = 70
+fs = 80
 barwidth = 0.75
 error_kw = dict(lw=4, capsize=7, capthick=4)
 # fc = '#F0F0F0'
@@ -12,15 +12,15 @@ error_kw = dict(lw=4, capsize=7, capthick=4)
 
 def plots(dataframe, model, targets, samples):
 
-	if len(samples)*len(targets)*1.4 < 40:
-		figsize = (len(samples)*len(targets)*2.7, 35)
+	if len(samples)*len(targets)*1.6 < 40:
+		figsize = (len(samples)*len(targets)*3.2, 25)
 	else:
-		figsize = (len(samples)*len(targets)*1.4, 35)
+		figsize = (len(samples)*len(targets)*1.6, 25)
 
 	if len(samples) < 20:
-		sfigsize = (len(samples)*3.8, 25)
+		sfigsize = (len(samples) * 5, 27)
 	else:
-		sfigsize = (len(samples) * 1.8, 25)
+		sfigsize = (len(samples) * 2, 27)
 
 	# number of columns in the legend
 	ncol_s = len(samples) // 10 + 1
@@ -33,7 +33,7 @@ def plots(dataframe, model, targets, samples):
 		counter = 0
 		for item in targets:
 			sample = list(dataframe.loc[item, 'NormQuant']['mean'])
-			x = np.arange(len(sample))
+			x = np.arange(len(samples))
 			x2 = x * len(targets) + barwidth * counter
 			plot = plt.figure(figsize=sfigsize)
 			# set color, width, edgecolor, etc.
@@ -159,7 +159,7 @@ def plots(dataframe, model, targets, samples):
 		for item in targets:
 			plot = plt.figure(figsize=sfigsize)
 			sample = list(dataframe.loc[item, 'rq']['mean'])
-			x = np.arange(len(sample))
+			x = np.arange(len(samples))
 			x2 = x * len(targets) + barwidth * counter
 			plt.bar(x, sample, yerr=list(dataframe.loc[item, 'rqSEM']['mean']), align='center',
 					error_kw=error_kw, width=barwidth, edgecolor='white', label=item)
@@ -201,7 +201,7 @@ def plots(dataframe, model, targets, samples):
 		plt.gca().spines['right'].set_visible(False)
 		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
-		plt.tight_layout()
+		# plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_samples)
 		# grouped by genes
@@ -246,10 +246,10 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 	ncol_t = len(targets) // 10 + 1
 
 	#set figure size
-	if len(targets) * len(samples)*1.4 < 40:
-		figsize = (len(targets) * len(samples)*2.7, 35)
+	if len(targets) * len(samples)*1.6 < 40:
+		figsize = (len(targets) * len(samples)*3.2, 25)
 	else:
-		figsize = (len(targets) * len(samples)*1.4, 35)
+		figsize = (len(targets) * len(samples)*1.6, 25)
 
 	plots = []
 
@@ -378,10 +378,10 @@ def plot_by_groups(df, model, targets, cgenes):
 	groups = df['Group'].drop_duplicates(keep='first').values.tolist()
 
 	# set figure size:
-	if len(groups) * len(targets) * 2 < 20:
-		figsize = (len(groups) * len(targets) * 3.2, 20)
+	if len(groups) * len(targets) * 2.4 < 20:
+		figsize = (len(groups) * len(targets) * 3.4, 20)
 	else:
-		figsize = (len(groups) * len(targets) * 2.2, 20)
+		figsize = (len(groups) * len(targets) * 2.4, 20)
 
 	# number of columns in the legend
 	ncol_t = len(targets) // 10 + 1
