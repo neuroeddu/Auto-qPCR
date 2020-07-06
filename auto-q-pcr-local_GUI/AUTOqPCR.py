@@ -10,23 +10,22 @@ import absolute , relative , stability
 import re
 
 
-def process_data(data , model , cgenes , cutoff , max_outliers , target_sorter=None , sample_sorter=None , csample=None, colnames=None):
+def process_data(data , model , quencher, task, cgenes , cutoff , max_outliers , target_sorter=None , sample_sorter=None , csample=None, colnames=None):
 	"""This filters the data and processes the selected model, returning a list of output dataframes"""
-	data.to_csv('input.csv')
 	# Transforms certain columns from string to numeric
 	cols = ['CT' , 'Quantity']
 	data[cols] = data[cols].apply(pandas.to_numeric , errors='coerce')
 
 	# Marks the Control Genes in a new column in the dataframe
 	data['Control'] = data['Target Name'].apply(lambda x: True if str(x).lower() in cgenes.lower() else False)
-
 	# Create column 'Ignore' in dataframe to mark rows with NaN values in certain columns
 	data['Ignore'] = False
 	data['Outliers'] = False
 	cols = ['Sample Name' , 'Target Name' , 'Task' , 'Reporter' , 'CT']
 	for col in cols:
 		data.loc[data[col].isnull() , 'Ignore'] = True
-
+	# ignore rows if they correspond to signal from the quencher
+	data['Ignore'].mask(data['Reporter'].str.lower() == quencher.lower(), True, inplace=True)
 	# define sorter for target name order based on list
 	targets = data['Target Name'].drop_duplicates(keep='first').values
 	if target_sorter != '':
@@ -51,34 +50,34 @@ def process_data(data , model , cgenes , cutoff , max_outliers , target_sorter=N
 
 	# Calls the different processing models depending on the model argument
 	if model == 'absolute':
-		data = cleanup_outliers(data, "Quantity", cutoff, max_outliers)
+		data = cleanup_outliers(data, "Quantity", cutoff, max_outliers, task)
 		data, data_summary, targets, samples = absolute.process(data, colnames)
 
 	elif model == 'relative_dCT':
-		data = cleanup_outliers(data, "CT", cutoff, max_outliers)
+		data = cleanup_outliers(data, "CT", cutoff, max_outliers, task)
 		data, data_summary, targets, samples = relative.process(data, colnames)
 
 	else:
-		data = cleanup_outliers(data, "CT", cutoff, max_outliers)
+		data = cleanup_outliers(data, "CT", cutoff, max_outliers, task)
 		data, data_summary, targets, samples = stability.process(model, data, csample, colnames)
 
 	return data, data_summary, targets, samples
 
 
-def cleanup_outliers(d , feature , cutoff , max_outliers):
+def cleanup_outliers(d , feature , cutoff , max_outliers, task):
 	"""Function to remove outliers based on cutoff and maximum number of outliers,
 	by removing the furthest data point in each group when the standard deviation
 	is higher than the cutoff"""
 
 	# Calculate SSD for all sample groups
-	f = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN')
+	f = (d['Ignore'].eq(False)) & (d['Task'].str.lower() == task.lower())
 	d1 = d[f].groupby(['Sample Name' , 'Target Name']).agg({'CT': ['std']})
 	f = (d1['CT']['std'] > cutoff)
 	d2 = d1[f]
 	if not d2.empty:
 		# Mark all outliers
 		for i , row in enumerate(d2.itertuples(name=None) , 1):
-			f = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') \
+			f = (d['Ignore'].eq(False)) & (d['Task'].str.lower() == task.lower()) \
 				& (d['Sample Name'] == row[0][0]) & (d['Target Name'] == row[0][1])
 			dx_idx = d[f].index
 			group_size = len(dx_idx)
@@ -87,7 +86,7 @@ def cleanup_outliers(d , feature , cutoff , max_outliers):
 			if min_size < 2:
 				min_size = 2
 			while True:
-				f = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') \
+				f = (d['Ignore'].eq(False)) & (d['Task'].str.lower() == task.lower()) \
 					& (d['Sample Name'] == row[0][0]) & (d['Target Name'] == row[0][1])
 				dx = d[f].copy()
 				dxg = d[f].groupby(['Sample Name' , 'Target Name']).agg({feature: [np.size , 'std' , 'mean']})

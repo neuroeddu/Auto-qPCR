@@ -144,21 +144,19 @@
                         </div>
                         <b> Upload your data (.csv): </b>
                         <br>
-                        <input id="file-input" type="file" name="file[]" accept=".csv" multiple/>
+                        <input id="file-input" type="file" name="file[]" accept=".csv" multiple>
                         <div class="help-tip" id="file-helptip">
-                            <p>Upload your data: Nativage to your folder of raw data csv files. These should be the output files
+                            <p>Upload your data: Navigate to your folder of raw data csv files. These should be the output files
                                 from you PCR machine. Multiple spread sheets can be included. The data will
                                 be combined into a single analysis. Be sure to
                                 inclue the control genes you want to normalize. </p>    <!--text inside question mark here-->
                         </div>
                     </div>
                     <br>
-                        </div>
                 </td>
             </tr>
             <tr>
                 <td >
-                    
                     <div class="input-container">
                         <b> Model </b>
                         <br>
@@ -174,8 +172,6 @@
                         <br>
                         <input type="radio" name="option" value="instability">Instability</input>
                         <br>
-                        <div> <p>  </p>
-                        </div>
                     </div>
                 </td>
             </tr>
@@ -184,6 +180,27 @@
                     <b> Options </b>
                     <br>
                     <br>
+                    <div class="input-container">
+                        Please enter your gene names if they are included in the filenames:
+                        <div class="help-tip">
+                            <p> Something </p>
+                        </div>
+                        <input type="text" name="genes" autocomplete="off">
+                    </div>
+                    <div class="input-container">
+                        Please enter the name of your quencher:
+                        <div class="help-tip">
+                            <p> Something </p>
+                        </div>
+                        <input type="text" name="quencher" autocomplete="off">
+                    </div>
+                    <div class="input-container">
+                        Please enter the name of your sample group in your task column:
+                        <div class="help-tip">
+                            <p> Something </p>
+                        </div>
+                        <input type="text" name="task" autocomplete="off">
+                    </div>
                     <div class="input-container">
                         Enter target(s) for normalization (endogenous control gene(s)/chromosome(s))
                         <div class="help-tip">
