@@ -1,0 +1,13 @@
+Model: absolute
+Endogenous control genes: b2m
+Cut-off: 0.3
+Maximum Outliers: 0.5
+Target Order: 
+Sample Order: B4bisNST,B6NST,R6 NST,V4 NST,V3 NST,R5bis NST,R6bisNST,R8bisNST,V2NST,V8NST,B4bisGP,R6 GP,V3 GP,V4 GP,R5bis GP,R6bisGP,R8bisGP,V2GP,V8GP,B4bisSN,R6 SN,V4 SN,V4 SN,R5bis SN,R6bisSN,R8bisSN,V2SN,V8SN
+Control Sample: 
+Additional column names: Groups
+Number of groups: 6
+Group column name: Groups
+Group name: 
+Repeated measures: False
+Normal distribution: True

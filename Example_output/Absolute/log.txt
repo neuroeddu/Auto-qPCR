@@ -1,0 +1,13 @@
+Model: absolute
+Endogenous control genes: ACTB,GAPDH
+Cut-off: 0.3
+Maximum Outliers: 0.5
+Target Order: 
+Sample Order: NCRM1-IPSC,522-266-2-IPSC,AiW001-2-IPSC,AiW002-2-IPSC,AJC001-5-IPSC,AJG001C4-IPSC,NCRM1-NPC,522-266-2-NPC,AiW001-2-NPC,AiW002-2-NPC,AJC001-5-NPC, AJG001C4-NPC,NCRM1-DA4W,522-266-2-DA4W,AiW001-2-DA4W,AiW002-2-DA4W,AJG001C4-DA4W,AJC001-5-DA4W,NCRM1-DA6W,522-266-2-DA6W,AiW001-2-DA6W,AiW002-2-DA6W,AJG001C4-DA6W,AJC001-5-DA6W
+Control Sample: 
+Additional column names: 
+Number of groups: 4
+Group column name: 
+Group name: IPSC,NPC,DA4W,DA6W
+Repeated measures: False
+Normal distribution: True
