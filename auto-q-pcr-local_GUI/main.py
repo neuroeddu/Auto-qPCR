@@ -235,8 +235,8 @@ def transform_view():
 def rx_rename(col_name):
 	# compiles regular expressions
 	rct = re.compile('((?<![\w _])[(]*c[()ycle ]*t[)hreshold]*(?![\w\W]))', re.IGNORECASE)
-	rquant = re.compile('((?<![\w _])[(]*quant[ity)]*\Z(?! sd)(?! mean))|(?<![\w _])(ng)', re.IGNORECASE)
-	# rquant = re.compile('((?<![\w _])[(]*quant[ity) ]*\Z(?! sd)(?! mean))', re.IGNORECASE)
+	#rquant = re.compile('((?<![\w _])[(]*quant[ity)]*\Z(?! sd)(?! mean))|(?<![\w _])(ng)', re.IGNORECASE)
+	rquant = re.compile('((?<![\w _])[(]*quant[ity) ]*\Z(?! sd)(?! mean))', re.IGNORECASE)
 	rsamp = re.compile('(samp)+|(chrom)+|(desc)+', re.IGNORECASE)
 	rtarg = re.compile('(targ)+|(gene)+', re.IGNORECASE)
 	rdye = re.compile('(repor)+|(dye)+|(fluor)+', re.IGNORECASE)
