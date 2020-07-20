@@ -73,7 +73,6 @@ def transform_view():
 			# print(filedata)
 			filedata['filename'] = item.filename
 			filedata.rename(columns=rx_rename, inplace=True)
-			print(filedata.columns.values.tolist())
 			data = data.append(filedata, ignore_index=True, sort=True)
 
 		# stream.seek(0)
@@ -211,7 +210,7 @@ def transform_view():
 				myzip.close()
 
 		response = make_response(outfile.getvalue())
-		response.headers['Content-Type'] = 'application/actet-stream'
+		response.headers['Content-Type'] = 'application/zip'
 		response.headers['Content-Disposition'] = 'attachment; filename=outputs_' + model + '_' + date_string + '.zip'
 		outfile.close()
 		# alert
@@ -219,7 +218,7 @@ def transform_view():
 	except Exception as e:
 		logger.error('Error occurred: ' + str(e))
 		response = make_response(log_stream.getvalue())
-		response.headers['Content-Type'] = 'application/actet-stream'
+		response.headers['Content-Type'] = 'text/plain'
 		response.headers['Content-Disposition'] = 'attachment; filename=log_'+date_string+'.txt'
 		log_stream.flush()
 		# alert
@@ -229,13 +228,14 @@ def transform_view():
 	# myProcess = psutil.Process(os.getpid())
 	# print('CPU percent: ' + str(myProcess.cpu_percent()))
 	# print('Memory info: ' + str(myProcess.memory_info()[0]/2.**30))
+
 	return response
 
 
 def rx_rename(col_name):
 	# compiles regular expressions
 	rct = re.compile('((?<![\w _])[(]*c[()ycle ]*t[)hreshold]*(?![\w\W]))', re.IGNORECASE)
-	#rquant = re.compile('((?<![\w _])[(]*quant[ity)]*\Z(?! sd)(?! mean))|(?<![\w _])(ng)', re.IGNORECASE)
+	# rquant = re.compile('((?<![\w _])[(]*quant[ity)]*\Z(?! sd)(?! mean))|(?<![\w _])(ng)', re.IGNORECASE)
 	rquant = re.compile('((?<![\w _])[(]*quant[ity) ]*\Z(?! sd)(?! mean))', re.IGNORECASE)
 	rsamp = re.compile('(samp)+|(chrom)+|(desc)+', re.IGNORECASE)
 	rtarg = re.compile('(targ)+|(gene)+', re.IGNORECASE)

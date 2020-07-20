@@ -1,6 +1,5 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -125,34 +124,66 @@
         background-color: #3A1B8C;
 
     }
+
     </style>
 </head>
-<body>
-    <table border = 1 width = 50%>
+    <body>
+    <div id="msg" class="input-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div id="alrt" class="alert alert-{{ category }}">
+                        <p>{{ message }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    <table border=1 width=50%>
         <tbody>
-            <tr>
+        <tr>
                 <th scope="col"><font color="white" size = 4>Auto-qPCR</font> </th>
             </tr>
             <form action="/download" method="POST" enctype="multipart/form-data">
             <tr>
                 <td >
                     <div class="input-container">
-                        <div class="flashes">
-                            {% for message in get_flashed_messages()%}
-                            {{ message }}
-                            {% endfor %}
-                        </div>
                         <b> Upload your data (.csv): </b>
                         <br>
                         <input id="file-input" type="file" name="file[]" accept=".csv" multiple>
                         <div class="help-tip" id="file-helptip">
-                            <p>Upload your data: Navigate to your folder of raw data csv files. These should be the output files
+                            <p>Upload your data: Navigate to your folder of raw data csv files. These should be the
+                                output files
                                 from you PCR machine. Multiple spread sheets can be included. The data will
                                 be combined into a single analysis. Be sure to
-                                inclue the control genes you want to normalize. </p>    <!--text inside question mark here-->
+                                inclue the control genes you want to normalize. </p>
+                            <!--text inside question mark here-->
                         </div>
                     </div>
-                    <br>
+                    <div class="input-container">
+                        If your file does not contain gene or target names, enter target names included in your file name:
+                        <div class="help-tip">
+                            <p> Something </p>
+                        </div>
+                        <br>
+                        <input type="text" name="genes" autocomplete="off">
+                    </div>
+                    <div class="input-container">
+                        Name of your quencher:
+                        <div class="help-tip">
+                            <p> Something </p>
+                        </div>
+                        <br>
+                        <input type="text" name="quencher" autocomplete="off">
+                    </div>
+                    <div class="input-container">
+                        Name of your sample group in your task column:
+                        <div class="help-tip">
+                            <p> Something </p>
+                        </div>
+                        <br>
+                        <input type="text" name="task" value="UNKNOWN" autocomplete="off">
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -181,27 +212,6 @@
                     <br>
                     <br>
                     <div class="input-container">
-                        If your file does not contain gene or target names, enter target names included in your file name:
-                        <div class="help-tip">
-                            <p> Something </p>
-                        </div>
-                        <input type="text" name="genes" autocomplete="off">
-                    </div>
-                    <div class="input-container">
-                        Name of your quencher:
-                        <div class="help-tip">
-                            <p> Something </p>
-                        </div>
-                        <input type="text" name="quencher" autocomplete="off">
-                    </div>
-                    <div class="input-container">
-                        Name of your sample group in your task column:
-                        <div class="help-tip">
-                            <p> Something </p>
-                        </div>
-                        <input type="text" name="task" autocomplete="off">
-                    </div>
-                    <div class="input-container">
                         Enter target(s) for normalization (endogenous control gene(s)/chromosome(s))
                         <div class="help-tip">
                             <p> Gene or region to to normalize with (Actin, GAPDH, CHR4, B2M).
@@ -214,12 +224,12 @@
                     <div class="input-container">
                         Cut-Off:
                         <div class="help-tip">
-                            <p> Techical replicates for a given sample will be removed if the SD
+                            <p> Technical replicates for a given sample will be removed if the SD
                                 of a given sample is above the threshold (default 0.3).
                                 </p>
                         </div>
                         <br>
-                        <input type="text" name="cutoff" value="0.3" min="0" max="1" step="any" autocomplete="off">
+                        <input type="number" name="cutoff" value="0.3" min="0" max="1" step="any" autocomplete="off">
                     </div>
                     <div class="input-container">
                        Max Outliers:
@@ -260,7 +270,7 @@
                         <br>
                     </div>
                     <div class="input-container">
-                        Enter the column names you would like to include for statistical analysis:
+                        Enter the column names you would like to include for stastistical analysis:
                         <div class="help-tip">
                             <p> Column names that indicate grouping of the data (e.g. treatments, time points). Do not
                                 enter column names for sample names and target names.</p>
@@ -336,7 +346,7 @@
             </tr>
             <tr>
                 <td>
-                    <button type="submit">Submit</button>
+                    <button id="submit" type="submit">Submit</button>
                     <br>
                 </td>
             </tr>
@@ -344,7 +354,15 @@
         </tbody>
     </table>
 </body>
+<script>
 
+    document.getElementById("submit").onclick = function() {
+        setTimeout(function() {
+            location.reload();
+        }, 60000);
+    }
+
+</script>
 <footer>
 
 </footer>
