@@ -83,4 +83,7 @@ def process(model, data , csample, colnames=None):
 		data_output_summary = data.groupby(['Target Name', 'Sample Name'], sort=False).agg(
 			{'rq': [np.size, 'mean'], 'rqSD': 'mean', 'rqSEM': 'mean'})
 
-	return df, data_output_summary, targets, samples
+		data_output_summary_w_group = data.groupby(['Target Name', 'Sample Name']+clist, sort=False).agg(
+			{'rq': [np.size, 'mean'], 'rqSD': 'mean', 'rqSEM': 'mean'})
+
+	return df, data_output_summary, data_output_summary_w_group, targets, samples

@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response, render_template, flash
+from flask import Flask, request, make_response, render_template, flash, redirect, url_for
 import io
 import pandas as pd
 import AUTOqPCR
@@ -19,6 +19,11 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route('/')
 def form():
 	return render_template('layout.html')
+
+
+@app.route('/hello')
+def hello():
+	return render_template('hello.html')
 
 
 @app.route('/download', methods=["POST"])
@@ -107,9 +112,14 @@ def transform_view():
 					'\nNumber of groups: ' + str(qty) + '\nGroup column name: ' + gcol + '\nGroup name: ' + glist + \
 					'\nRepeated measures: ' + rm + '\n' + 'Normal distribution: ' + nd)
 
-		clean_data, summary_data, targets, samples = AUTOqPCR.process_data(data, model, quencher, task, cgenes, cutoff,
+		clean_data, summary_data, summary_data_w_group, targets, samples = AUTOqPCR.process_data(data, model, quencher, task, cgenes, cutoff,
 																		   max_outliers,
 																		   target_sorter, sample_sorter, csample, colnames)
+		# making summary data csv
+		output = summary_data.to_csv()
+		output_w_group = summary_data_w_group.to_csv()
+		clean_output = clean_data.to_csv()
+
 		logger.info('Clean data and summary data are created')
 
 		plots = plot.plots(summary_data, model, targets, samples)
@@ -136,10 +146,6 @@ def transform_view():
 			group_plot = plot.plot_by_groups(clean_data, model, targets, cgenes)
 
 			logger.info('Plots of statistics output are created.')
-
-		# making summary data csv
-		output = summary_data.to_csv()
-		clean_output = clean_data.to_csv()
 
 		outfile = io.BytesIO()
 		with ZipFile(outfile, 'w') as myzip:
@@ -175,6 +181,7 @@ def transform_view():
 				buf.close()
 			myzip.writestr('clean_data.csv', clean_output)
 			myzip.writestr('summary_data.csv', output)
+			myzip.writestr('summary_data_w_group.csv', output_w_group)
 			myzip.writestr('log.txt', log_stream.getvalue())
 			log_stream.flush()
 			# individual plots

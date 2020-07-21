@@ -30,7 +30,7 @@ def process_data(data , model , quencher, task, cgenes , cutoff , max_outliers ,
 	targets = data['Target Name'].drop_duplicates(keep='first').values
 	if target_sorter != '':
 		targets = [sorter.strip() for sorter in target_sorter.split(',')]
-		# remove nan from list
+	# remove nan from list
 	targets = [t for t in targets if type(t) is not float]
 	# Add sorter to dataframe to order Target Names in output files
 	sorter_index = dict(zip([g.lower() for g in targets], range(len(targets))))
@@ -51,17 +51,17 @@ def process_data(data , model , quencher, task, cgenes , cutoff , max_outliers ,
 	# Calls the different processing models depending on the model argument
 	if model == 'absolute':
 		data = cleanup_outliers(data, "Quantity", cutoff, max_outliers, task)
-		data, data_summary, targets, samples = absolute.process(data, colnames)
+		data, data_summary, data_summary_w_group, targets, samples = absolute.process(data, colnames)
 
 	elif model == 'relative_dCT':
 		data = cleanup_outliers(data, "CT", cutoff, max_outliers, task)
-		data, data_summary, targets, samples = relative.process(data, colnames)
+		data, data_summary, data_summary_w_group, targets, samples = relative.process(data, colnames)
 
 	else:
 		data = cleanup_outliers(data, "CT", cutoff, max_outliers, task)
-		data, data_summary, targets, samples = stability.process(model, data, csample, colnames)
+		data, data_summary, data_summary_w_group, targets, samples = stability.process(model, data, csample, colnames)
 
-	return data, data_summary, targets, samples
+	return data, data_summary, data_summary_w_group, targets, samples
 
 
 def cleanup_outliers(d , feature , cutoff , max_outliers, task):

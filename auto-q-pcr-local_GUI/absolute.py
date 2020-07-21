@@ -3,20 +3,16 @@ import numpy as np
 
 
 def process(data, colnames=None):
-
 	outlier_data = data[data['Outliers'].eq(True)]
 	data = data[data['Outliers'].eq(False)]
 	# Calculate Mean (Endogenous Control Mean) and SSD for all Controls
-
 	data['NormQuant'] = 0
 
 	control_filter = (data['Control'].eq(True))
-
 	# print("Endogenous Control Quantity Means and SSD")
 	# print(data_controls_grouped)
 
 	data_controls_quantity = data[control_filter].groupby(['Sample Name'], sort=False).agg({'Quantity': 'mean'})
-
 	# print("Combined Endogenous Control Quantity Means and SSD")
 	# print(data_controls_quantity)
 
@@ -66,4 +62,7 @@ def process(data, colnames=None):
 	data_output_summary = data.groupby(['Target Name', 'Sample Name'], sort=False).agg(
 		{'NormQuant': [np.size , 'mean' , 'std'] , 'NormSEM': 'mean'})
 
-	return df, data_output_summary, targets, samples
+	data_output_summary_w_group = data.groupby(['Target Name', 'Sample Name']+clist, sort=False).agg(
+		{'NormQuant': [np.size , 'mean' , 'std'] , 'NormSEM': 'mean'})
+
+	return df, data_output_summary, data_output_summary_w_group, targets, samples
