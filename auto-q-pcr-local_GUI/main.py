@@ -181,7 +181,7 @@ def transform_view():
 				buf.close()
 			myzip.writestr('clean_data.csv', clean_output)
 			myzip.writestr('summary_data.csv', output)
-			myzip.writestr('summary_data_w_group.csv', output_w_group)
+			myzip.writestr('summary_data_w_groups.csv', output_w_group)
 			myzip.writestr('log.txt', log_stream.getvalue())
 			log_stream.flush()
 			# individual plots
