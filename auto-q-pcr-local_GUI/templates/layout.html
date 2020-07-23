@@ -311,29 +311,43 @@
                     <input type="number"  name="quantity" min="1">
                     <br>
                     <br>
+                    <input type="radio" name="twoway" value="False" checked><b>One-way Anova</b>
+                    <br>
                     How are your groups defined?
                     <br>
-                    <input type="radio" name="option3" value="True" checked>I have a group column. Enter the name of your group column</input>
+                    <input type="radio" name="option3" value="True" checked>I have a group column. Enter the name of your group column
                     <input type="text" name="gcol" autocomplete="off">
                      <br>
                      <br>
                     <input type="radio" name="option3" value="False">Group names are within the sample name.
-                    Enter your group names as they are indicated in your sample names (separate with commas)</input>
+                    Enter your group names as they are indicated in your sample names (separate with commas)
                     <input type="text" name="glist" autocomplete="off">
                     <br>
                     <br>
+                    <input type="radio" name="twoway" value="True"><b>Two-way Anova</b>
+                    <br>
+                    <input type="radio" name="option3" value="True">I have group columns. Enter the name of your group column for variable A
+                    <input type="text" name="gcol1" autocomplete="off"><br>
+                    Enter the name of your group column for variable B <input type="text" name="gcol2" autocomplete="off"><br>
+                    <br>
+                    <input type="radio" name="option3" value="False">Group names are within a column.
+                    Enter column name for variable A <input type="text" name="colname1" autocomplete="off">
+                    your group names as they are indicated in the column (separate with commas)<input type="text" name="glist1" autocomplete="off"><br>
+                    Enter column name for variable B <input type="text" name="colname2" autocomplete="off">
+                    your group names as they are indicated in the column (separate with commas)<input type="text" name="glist2" autocomplete="off"><br>
+                    <br>
                     Is it a time series or repeated measures?
                     <br>
-                    <input type="radio" name="option2" value="True">Yes --- measures are dependent </input>
+                    <input type="radio" name="option2" value="True">Yes --- measures are dependent
                     <br>
-                    <input type="radio" name="option2" value="False" checked>No  --- measures are independent </input>
+                    <input type="radio" name="option2" value="False" checked>No  --- measures are independent
                     <br>
                     <br>
                     Is your data normally distributed?
                     <br>
-                    <input id="normalyes" type="radio" name="option4" value="True" checked>Yes --- Parametric tests</input>
+                    <input id="normalyes" type="radio" name="option4" value="True" checked>Yes --- Parametric tests
                     <br>
-                    <input id="normalno" type="radio" name="option4" value="False">No  --- Non-parametric tests</input>
+                    <input id="normalno" type="radio" name="option4" value="False">No  --- Non-parametric tests
                     <br>
 
                 </td>

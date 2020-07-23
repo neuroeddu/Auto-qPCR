@@ -101,8 +101,15 @@ def transform_view():
 		csample = request.form['csample']
 		colnames = request.form['colnames']
 		qty = request.form.get('quantity', type=int)
+		tw = request.form['twoway']
 		gcol = request.form['gcol']
 		glist = request.form['glist']
+		gcol1 = request.form['gcol1']
+		gcol2 = request.form['gcol2']
+		colname1 = request.form['colname1']
+		colname2 = request.form['colname2']
+		glist1 = request.form['glist1']
+		glist2 = request.form['glist2']
 		rm = request.form['option2']
 		nd = request.form['option4']
 
@@ -112,9 +119,12 @@ def transform_view():
 					'\nNumber of groups: ' + str(qty) + '\nGroup column name: ' + gcol + '\nGroup name: ' + glist + \
 					'\nRepeated measures: ' + rm + '\n' + 'Normal distribution: ' + nd)
 
-		clean_data, summary_data, summary_data_w_group, targets, samples = AUTOqPCR.process_data(data, model, quencher, task, cgenes, cutoff,
-																		   max_outliers,
-																		   target_sorter, sample_sorter, csample, colnames)
+		clean_data, summary_data, summary_data_w_group, targets, samples = AUTOqPCR.process_data(data, model, quencher,
+																								 task, cgenes, cutoff,
+																								 max_outliers,
+																								 target_sorter,
+																								 sample_sorter, csample,
+																								 colnames)
 		# making summary data csv
 		output = summary_data.to_csv()
 		output_w_group = summary_data_w_group.to_csv()
@@ -129,21 +139,34 @@ def transform_view():
 
 		# making stats csv
 		if qty is not None:
-			if request.form['option3'] != 'False':
-				if gcol.lower() in clean_data.columns.str.lower():
-					col = gcol
-				clean_data['Group'] = clean_data[col]
+			if tw == 'False':
+				if request.form['option3'] != 'False':
+					if gcol.lower() in clean_data.columns.str.lower():
+						col = gcol
+					clean_data['Group'] = clean_data[col]
+				else:
+					groups = glist.split(',')
+					clean_data = statistics.add_groups(clean_data, tw, groups)
 			else:
-				groups = glist.split(',')
-				clean_data = statistics.add_groups(clean_data, groups)
+				if request.form['option3'] != 'False':
+					if gcol1.lower() in clean_data.columns.str.lower():
+						col = gcol1
+					clean_data['Group1'] = clean_data[col]
+					if gcol2.lower() in clean_data.columns.str.lower():
+						col = gcol2
+					clean_data['Group2'] = clean_data[col]
+				else:
+					groups1 = glist1.split(',')
+					groups2 = glist2.split(',')
+					clean_data = statistics.add_groups(clean_data, tw, groups1, groups2, colname1, colname2)
 
-			stats_dfs, posthoc_dfs = statistics.stats(model, qty, clean_data, targets, rm, nd)
+			stats_dfs, posthoc_dfs = statistics.stats(model, qty, clean_data, targets, tw, rm, nd)
 			stats_output = stats_dfs.to_csv(index=False)
 			posthoc_output = posthoc_dfs.to_csv(index=False)
 
 			logger.info('Statistics output data are created.')
 
-			group_plot = plot.plot_by_groups(clean_data, model, targets, cgenes)
+			group_plot = plot.plot_by_groups(clean_data, model, targets, cgenes, tw)
 
 			logger.info('Plots of statistics output are created.')
 
@@ -168,17 +191,24 @@ def transform_view():
 						else:
 							myzip.writestr('KruskalWallisTest_result.csv', stats_output)
 						myzip.writestr('Posthoc_result.csv', posthoc_output)
-
-				buf = io.BytesIO()
-				group_plot[0].savefig(buf)
-				image_name = 'Plot_by_groups.png'
-				myzip.writestr(image_name, buf.getvalue())
-				buf.close()
-				buf = io.BytesIO()
-				group_plot[1].savefig(buf)
-				image_name2 = 'Plot_by_targets.png'
-				myzip.writestr(image_name2, buf.getvalue())
-				buf.close()
+				# output grouped plots
+				if len(group_plot) == 2:
+					buf = io.BytesIO()
+					group_plot[0].savefig(buf)
+					image_name = 'Plot_by_groups.png'
+					myzip.writestr(image_name, buf.getvalue())
+					buf.close()
+					buf = io.BytesIO()
+					group_plot[1].savefig(buf)
+					image_name2 = 'Plot_by_targets.png'
+					myzip.writestr(image_name2, buf.getvalue())
+					buf.close()
+				else:
+					buf = io.BytesIO()
+					group_plot[0].savefig(buf)
+					image_name = 'Group1_vs_Group2.png'
+					myzip.writestr(image_name, buf.getvalue())
+					buf.close()
 			myzip.writestr('clean_data.csv', clean_output)
 			myzip.writestr('summary_data.csv', output)
 			myzip.writestr('summary_data_w_groups.csv', output_w_group)
@@ -230,11 +260,6 @@ def transform_view():
 		log_stream.flush()
 		# alert
 		flash('Sorry, something went wrong. Please check log.txt file.', 'danger')
-
-	# get CPU and memory for the process
-	# myProcess = psutil.Process(os.getpid())
-	# print('CPU percent: ' + str(myProcess.cpu_percent()))
-	# print('Memory info: ' + str(myProcess.memory_info()[0]/2.**30))
 
 	return response
 

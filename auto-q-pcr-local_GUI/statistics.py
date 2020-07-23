@@ -1,11 +1,11 @@
 import pandas
 import pingouin as pg
-from pingouin import pairwise_ttests, multicomp, ttest
+from pingouin import pairwise_ttests, multicomp, ttest, pairwise_tukey
 from scipy.stats import mannwhitneyu, wilcoxon
 import re
 
 
-def stats(model, quantity, data, targets, rm, nd):
+def stats(model, quantity, data, targets, tw, rm, nd):
 	if model == 'absolute':
 		data = data.drop(['NormQuant'], axis=1)
 		data['NormMean'] = data['NormMean'].astype(float)
@@ -50,27 +50,55 @@ def stats(model, quantity, data, targets, rm, nd):
 			# ANOVA test
 			stats_dfs = pandas.DataFrame()
 			posthoc_dfs = pandas.DataFrame()
+			# tukey_dfs = pandas.DataFrame()
 			pvals = []
 			for item in targets:
 				if rm == 'True':
-					# repeated measure anova
-					aov = pg.rm_anova(dv=mean, data=data[data['Target Name'].eq(item)], within='Group', subject='Sample Name', detailed=True)
-					aov = aov.drop([1])
+					# one-way
+					if tw == 'False':
+						# repeated measure anova
+						aov = pg.rm_anova(dv=mean, data=data[data['Target Name'].eq(item)], within='Group', subject='Sample Name', detailed=True)
+						pvals.append(aov['p-unc'][0])
+						aov = aov.drop([1])
+						aov['measures'] = ['dependent']
+						aov['Target Name'] = item
+					# two-way
+					else:
+						aov = pg.rm_anova(dv=mean, data=data[data['Target Name'].eq(item)], within=['Group1', 'Group2'],
+										  subject='Sample Name', detailed=True)
+						reject_tw, pval_corr_tw = pg.multicomp(list(aov['p-unc']), alpha=0.05, method='bonf')
+						aov['p-value corrected'] = pval_corr_tw
+						aov['measures'] = ['dependent']*3
+						aov['Target Name'] = [item]*3
 					aov.drop(['eps'], axis=1)
-					pvals.append(aov['p-unc'][0])
-					aov['measures'] = ['dependent']
 					ph = pairwise_ttests(data=data[data['Target Name'].eq(item)], dv=mean, within='Group',
-										 subject='Sample Name', padjust='fdr_bh')
+											 subject='Sample Name', padjust='fdr_bh')
 					ph['Target Name'] = item
 					ph['Test'] = 'T-Test'
 				else:
-					aov = pg.anova(dv=mean, between='Group', data=data[data['Target Name'].eq(item)], detailed=True)
-					aov = aov.drop([1])
-					pvals.append(aov['p-unc'][0])
-					aov['measures'] = ['independent']
-					ph = pairwise_ttests(data=data[data['Target Name'].eq(item)], dv=mean, between='Group', padjust='fdr_bh')
+					# one-way
+					if tw == 'False':
+						aov = pg.anova(dv=mean, between='Group', data=data[data['Target Name'].eq(item)], detailed=True)
+						pvals.append(aov['p-unc'][0])
+						aov = aov.drop([1])
+						aov['measures'] = ['independent']
+						aov['Target Name'] = item
+						ph = pairwise_ttests(data=data[data['Target Name'].eq(item)], dv=mean, between='Group',
+											 padjust='fdr_bh')
+						ph['Test'] = 'T-Test'
+						# ph_tukey = pairwise_tukey(data=data[data['Target Name'].eq(item)], dv=mean, between='Group')
+						# ph_tukey['Test'] = 'Tukey'
+					# two-way
+					else:
+						aov = pg.anova(dv=mean, between=['Group1', 'Group2'], data=data[data['Target Name'].eq(item)], detailed=False)
+						aov = aov.drop([3])
+						reject_tw, pval_corr_tw = pg.multicomp(list(aov['p-unc']), alpha=0.05, method='bonf')
+						aov['p-value corrected'] = pval_corr_tw
+						aov['measures'] = ['independent']*3
+						aov['Target Name'] = [item]*3
+						ph = pairwise_ttests(data=data[data['Target Name'].eq(item)], dv=mean, between=['Group1', 'Group2'], padjust='fdr_bh')
+						ph['Test'] = 'T-Test'
 					ph['Target Name'] = item
-					ph['Test'] = 'T-Test'
 				if stats_dfs is None:
 					stats_dfs = aov
 				else:
@@ -79,16 +107,21 @@ def stats(model, quantity, data, targets, rm, nd):
 					posthoc_dfs = ph
 				else:
 					posthoc_dfs = posthoc_dfs.append(ph, ignore_index=True)
+
 			reject, pvals_corr = pg.multicomp(pvals, alpha=0.05, method='bonf')
+
 			# reformat output tables
-			stats_dfs = stats_dfs.drop(['Source'], axis=1)
 			stats_dfs = stats_dfs.rename(columns={'p-unc': 'p-value', 'np2': 'effect size'})
-			stats_dfs['Target Name'] = targets
-			stats_dfs['p-value corrected'] = pvals_corr
-			stats_dfs['distribution'] = ['parametric'] * len(targets)
-			stats_dfs['test'] = ['ANOVA'] * len(targets)
-			stats_dfs['statistic'] = ['NA'] * len(targets)
-			cols = ['Target Name', 'DF', 'F', 'MS', 'SS', 'p-value', 'p-value corrected', 'measures', 'distribution', 'test',
+			if tw == 'False':
+				stats_dfs['p-value corrected'] = pvals_corr
+				stats_dfs['distribution'] = ['parametric'] * len(targets)
+				stats_dfs['test'] = ['ANOVA'] * len(targets)
+				stats_dfs['statistic'] = ['NA'] * len(targets)
+			else:
+				stats_dfs['distribution'] = ['parametric'] * (len(targets)*3)
+				stats_dfs['test'] = ['ANOVA'] * (len(targets)*3)
+				stats_dfs['statistic'] = ['NA'] * (len(targets)*3)
+			cols = ['Target Name', 'Source', 'DF', 'F', 'MS', 'SS', 'p-value', 'p-value corrected', 'measures', 'distribution', 'test',
 					'statistic', 'effect size']
 			stats_dfs = stats_dfs.reindex(columns=cols)
 
@@ -191,9 +224,17 @@ def stats(model, quantity, data, targets, rm, nd):
 
 
 # Extract groups from sample name
-def add_groups(df, groups):
-	df['Group'] = df['Sample Name'].str.extract(re.compile('(' + '|'.join(groups) + ')', re.IGNORECASE),
+def add_groups(df, tw, groups1, groups2=None, colname1=None, colname2=None):
+	if tw == 'False':
+		df['Group'] = df['Sample Name'].str.extract(re.compile('(' + '|'.join(groups1) + ')', re.IGNORECASE),
+													expand=False).fillna('')
+		df['Sample Name'] = df['Sample Name'].str.replace(re.compile('(' + '|'.join(groups1) + ')', re.IGNORECASE), '')
+	else:
+		df['Group1'] = df[colname1].str.extract(re.compile('(' + '|'.join(groups1) + ')', re.IGNORECASE),
+													expand=False).fillna('')
+		df[colname1] = df[colname1].str.replace(re.compile('(' + '|'.join(groups1) + ')', re.IGNORECASE), '')
+		df['Group2'] = df[colname1].str.extract(re.compile('(' + '|'.join(groups2) + ')', re.IGNORECASE),
 												expand=False).fillna('')
-	df['Sample Name'] = df['Sample Name'].str.replace(re.compile('(' + '|'.join(groups) + ')', re.IGNORECASE), '')
+		df[colname2] = df[colname2].str.replace(re.compile('(' + '|'.join(groups2) + ')', re.IGNORECASE), '')
 
 	return df
