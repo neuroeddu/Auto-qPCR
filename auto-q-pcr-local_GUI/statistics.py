@@ -86,8 +86,6 @@ def stats(model, quantity, data, targets, tw, rm, nd):
 						ph = pairwise_ttests(data=data[data['Target Name'].eq(item)], dv=mean, between='Group',
 											 padjust='fdr_bh')
 						ph['Test'] = 'T-Test'
-						# ph_tukey = pairwise_tukey(data=data[data['Target Name'].eq(item)], dv=mean, between='Group')
-						# ph_tukey['Test'] = 'Tukey'
 					# two-way
 					else:
 						aov = pg.anova(dv=mean, between=['Group1', 'Group2'], data=data[data['Target Name'].eq(item)], detailed=False)
@@ -124,12 +122,19 @@ def stats(model, quantity, data, targets, tw, rm, nd):
 			cols = ['Target Name', 'Source', 'DF', 'F', 'MS', 'SS', 'p-value', 'p-value corrected', 'measures', 'distribution', 'test',
 					'statistic', 'effect size']
 			stats_dfs = stats_dfs.reindex(columns=cols)
-
-			posthoc_dfs = posthoc_dfs.drop(['Contrast', 'T'], axis=1)
+			if tw == 'False':
+				posthoc_dfs = posthoc_dfs.drop(['Contrast', 'T'], axis=1)
+			else:
+				posthoc_dfs = posthoc_dfs.drop(['T'], axis=1)
 			posthoc_dfs = posthoc_dfs.rename(columns={'hedges': 'effect size', 'p-corr': 'p-value corrected', 'p-unc': 'p-value',
 													  'p-adjust': 'correction method', 'BF10': 'Bayes factor', 'dof': 'DF'})
-			cols2 = ['Target Name', 'A', 'B', 'DF', 'p-value corrected', 'p-value', 'correction method', 'Paired',
+			if tw == 'False':
+				cols2 = ['Target Name', 'A', 'B', 'DF', 'p-value corrected', 'p-value', 'correction method', 'Paired',
 					 'Parametric', 'Test', 'effect size', 'Bayes factor']
+			else:
+				cols2 = ['Target Name', 'Contrast', 'Group1', 'A', 'B', 'DF', 'p-value corrected', 'p-value',
+						 'correction method', 'Paired',
+						 'Parametric', 'Test', 'effect size', 'Bayes factor']
 			posthoc_dfs = posthoc_dfs.reindex(columns=cols2)
 
 	# nonparametric tests for not normally distributed data

@@ -113,11 +113,13 @@ def transform_view():
 		rm = request.form['option2']
 		nd = request.form['option4']
 
-		logger.info('Model: ' + model + '\nEndogenous control genes: ' + cgenes + '\nCut-off: ' + str(cutoff) + \
-					'\nMaximum Outliers: ' + str(max_outliers) + '\nTarget Order: ' + target_sorter + '\nSample Order: ' + \
-					sample_sorter + '\nControl Sample: ' + csample + '\nAdditional column names: ' + colnames + \
-					'\nNumber of groups: ' + str(qty) + '\nGroup column name: ' + gcol + '\nGroup name: ' + glist + \
-					'\nRepeated measures: ' + rm + '\n' + 'Normal distribution: ' + nd)
+		logger.info('Model: ' + model + '\nQuencher: ' + quencher + '\nTask: ' + task + '\nEndogenous control genes: ' +
+					cgenes + '\nCut-off: ' + str(cutoff) + '\nMaximum Outliers: ' + str(max_outliers) + '\nTarget Order: '
+					+ target_sorter + '\nSample Order: ' + sample_sorter + '\nControl Sample: ' + csample +
+					'\nAdditional column names: ' + colnames + '\nNumber of groups: ' + str(qty) + '\nGroup column name: '
+					+ gcol + '\nGroup name: ' + glist + '\nColumn name A: ' + colname1 +
+					'\nColumn Name B: ' + colname2 + '\nGroup names for column A: ' + glist1 + '\nGroup names for column B: '
+					+ glist2 + '\nRepeated measures: ' + rm + '\n' + 'Normal distribution: ' + nd)
 
 		clean_data, summary_data, summary_data_w_group, targets, samples = AUTOqPCR.process_data(data, model, quencher,
 																								 task, cgenes, cutoff,
