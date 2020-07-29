@@ -1,0 +1,81 @@
+,,,,,,,,,
+,,,,,,,,,
+Well / Set,Dye,Content,Description,Efficiency,C(t),ng,T_R,Treatment,Region
+A1,FAM,Blank,,3.81%,36.11,0.002308,,,
+A1,TMR,Blank,,N/A,N/A,,,,
+A10,FAM,Standard,,34.63%,26.85,0.7813,,,
+A10,TMR,Standard,,N/A,N/A,0.7813,,,
+A11,FAM,Standard,,53.51%,29.82,0.1953,,,
+A11,TMR,Standard,,N/A,N/A,0.1953,,,
+A12,FAM,Standard,,36.60%,28.49,0.1953,,,
+A12,TMR,Standard,,N/A,N/A,0.1953,,,
+A2,FAM,Blank,,N/A,N/A,,,,
+A2,TMR,Blank,,N/A,N/A,,,,
+A3,FAM,Standard,,51.98%,21.71,50,,,
+A3,TMR,Standard,,N/A,N/A,50,,,
+A4,FAM,Standard,,66.62%,22.67,50,,,
+A4,TMR,Standard,,N/A,N/A,50,,,
+A5,FAM,Standard,,35.23%,24.18,12.5,,,
+A5,TMR,Standard,,N/A,N/A,12.5,,,
+A6,FAM,Standard,,40.23%,24.54,12.5,,,
+A6,TMR,Standard,,N/A,N/A,12.5,,,
+A7,FAM,Standard,,54.59%,27.46,3.125,,,
+A7,TMR,Standard,,N/A,N/A,3.125,,,
+A8,FAM,Standard,,38.21%,27.07,3.125,,,
+A8,TMR,Standard,,N/A,N/A,3.125,,,
+A9,FAM,Standard,,43.28%,28.01,0.7813,,,
+A9,TMR,Standard,,N/A,N/A,0.7813,,,
+B4,FAM,Sample,B4bisGP,52.82%,27.3,1.33,GP_Control,Con,GP
+B4,TMR,Sample,B4bisGP,N/A,N/A,,GP_Control,Con,GP
+B5,FAM,Sample,B4bisGP,46.28%,26.37,2.598,GP_Control,Con,GP
+B5,TMR,Sample,B4bisGP,N/A,N/A,,GP_Control,Con,GP
+B6,TMR,Sample,B4bisGP,N/A,N/A,,GP_Control,Con,GP
+B6,FAM,Sample,B4bisGP,42.64%,26.4,2.541,GP_Control,Con,GP
+C4,FAM,Sample,R6 GP,61.12%,26.63,2.157,GP_Control,Con,GP
+C4,TMR,Sample,R6 GP,N/A,N/A,,GP_Control,Con,GP
+C5,FAM,Sample,R6 GP,53.03%,25.7,4.207,GP_Control,Con,GP
+C5,TMR,Sample,R6 GP,N/A,N/A,,GP_Control,Con,GP
+C6,FAM,Sample,R6 GP,46.70%,26.41,2.524,GP_Control,Con,GP
+C6,TMR,Sample,R6 GP,N/A,N/A,,GP_Control,Con,GP
+D1,FAM,Sample,V3 GP,67.44%,27.91,0.8578,GP_Control,Con,GP
+D1,TMR,Sample,V3 GP,N/A,N/A,,GP_Control,Con,GP
+D10,FAM,Sample,V4 GP,57.90%,27.51,1.146,GP_Control,Con,GP
+D10,TMR,Sample,V4 GP,N/A,N/A,,GP_Control,Con,GP
+D11,FAM,Sample,V4 GP,34.84%,26.74,1.989,GP_Control,Con,GP
+D11,TMR,Sample,V4 GP,N/A,N/A,,GP_Control,Con,GP
+D12,FAM,Sample,V4 GP,57.55%,26.81,1.891,GP_Control,Con,GP
+D12,TMR,Sample,V4 GP,N/A,N/A,,GP_Control,Con,GP
+D2,FAM,Sample,V3 GP,59.35%,28.83,0.4414,GP_Control,Con,GP
+D2,TMR,Sample,V3 GP,N/A,N/A,,GP_Control,Con,GP
+D3,FAM,Sample,V3 GP,57.37%,27.87,0.8844,GP_Control,Con,GP
+D3,TMR,Sample,V3 GP,N/A,N/A,,GP_Control,Con,GP
+E7,FAM,Sample,R5bis GP,41.58%,27.92,0.8504,GP_Cocaine,Cocaine,GP
+E7,TMR,Sample,R5bis GP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+E8,FAM,Sample,R5bis GP,45.71%,27.49,1.157,GP_Cocaine,Cocaine,GP
+E8,TMR,Sample,R5bis GP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+E9,FAM,Sample,R5bis GP,43.81%,27.32,1.313,GP_Cocaine,Cocaine,GP
+E9,TMR,Sample,R5bis GP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+F4,FAM,Sample,R6bisGP,62.61%,25.62,4.473,GP_Cocaine,Cocaine,GP
+F4,TMR,Sample,R6bisGP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+F5,FAM,Sample,R6bisGP,8.01%,20.82,142.5,GP_Cocaine,Cocaine,GP
+F5,TMR,Sample,R6bisGP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+F6,FAM,Sample,R6bisGP,65.20%,26.76,1.964,GP_Cocaine,Cocaine,GP
+F6,TMR,Sample,R6bisGP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+G1,TMR,Sample,R8bisGP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+G1,FAM,Sample,R8bisGP,69.63%,28.12,0.7365,GP_Cocaine,Cocaine,GP
+G10,TMR,Sample,V2GP,1.57%,11.23,,GP_Cocaine,Cocaine,GP
+G10,FAM,Sample,V2GP,54.99%,25.84,3.813,GP_Cocaine,Cocaine,GP
+G11,FAM,Sample,V2GP,70.27%,26.95,1.713,GP_Cocaine,Cocaine,GP
+G11,TMR,Sample,V2GP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+G12,FAM,Sample,V2GP,72.30%,26.63,2.164,GP_Cocaine,Cocaine,GP
+G12,TMR,Sample,V2GP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+G2,TMR,Sample,R8bisGP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+G2,FAM,Sample,R8bisGP,59.70%,27.93,0.8456,GP_Cocaine,Cocaine,GP
+G3,FAM,Sample,R8bisGP,53.48%,28.35,0.6245,GP_Cocaine,Cocaine,GP
+G3,TMR,Sample,R8bisGP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+H7,FAM,Sample,V8GP,51.48%,28.18,0.703,GP_Cocaine,Cocaine,GP
+H7,TMR,Sample,V8GP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+H8,FAM,Sample,V8GP,119.20%,2.51,77300000,GP_Cocaine,Cocaine,GP
+H8,TMR,Sample,V8GP,7.39%,11.09,,GP_Cocaine,Cocaine,GP
+H9,FAM,Sample,V8GP,55.66%,27.72,0.9852,GP_Cocaine,Cocaine,GP
+H9,TMR,Sample,V8GP,N/A,N/A,,GP_Cocaine,Cocaine,GP
