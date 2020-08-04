@@ -13,17 +13,13 @@ import logging
 
 
 app: Flask = Flask(__name__)
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.secret_key = b'6Le3c7oZAAAAADF6jktQ2xuxnb1I1tlODKQwaWxU'
+app.max_content_length = 200 * 1024 * 1024 # 200 MB limit
 
 
 @app.route('/')
 def form():
 	return render_template('layout.html')
-
-
-@app.route('/hello')
-def hello():
-	return render_template('hello.html')
 
 
 @app.route('/download', methods=["POST"])
@@ -252,16 +248,15 @@ def transform_view():
 		response.headers['Content-Type'] = 'application/zip'
 		response.headers['Content-Disposition'] = 'attachment; filename=outputs_' + model + '_' + date_string + '.zip'
 		outfile.close()
-		# alert
-		flash('Your data has been processed successfully!', 'success')
 	except Exception as e:
 		logger.error('Error occurred: ' + str(e))
 		response = make_response(log_stream.getvalue())
 		response.headers['Content-Type'] = 'text/plain'
 		response.headers['Content-Disposition'] = 'attachment; filename=log_'+date_string+'.txt'
-		log_stream.flush()
-		# alert
-		flash('Sorry, something went wrong. Please check log.txt file.', 'danger')
+		# # alert
+		# flash('Sorry, something went wrong. '+log_stream.getvalue(), 'danger')
+		log_stream.close()
+		# return redirect(url_for('form'))
 
 	return response
 
