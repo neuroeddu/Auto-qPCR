@@ -68,6 +68,8 @@ def process(model, data , csample, colnames=None):
 
 		data_output_summary = data.groupby(['Target Name' , 'Sample Name', 'Indel'], sort=False).agg(
 			{'rq': [np.size , 'mean'] , 'rqSD': 'mean' , 'rqSEM': 'mean'})
+		data_output_summary_w_group = data.groupby(['Target Name', 'Sample Name', 'Indel']+clist, sort=False).agg(
+			{'rq': [np.size, 'mean'], 'rqSD': 'mean', 'rqSEM': 'mean'})
 	else:
 		cnames = [c.strip().lower() for c in colnames.split(',')]
 		clist = []
