@@ -7,7 +7,6 @@ QUALITY = ""
 import pandas
 import numpy as np
 import absolute , relative , stability
-import re
 
 
 def process_data(data , model , quencher, task, cgenes , cutoff , max_outliers , target_sorter=None , sample_sorter=None , csample=None, colnames=None):
@@ -26,40 +25,18 @@ def process_data(data , model , quencher, task, cgenes , cutoff , max_outliers ,
 		data.loc[data[col].isnull() , 'Ignore'] = True
 	# ignore rows if they correspond to signal from the quencher
 	data['Ignore'].mask(data['Reporter'].str.lower() == quencher.lower(), True, inplace=True)
-	# define sorter for target name order based on list
-	targets = data['Target Name'].drop_duplicates(keep='first').values
-	if target_sorter != '':
-		targets = [sorter.strip() for sorter in target_sorter.split(',')]
-	# remove nan from list
-	targets = [t for t in targets if type(t) is not float]
-	# Add sorter to dataframe to order Target Names in output files
-	sorter_index = dict(zip([g.lower() for g in targets], range(len(targets))))
-	data['Target Order'] = data['Target Name'].str.lower().map(sorter_index)
-	data.sort_values(['Target Order'], inplace=True)
-
-	# define sorter for sample name order based on list
-	if sample_sorter != '':
-		sorter = [sorter.strip() for sorter in sample_sorter.split(',')]
-		# remove nan from list
-		sorter = [s for s in sorter if type(s) is not float]
-		# Add sorter to dataframe to order Sample Names in output files
-		sorter_index = dict(zip([s.lower() for s in sorter], range(len(sorter))))
-		data['Sample Name Key'] = data['Sample Name'].str.extract(re.compile('('+'|'.join(sorter)+')', re.IGNORECASE), expand=False).fillna('')
-		data['Sample Order'] = data['Sample Name Key'].str.lower().map(sorter_index)
-		data.sort_values(by=['Target Order', 'Sample Order'], inplace=True)
 
 	# Calls the different processing models depending on the model argument
 	if model == 'absolute':
 		data = cleanup_outliers(data, "Quantity", cutoff, max_outliers, task)
-		data, data_summary, data_summary_w_group, targets, samples = absolute.process(data, colnames)
+		data, data_summary, data_summary_w_group, targets, samples = absolute.process(data, colnames, target_sorter, sample_sorter)
 
 	elif model == 'relative_dCT':
 		data = cleanup_outliers(data, "CT", cutoff, max_outliers, task)
-		data, data_summary, data_summary_w_group, targets, samples = relative.process(data, colnames)
-
+		data, data_summary, data_summary_w_group, targets, samples = relative.process(data, colnames, target_sorter, sample_sorter)
 	else:
 		data = cleanup_outliers(data, "CT", cutoff, max_outliers, task)
-		data, data_summary, data_summary_w_group, targets, samples = stability.process(model, data, csample, colnames)
+		data, data_summary, data_summary_w_group, targets, samples = stability.process(model, data, csample, colnames, target_sorter, sample_sorter)
 
 	return data, data_summary, data_summary_w_group, targets, samples
 
@@ -104,6 +81,5 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, task):
 				dx['Distance'] = (dx[feature] - dxg[feature]['mean'].iloc[0]) ** 2
 				j = dx.sort_values(by='Distance' , ascending=False).index[0]
 				d['Outliers'].loc[j] = True
-				d['Ignore'].loc[j] = True
 
 	return d[(d['Ignore'].eq(False))]
