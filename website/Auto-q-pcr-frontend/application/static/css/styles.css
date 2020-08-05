@@ -1,0 +1,195 @@
+header {
+    padding: 2em;
+    background-color: #ECEFF1;
+    border-top: 1px solid #BE1121;
+    border-bottom: 1px solid #6f766f;
+    font-family: "CartoGothicStdBold", Helvetica, "Helvetica Neue", Arial, sans serif;
+}
+
+#logo {
+    background-color: #ECEFF1;
+    height: 100px;
+    width: 214px;
+}
+
+.row-header {
+    margin: 0px auto;
+    padding: 0px auto;
+}
+
+.row-content {
+    margin: 0px auto;
+    padding: 50px 0px 50px 0px;
+    border-bottom: 1px ridge;
+    min-height: 400px;
+}
+
+.navbar {
+    font-family: "CartoGothicStdBook", Helvetica, "Helvetica Neue", Arial, sans serif;
+    font-weight: normal;
+    padding: 0px;
+}
+
+.navbar-dark {
+    background-color: #444844;
+}
+
+.nav-item {
+    margin: 0px;
+    padding: 1px;
+}
+
+.nav-link:hover {
+    background-color: #0C0C0C;
+}
+
+li a.active {
+    background-color: #0C0C0C;
+}
+
+.footer {
+    margin: 0px auto;
+    padding: 20px 0px 20px 0px;
+}
+
+.help-tip {
+    position: absolute;
+    top: -.2em;
+    right: 0em;
+    text-align: center;
+    background-color: #470A68;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+    line-height: 26px;
+    cursor: default;
+}
+
+.help-tip:before {
+    content: "?";
+    font-weight: bold;
+    color: #fff;
+}
+
+.help-tip:hover p {
+    display: block;
+    transform-origin: 100% 0%;
+
+    -webkit-animation: fadeIn 0.3s ease-in-out;
+    animation: fadeIn 0.3s ease-in-out;
+
+}
+
+.help-tip p { /* The tooltip */
+    display: none;
+    text-align: left;
+    background-color: #1E2021;
+    padding: 10px;
+    width: 250px;
+    position: absolute;
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    left: -4px;
+    color: #FFF;
+    font-size: 13px;
+    line-height: 1.4;
+    z-index: 2;
+}
+
+.help-tip p:before { /* The pointer of the tooltip */
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-bottom-color: #1E2021;
+    left: 10px;
+    top: -12px;
+}
+
+.help-tip p:after { /* Prevents the tooltip from being hidden */
+    width: 100%;
+    height: 40px;
+    content: "";
+    position: absolute;
+    top: -40px;
+    left: 0;
+}
+
+/* CSS animation */
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+
+    100% {
+        opacity: 100%;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.col-form-label{
+    padding-bottom: 0;
+}
+
+.form-inline input {
+    margin-right: 4px;
+}
+
+p {
+    margin-bottom: 0rem;
+}
+
+.btn-primary {
+    background-color: #2CCCD3;
+}
+
+.btn-primary:hover {
+    background-color: #470A68!important;
+}
+
+.btn-primary:focus {
+    background-color: #2CCCD3!important;
+}
+
+.btn-primary:active {
+    background-color: #470A68!important;
+}
+
+form label.required:after {
+    color: #FF0000;
+    content: " *";
+}
+
+form h4.required:after {
+    color: #FF0000;
+    content: " *";
+}
+
+.footnote p{
+    color: #FF0000;
+    font-size: 90%;
+}
+
+h3 {
+    margin-bottom: 1.2rem;
+}
