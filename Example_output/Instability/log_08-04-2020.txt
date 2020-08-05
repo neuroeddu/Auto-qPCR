@@ -1,0 +1,23 @@
+Started
+Files upload complete.
+Gene names if they are included in file names: 
+Model: instability
+Quencher: 
+Task: UNKNOWN
+Endogenous control genes: CHR4
+Cut-off: 0.3
+Maximum Outliers: 0.5
+Target Order: CHR1,CHR4,CHR8,CHR10,CHR12,CHR17,CHR18,CHR20,CHRX
+Sample Order: GM25953,GM25975,GM25974,GM25952,Normal
+Control Sample: Normal
+Additional column names: 
+Number of groups: None
+Group column name: 
+Group name: 
+Column name A: 
+Column Name B: 
+Group names for column A: 
+Group names for column B: 
+Repeated measures: False
+Normal distribution: True
+Error occurred: local variable 'data_output_summary_w_group' referenced before assignment
