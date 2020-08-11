@@ -29,15 +29,15 @@ def process_data(data , model , quencher, task, cgenes , cutoff , max_outliers ,
 	# Calls the different processing models depending on the model argument
 	if model == 'absolute':
 		data = cleanup_outliers(data, "Quantity", cutoff, max_outliers, task)
-		data, data_summary, data_summary_w_group, targets, samples = absolute.process(data, colnames)
+		data, data_summary, data_summary_w_group, targets, samples = absolute.process(data, colnames, target_sorter, sample_sorter)
 
 	elif model == 'relative_dCT':
 		data = cleanup_outliers(data, "CT", cutoff, max_outliers, task)
-		data, data_summary, data_summary_w_group, targets, samples = relative.process(data, colnames)
+		data, data_summary, data_summary_w_group, targets, samples = relative.process(data, colnames, target_sorter, sample_sorter)
 
 	else:
 		data = cleanup_outliers(data, "CT", cutoff, max_outliers, task)
-		data, data_summary, data_summary_w_group, targets, samples = stability.process(model, data, csample, colnames)
+		data, data_summary, data_summary_w_group, targets, samples = stability.process(model, data, csample, colnames, target_sorter, sample_sorter)
 
 	return data, data_summary, data_summary_w_group, targets, samples
 
