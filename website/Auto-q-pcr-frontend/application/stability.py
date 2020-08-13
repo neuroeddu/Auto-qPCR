@@ -3,7 +3,7 @@ import numpy as np
 import re
 
 
-def process(model, data , csample, colnames=None, target_sorter=None, sample_sorter=None):
+def process(model, data , csample, colnames, target_sorter, sample_sorter):
 	outlier_data = data[data['Outliers'].eq(True)]
 	data = data[data['Outliers'].eq(False)]
 
@@ -75,6 +75,10 @@ def process(model, data , csample, colnames=None, target_sorter=None, sample_sor
 
 		data_output_summary_w_group = data.groupby(['Target Name', 'Sample Name', 'Indel']+clist, sort=False).agg(
 			{'rq': [np.size, 'mean'], 'rqSD': 'mean', 'rqSEM': 'mean'})
+
+		targets = data['Target Name'].drop_duplicates(keep='first').values
+		samples = data['Sample Name'].drop_duplicates(keep='first').values
+
 	else:
 		cnames = [c.strip().lower() for c in colnames.split(',')]
 		clist = []
@@ -92,6 +96,9 @@ def process(model, data , csample, colnames=None, target_sorter=None, sample_sor
 
 		data_output_summary_w_group = data.groupby(['Target Name', 'Sample Name']+clist, sort=False).agg(
 			{'rq': [np.size, 'mean'], 'rqSD': 'mean', 'rqSEM': 'mean'})
+
+		targets = data['Target Name'].drop_duplicates(keep='first').values
+		samples = data['Sample Name'].drop_duplicates(keep='first').values
 
 	return df, data_output_summary, data_output_summary_w_group, targets, samples
 
