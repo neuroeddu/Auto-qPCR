@@ -72,6 +72,9 @@ def process(data, colnames=None, target_sorter=None, sample_sorter=None):
 	data_output_summary_w_group = data.groupby(['Target Name', 'Sample Name', 'filename']+clist, sort=False).agg(
 		{'rq': [np.size , 'mean'] , 'rqSD': 'mean', 'rqSEM': 'mean'})
 
+	targets = data['Target Name'].drop_duplicates(keep='first').values
+	samples = data['Sample Name'].drop_duplicates(keep='first').values
+
 	return df, data_output_summary, data_output_summary_w_group, targets, samples
 
 
