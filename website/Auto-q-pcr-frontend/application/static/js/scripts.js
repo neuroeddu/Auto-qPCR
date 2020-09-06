@@ -10,6 +10,13 @@ document.getElementById("y_fileinfo").onclick = function() {
 	document.getElementById("info_form").style.display = "block";
 };
 
+document.getElementById("n_fileinfo").onclick = function() {
+	document.getElementById("genes").value = "";
+	document.getElementById("quencher").value = "";
+	document.getElementById("task").value = "UNKNOWN";
+	document.getElementById("info_form").style.display = "none";
+};
+
 // CSample is only enabled and required when relative ddCT or instability is selected
 document.getElementById("csample").setAttribute("disabled", "");
 
