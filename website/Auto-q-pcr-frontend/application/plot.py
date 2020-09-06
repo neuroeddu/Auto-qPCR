@@ -12,7 +12,11 @@ error_kw = dict(lw=4, capsize=7, capthick=4)
 
 def plots(dataframe, model, targets, samples):
 
-	if len(samples)*len(targets)*1.6 < 40:
+	if len(samples)*len(targets) < 5:
+		figsize = (20, 25)
+	elif len(samples)*len(targets) < 10:
+		figsize = (len(samples)*len(targets)*5, 25)
+	elif len(samples)*len(targets) < 25:
 		figsize = (len(samples)*len(targets)*3.2, 25)
 	else:
 		figsize = (len(samples)*len(targets)*1.6, 25)
@@ -71,7 +75,7 @@ def plots(dataframe, model, targets, samples):
 		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
-		plt.close(plot_by_samples)
+		plt.close()
 		plots.append(plot_by_samples)
 
 		plot_by_genes = plt.figure(figsize=figsize)
@@ -246,7 +250,11 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 	ncol_t = len(targets) // 10 + 1
 
 	#set figure size
-	if len(targets) * len(samples)*1.6 < 40:
+	if len(samples) * len(targets) < 5:
+		figsize = (20, 25)
+	elif len(samples) * len(targets) < 10:
+		figsize = (len(samples) * len(targets) * 5, 25)
+	elif len(targets) * len(samples)*1.6 < 40:
 		figsize = (len(targets) * len(samples)*3.2, 25)
 	else:
 		figsize = (len(targets) * len(samples)*1.6, 25)

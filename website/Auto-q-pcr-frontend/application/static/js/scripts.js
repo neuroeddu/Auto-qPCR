@@ -3,6 +3,13 @@ document.querySelector(".custom-file-input").addEventListener("change",function(
 	$(this).next(".custom-file-label").html(e.target.files.length + " file(s) uploaded");
 });
 
+// Display and hide file information fields
+document.getElementById("info_form").style.display = "none";
+
+document.getElementById("y_fileinfo").onclick = function() {
+	document.getElementById("info_form").style.display = "block";
+};
+
 // CSample is only enabled and required when relative ddCT or instability is selected
 document.getElementById("csample").setAttribute("disabled", "");
 

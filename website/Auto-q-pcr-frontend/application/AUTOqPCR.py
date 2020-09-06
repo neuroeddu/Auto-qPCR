@@ -9,7 +9,7 @@ import numpy as np
 from application import absolute , relative , stability
 
 
-def process_data(data , model , quencher, task, cgenes , cutoff , max_outliers , target_sorter=None , sample_sorter=None , csample=None, colnames=None):
+def process_data(data , model , quencher, task, cgenes , cutoff , max_outliers , preservevar, target_sorter=None , sample_sorter=None , csample=None, colnames=None):
 	"""This filters the data and processes the selected model, returning a list of output dataframes"""
 	# Transforms certain columns from string to numeric
 	cols = ['CT' , 'Quantity']
@@ -28,21 +28,21 @@ def process_data(data , model , quencher, task, cgenes , cutoff , max_outliers ,
 
 	# Calls the different processing models depending on the model argument
 	if model == 'absolute':
-		data = cleanup_outliers(data, "Quantity", cutoff, max_outliers, task)
+		data = cleanup_outliers(data, "Quantity", cutoff, max_outliers, preservevar, task)
 		data, data_summary, data_summary_w_group, targets, samples = absolute.process(data, colnames, target_sorter, sample_sorter)
 
 	elif model == 'relative_dCT':
-		data = cleanup_outliers(data, "CT", cutoff, max_outliers, task)
+		data = cleanup_outliers(data, "CT", cutoff, max_outliers, preservevar, task)
 		data, data_summary, data_summary_w_group, targets, samples = relative.process(data, colnames, target_sorter, sample_sorter)
 
 	else:
-		data = cleanup_outliers(data, "CT", cutoff, max_outliers, task)
+		data = cleanup_outliers(data, "CT", cutoff, max_outliers, preservevar, task)
 		data, data_summary, data_summary_w_group, targets, samples = stability.process(model, data, csample, colnames, target_sorter, sample_sorter)
 
 	return data, data_summary, data_summary_w_group, targets, samples
 
 
-def cleanup_outliers(d , feature , cutoff , max_outliers, task):
+def cleanup_outliers(d , feature , cutoff , max_outliers, preservevar, task):
 	"""Function to remove outliers based on cutoff and maximum number of outliers,
 	by removing the furthest data point in each group when the standard deviation
 	is higher than the cutoff"""
@@ -82,5 +82,9 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, task):
 				dx['Distance'] = (dx[feature] - dxg[feature]['mean'].iloc[0]) ** 2
 				j = dx.sort_values(by='Distance' , ascending=False).index[0]
 				d['Outliers'].loc[j] = True
+				# check if the outlier should be kept if mean has high variation
+				if preservevar == 'True':
+					if (dxg[feature]['mean']-dxg[feature].median())/dxg[feature].median() < 0.2:
+						d['Outliers'].loc[j] = False
 
 	return d[(d['Ignore'].eq(False))]
