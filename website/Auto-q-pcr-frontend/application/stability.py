@@ -70,6 +70,8 @@ def process(model, data , csample, colnames, target_sorter, sample_sorter):
 			df[item] = data[item]
 		df.reset_index(drop=True , inplace=True)
 
+		# remove outliers in summary data
+		data = data[data['Outliers'].eq(False)]
 		data_output_summary = data.groupby(['Target Name' , 'Sample Name', 'Indel'], sort=False).agg(
 			{'rq': [np.size , 'mean'] , 'rqSD': 'mean' , 'rqSEM': 'mean'})
 
@@ -91,6 +93,8 @@ def process(model, data , csample, colnames, target_sorter, sample_sorter):
 			df[item] = data[item]
 		df.reset_index(drop=True, inplace=True)
 
+		# remove outliers in summary data
+		data = data[data['Outliers'].eq(False)]
 		data_output_summary = data.groupby(['Target Name', 'Sample Name'], sort=False).agg(
 			{'rq': [np.size, 'mean'], 'rqSD': 'mean', 'rqSEM': 'mean'})
 

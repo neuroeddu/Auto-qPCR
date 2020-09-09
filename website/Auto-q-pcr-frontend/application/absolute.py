@@ -62,6 +62,8 @@ def process(data, colnames, target_sorter, sample_sorter):
 		df[item] = data[item]
 	df.reset_index(drop=True, inplace=True)
 
+	# remove outliers in summary data
+	data = data[data['Outliers'].eq(False)]
 	data_output_summary = data.groupby(['Target Name', 'Sample Name'], sort=False).agg(
 		{'NormQuant': [np.size , 'mean' , 'std'] , 'NormSEM': 'mean'})
 
