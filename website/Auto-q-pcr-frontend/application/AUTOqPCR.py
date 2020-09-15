@@ -85,7 +85,7 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, preservevar, task):
 				d['Outliers'].loc[j] = True
 				# check if the outlier should be kept if mean has high variation
 				if preservevar == 'True':
-					if abs((dxg[feature]['mean'].iloc[0]-dx[feature].median())/dx[feature].median()) > 0.2:
+					if abs((dxg[feature]['mean'].iloc[0]-dx[feature].median())/dx[feature].median()) < 0.1:
 						d['Outliers'].loc[j] = False
 
 	return d[(d['Ignore'].eq(False))]
