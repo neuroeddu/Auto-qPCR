@@ -1,0 +1,27 @@
+Started
+Files upload complete.
+Gene names if they are included in file names: 
+Model: relative_ddCT
+Quencher: 
+Task: UNKNOWN
+Endogenous control genes: ACTB,GAPDH
+Cut-off: 0.3
+Maximum Outliers: 0.5
+Target Order: PAX6,CAMK2A,GRIN1
+Sample Order: AiW002-2-D0, AiW002-2-D7,KYOU-D0,KYOU-D7
+Control Sample: AiW002-2-D0
+Additional column names: 
+Number of groups: 2
+Group column name: 
+Group name: D0,D7
+Column name A: 
+Column Name B: 
+Group names for column A: 
+Group names for column B: 
+Repeated measures: True
+Normal distribution: True
+NumExpr defaulting to 8 threads.
+Clean data and summary data are created
+Plots of the summary data are created.
+Statistics output data are created.
+Plots of statistics output are created.

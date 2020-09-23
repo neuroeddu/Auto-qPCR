@@ -1,0 +1,27 @@
+Started
+Model: absolute
+
+Files upload complete.
+Gene names if they are included in file names: B2M,NRXN3
+Quencher: TMR
+Task: sample
+Endogenous control genes: B2M
+Cut-off: 0.3
+Maximum Outliers: 0.5
+Preserve highly variable replicates: True
+Target Order: 
+Sample Order: B4bisGP,R6 GP,V3 GP,V4 GP,R5bis GP,R6bisGP,R8bisGP,V2GP,V8GP
+Control Sample: 
+Additional column names: 
+Number of groups: None
+Group column name: 
+Group name: 
+Column name A: 
+Column Name B: 
+Group names for column A: 
+Group names for column B: 
+Repeated measures: False
+Normal distribution: True
+NumExpr defaulting to 8 threads.
+Clean data and summary data are created
+Plots of the summary data are created.

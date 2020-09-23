@@ -51,7 +51,8 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, preservevar, task):
 	# Calculate SSD for all sample groups
 	f = (d['Ignore'].eq(False)) & (d['Task'].str.lower() == task.lower())
 	d1 = d[f].groupby(['Sample Name' , 'Target Name']).agg({'CT': ['std']})
-	f = (d1['CT']['std'] > cutoff)
+	print(d1)	
+	f = (d1['CT']['std'] >= cutoff)
 	d2 = d1[f]
 	if not d2.empty:
 		# Mark all outliers

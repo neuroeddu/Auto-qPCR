@@ -25,84 +25,84 @@ A11,FAM,Standard,,53.51%,29.82,0.1953,,,
 A11,TMR,Standard,,N/A,N/A,0.1953,,,
 A12,FAM,Standard,,36.60%,28.49,0.1953,,,
 A12,TMR,Standard,,N/A,N/A,0.1953,,,
-B1,FAM,Sample,B4bisNST,61.36%,27.68,1.014,NST_Control,Con,NST
-B1,TMR,Sample,B4bisNST,N/A,N/A,,NST_Control,Con,NST
-B2,FAM,Sample,B4bisNST,57.23%,28.39,0.604,NST_Control,Con,NST
-B2,TMR,Sample,B4bisNST,N/A,N/A,,NST_Control,Con,NST
-B3,FAM,Sample,B4bisNST,56.35%,28.32,0.6395,NST_Control,Con,NST
-B3,TMR,Sample,B4bisNST,N/A,N/A,,NST_Control,Con,NST
-B4,FAM,Sample,B4bisGP,52.82%,27.3,1.33,GP_Control,Con,GP
-B4,TMR,Sample,B4bisGP,N/A,N/A,,GP_Control,Con,GP
-B5,FAM,Sample,B4bisGP,46.28%,26.37,2.598,GP_Control,Con,GP
-B5,TMR,Sample,B4bisGP,N/A,N/A,,GP_Control,Con,GP
-B6,TMR,Sample,B4bisGP,N/A,N/A,,GP_Control,Con,GP
-B6,FAM,Sample,B4bisGP,42.64%,26.4,2.541,GP_Control,Con,GP
-B7,TMR,Sample,B4bisSN,N/A,N/A,,SN_Control,Con,SN
-B7,FAM,Sample,B4bisSN,58.26%,27.61,1.066,SN_Control,Con,SN
-B8,TMR,Sample,B4bisSN,N/A,N/A,,SN_Control,Con,SN
-B8,FAM,Sample,B4bisSN,47.22%,27.1,1.532,SN_Control,Con,SN
-B9,TMR,Sample,B4bisSN,N/A,N/A,,SN_Control,Con,SN
-B9,FAM,Sample,B4bisSN,56.59%,27.1,1.539,SN_Control,Con,SN
-B10,TMR,Sample,B6NST,N/A,N/A,,NST_Control,Con,NST
-B10,FAM,Sample,B6NST,53.99%,27.34,1.289,NST_Control,Con,NST
-B11,TMR,Sample,B6NST,N/A,N/A,,NST_Control,Con,NST
-B11,FAM,Sample,B6NST,57.14%,27.23,1.398,NST_Control,Con,NST
-B12,TMR,Sample,B6NST,0.80%,22.41,,NST_Control,Con,NST
-B12,FAM,Sample,B6NST,58.08%,26.4,2.544,NST_Control,Con,NST
-C1,FAM,Sample,R6 NST,62.11%,27.06,1.583,NST_Control,Con,NST
-C1,TMR,Sample,R6 NST,N/A,N/A,,NST_Control,Con,NST
-C2,FAM,Sample,R6 NST,57.67%,27.23,1.395,NST_Control,Con,NST
-C2,TMR,Sample,R6 NST,N/A,N/A,,NST_Control,Con,NST
-C3,FAM,Sample,R6 NST,56.99%,27.48,1.17,NST_Control,Con,NST
-C3,TMR,Sample,R6 NST,N/A,N/A,,NST_Control,Con,NST
-C4,FAM,Sample,R6 GP,61.12%,26.63,2.157,GP_Control,Con,GP
-C4,TMR,Sample,R6 GP,N/A,N/A,,GP_Control,Con,GP
-C5,FAM,Sample,R6 GP,53.03%,25.7,4.207,GP_Control,Con,GP
-C5,TMR,Sample,R6 GP,N/A,N/A,,GP_Control,Con,GP
-C6,FAM,Sample,R6 GP,46.70%,26.41,2.524,GP_Control,Con,GP
-C6,TMR,Sample,R6 GP,N/A,N/A,,GP_Control,Con,GP
-C7,FAM,Sample,R6 SN,49.32%,29.29,0.3168,SN_Control,Con,SN
-C7,TMR,Sample,R6 SN,N/A,N/A,,SN_Control,Con,SN
-C8,FAM,Sample,R6 SN,36.81%,28.1,0.7454,SN_Control,Con,SN
-C8,TMR,Sample,R6 SN,N/A,N/A,,SN_Control,Con,SN
-C9,FAM,Sample,R6 SN,54.78%,29.36,0.3018,SN_Control,Con,SN
-C9,TMR,Sample,R6 SN,N/A,N/A,,SN_Control,Con,SN
-C10,FAM,Sample,V3 NST,55.92%,28.32,0.6357,NST_Control,Con,NST
-C10,TMR,Sample,V3 NST,N/A,N/A,,NST_Control,Con,NST
-C11,FAM,Sample,V3 NST,70.73%,28.74,0.4712,NST_Control,Con,NST
-C11,TMR,Sample,V3 NST,N/A,N/A,,NST_Control,Con,NST
-C12,FAM,Sample,V3 NST,61.13%,28.58,0.5298,NST_Control,Con,NST
-C12,TMR,Sample,V3 NST,N/A,N/A,,NST_Control,Con,NST
-D1,FAM,Sample,V3 GP,67.44%,27.91,0.8578,GP_Control,Con,GP
-D1,TMR,Sample,V3 GP,N/A,N/A,,GP_Control,Con,GP
-D2,FAM,Sample,V3 GP,59.35%,28.83,0.4414,GP_Control,Con,GP
-D2,TMR,Sample,V3 GP,N/A,N/A,,GP_Control,Con,GP
-D3,FAM,Sample,V3 GP,57.37%,27.87,0.8844,GP_Control,Con,GP
-D3,TMR,Sample,V3 GP,N/A,N/A,,GP_Control,Con,GP
-D4,FAM,Sample,V3 SN,49.40%,27.49,1.162,SN_Control,Con,SN
-D4,TMR,Sample,V3 SN,N/A,N/A,,SN_Control,Con,SN
-D5,FAM,Sample,V3 SN,35.85%,28.09,0.7497,SN_Control,Con,SN
-D5,TMR,Sample,V3 SN,N/A,N/A,,SN_Control,Con,SN
-D6,FAM,Sample,V3 SN,43.65%,28.4,0.5998,SN_Control,Con,SN
-D6,TMR,Sample,V3 SN,N/A,N/A,,SN_Control,Con,SN
-D7,FAM,Sample,V4 NST,45.89%,27.59,1.079,NST_Control,Con,NST
-D7,TMR,Sample,V4 NST,N/A,N/A,,NST_Control,Con,NST
-D8,FAM,Sample,V4 NST,33.94%,27.59,1.079,NST_Control,Con,NST
-D8,TMR,Sample,V4 NST,N/A,N/A,,NST_Control,Con,NST
-D9,FAM,Sample,V4 NST,37.51%,26.5,2.374,NST_Control,Con,NST
-D9,TMR,Sample,V4 NST,N/A,N/A,,NST_Control,Con,NST
-D10,FAM,Sample,V4 GP,57.90%,27.51,1.146,GP_Control,Con,GP
-D10,TMR,Sample,V4 GP,N/A,N/A,,GP_Control,Con,GP
-D11,FAM,Sample,V4 GP,34.84%,26.74,1.989,GP_Control,Con,GP
-D11,TMR,Sample,V4 GP,N/A,N/A,,GP_Control,Con,GP
-D12,FAM,Sample,V4 GP,57.55%,26.81,1.891,GP_Control,Con,GP
-D12,TMR,Sample,V4 GP,N/A,N/A,,GP_Control,Con,GP
-E1,FAM,Sample,V4 SN,58.32%,27.62,1.052,SN_Control,Con,SN
-E1,TMR,Sample,V4 SN,N/A,N/A,,SN_Control,Con,SN
-E2,FAM,Sample,V4 SN,55.35%,28.36,0.6209,SN_Control,Con,SN
-E2,TMR,Sample,V4 SN,N/A,N/A,,SN_Control,Con,SN
-E3,FAM,Sample,V4 SN,54.05%,28.12,0.7377,SN_Control,Con,SN
-E3,TMR,Sample,V4 SN,N/A,N/A,,SN_Control,Con,SN
+B1,FAM,Sample,B4bisNST,61.36%,27.68,1.014,NST_Control,Control,NST
+B1,TMR,Sample,B4bisNST,N/A,N/A,,NST_Control,Control,NST
+B2,FAM,Sample,B4bisNST,57.23%,28.39,0.604,NST_Control,Control,NST
+B2,TMR,Sample,B4bisNST,N/A,N/A,,NST_Control,Control,NST
+B3,FAM,Sample,B4bisNST,56.35%,28.32,0.6395,NST_Control,Control,NST
+B3,TMR,Sample,B4bisNST,N/A,N/A,,NST_Control,Control,NST
+B4,FAM,Sample,B4bisGP,52.82%,27.3,1.33,GP_Control,Control,GP
+B4,TMR,Sample,B4bisGP,N/A,N/A,,GP_Control,Control,GP
+B5,FAM,Sample,B4bisGP,46.28%,26.37,2.598,GP_Control,Control,GP
+B5,TMR,Sample,B4bisGP,N/A,N/A,,GP_Control,Control,GP
+B6,TMR,Sample,B4bisGP,N/A,N/A,,GP_Control,Control,GP
+B6,FAM,Sample,B4bisGP,42.64%,26.4,2.541,GP_Control,Control,GP
+B7,TMR,Sample,B4bisSN,N/A,N/A,,SN_Control,Control,SN
+B7,FAM,Sample,B4bisSN,58.26%,27.61,1.066,SN_Control,Control,SN
+B8,TMR,Sample,B4bisSN,N/A,N/A,,SN_Control,Control,SN
+B8,FAM,Sample,B4bisSN,47.22%,27.1,1.532,SN_Control,Control,SN
+B9,TMR,Sample,B4bisSN,N/A,N/A,,SN_Control,Control,SN
+B9,FAM,Sample,B4bisSN,56.59%,27.1,1.539,SN_Control,Control,SN
+B10,TMR,Sample,B6NST,N/A,N/A,,NST_Control,Control,NST
+B10,FAM,Sample,B6NST,53.99%,27.34,1.289,NST_Control,Control,NST
+B11,TMR,Sample,B6NST,N/A,N/A,,NST_Control,Control,NST
+B11,FAM,Sample,B6NST,57.14%,27.23,1.398,NST_Control,Control,NST
+B12,TMR,Sample,B6NST,0.80%,22.41,,NST_Control,Control,NST
+B12,FAM,Sample,B6NST,58.08%,26.4,2.544,NST_Control,Control,NST
+C1,FAM,Sample,R6 NST,62.11%,27.06,1.583,NST_Control,Control,NST
+C1,TMR,Sample,R6 NST,N/A,N/A,,NST_Control,Control,NST
+C2,FAM,Sample,R6 NST,57.67%,27.23,1.395,NST_Control,Control,NST
+C2,TMR,Sample,R6 NST,N/A,N/A,,NST_Control,Control,NST
+C3,FAM,Sample,R6 NST,56.99%,27.48,1.17,NST_Control,Control,NST
+C3,TMR,Sample,R6 NST,N/A,N/A,,NST_Control,Control,NST
+C4,FAM,Sample,R6 GP,61.12%,26.63,2.157,GP_Control,Control,GP
+C4,TMR,Sample,R6 GP,N/A,N/A,,GP_Control,Control,GP
+C5,FAM,Sample,R6 GP,53.03%,25.7,4.207,GP_Control,Control,GP
+C5,TMR,Sample,R6 GP,N/A,N/A,,GP_Control,Control,GP
+C6,FAM,Sample,R6 GP,46.70%,26.41,2.524,GP_Control,Control,GP
+C6,TMR,Sample,R6 GP,N/A,N/A,,GP_Control,Control,GP
+C7,FAM,Sample,R6 SN,49.32%,29.29,0.3168,SN_Control,Control,SN
+C7,TMR,Sample,R6 SN,N/A,N/A,,SN_Control,Control,SN
+C8,FAM,Sample,R6 SN,36.81%,28.1,0.7454,SN_Control,Control,SN
+C8,TMR,Sample,R6 SN,N/A,N/A,,SN_Control,Control,SN
+C9,FAM,Sample,R6 SN,54.78%,29.36,0.3018,SN_Control,Control,SN
+C9,TMR,Sample,R6 SN,N/A,N/A,,SN_Control,Control,SN
+C10,FAM,Sample,V3 NST,55.92%,28.32,0.6357,NST_Control,Control,NST
+C10,TMR,Sample,V3 NST,N/A,N/A,,NST_Control,Control,NST
+C11,FAM,Sample,V3 NST,70.73%,28.74,0.4712,NST_Control,Control,NST
+C11,TMR,Sample,V3 NST,N/A,N/A,,NST_Control,Control,NST
+C12,FAM,Sample,V3 NST,61.13%,28.58,0.5298,NST_Control,Control,NST
+C12,TMR,Sample,V3 NST,N/A,N/A,,NST_Control,Control,NST
+D1,FAM,Sample,V3 GP,67.44%,27.91,0.8578,GP_Control,Control,GP
+D1,TMR,Sample,V3 GP,N/A,N/A,,GP_Control,Control,GP
+D2,FAM,Sample,V3 GP,59.35%,28.83,0.4414,GP_Control,Control,GP
+D2,TMR,Sample,V3 GP,N/A,N/A,,GP_Control,Control,GP
+D3,FAM,Sample,V3 GP,57.37%,27.87,0.8844,GP_Control,Control,GP
+D3,TMR,Sample,V3 GP,N/A,N/A,,GP_Control,Control,GP
+D4,FAM,Sample,V3 SN,49.40%,27.49,1.162,SN_Control,Control,SN
+D4,TMR,Sample,V3 SN,N/A,N/A,,SN_Control,Control,SN
+D5,FAM,Sample,V3 SN,35.85%,28.09,0.7497,SN_Control,Control,SN
+D5,TMR,Sample,V3 SN,N/A,N/A,,SN_Control,Control,SN
+D6,FAM,Sample,V3 SN,43.65%,28.4,0.5998,SN_Control,Control,SN
+D6,TMR,Sample,V3 SN,N/A,N/A,,SN_Control,Control,SN
+D7,FAM,Sample,V4 NST,45.89%,27.59,1.079,NST_Control,Control,NST
+D7,TMR,Sample,V4 NST,N/A,N/A,,NST_Control,Control,NST
+D8,FAM,Sample,V4 NST,33.94%,27.59,1.079,NST_Control,Control,NST
+D8,TMR,Sample,V4 NST,N/A,N/A,,NST_Control,Control,NST
+D9,FAM,Sample,V4 NST,37.51%,26.5,2.374,NST_Control,Control,NST
+D9,TMR,Sample,V4 NST,N/A,N/A,,NST_Control,Control,NST
+D10,FAM,Sample,V4 GP,57.90%,27.51,1.146,GP_Control,Control,GP
+D10,TMR,Sample,V4 GP,N/A,N/A,,GP_Control,Control,GP
+D11,FAM,Sample,V4 GP,34.84%,26.74,1.989,GP_Control,Control,GP
+D11,TMR,Sample,V4 GP,N/A,N/A,,GP_Control,Control,GP
+D12,FAM,Sample,V4 GP,57.55%,26.81,1.891,GP_Control,Control,GP
+D12,TMR,Sample,V4 GP,N/A,N/A,,GP_Control,Control,GP
+E1,FAM,Sample,V4 SN,58.32%,27.62,1.052,SN_Control,Control,SN
+E1,TMR,Sample,V4 SN,N/A,N/A,,SN_Control,Control,SN
+E2,FAM,Sample,V4 SN,55.35%,28.36,0.6209,SN_Control,Control,SN
+E2,TMR,Sample,V4 SN,N/A,N/A,,SN_Control,Control,SN
+E3,FAM,Sample,V4 SN,54.05%,28.12,0.7377,SN_Control,Control,SN
+E3,TMR,Sample,V4 SN,N/A,N/A,,SN_Control,Control,SN
 E4,FAM,Sample,R5bis NST,45.48%,28.76,0.4631,NST_Cocaine,Cocaine,NST
 E4,TMR,Sample,R5bis NST,N/A,N/A,,NST_Cocaine,Cocaine,NST
 E5,FAM,Sample,R5bis NST,47.30%,29.24,0.3288,NST_Cocaine,Cocaine,NST
