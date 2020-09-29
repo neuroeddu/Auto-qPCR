@@ -1,8 +1,0 @@
-Flask
-Werkzeug
-Pandas
-Numpy
-Plotly
-Pingouin
-Io
-Zipp

@@ -51,6 +51,7 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, preservevar, task):
 	# Calculate SSD for all sample groups
 	f = (d['Ignore'].eq(False)) & (d['Task'].str.lower() == task.lower())
 	d1 = d[f].groupby(['Sample Name' , 'Target Name']).agg({'CT': ['std']})
+
 	# print(tabulate(d1, headers='keys', tablefmt='psql'))
 	f = (d1['CT']['std'] > cutoff)
 	d2 = d1[f]
