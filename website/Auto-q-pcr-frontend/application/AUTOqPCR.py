@@ -51,8 +51,11 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, preservevar, task):
 	# Calculate SSD for all sample groups
 	f = (d['Ignore'].eq(False)) & (d['Task'].str.lower() == task.lower())
 	d1 = d[f].groupby(['Sample Name' , 'Target Name']).agg({'CT': ['std']})
+	# print(tabulate(d1, headers='keys', tablefmt='psql'))
 	f = (d1['CT']['std'] > cutoff)
 	d2 = d1[f]
+	# print(tabulate(d2, headers='keys', tablefmt='psql'))
+
 	if not d2.empty:
 		# Mark all outliers
 		for i , row in enumerate(d2.itertuples(name=None) , 1):
@@ -68,8 +71,11 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, preservevar, task):
 				f = (d['Ignore'].eq(False)) & (d['Task'].str.lower() == task.lower()) \
 					& (d['Sample Name'] == row[0][0]) & (d['Target Name'] == row[0][1])
 				dx = d[f].copy()
-				dxg = d[f].groupby(['Sample Name' , 'Target Name']).agg({feature: [np.size , 'std' , 'mean']})
-				if dxg[feature]['std'].iloc[0] <= cutoff:
+				dxg1 = d[f].groupby(['Sample Name' , 'Target Name']).agg({'CT': [np.size , 'std' , 'mean']})
+				dxg2 = d[f].groupby(['Sample Name', 'Target Name']).agg({feature: [np.size, 'std', 'mean']})
+				print(tabulate(dxg1, headers='keys', tablefmt='psql'))
+
+				if dxg1['CT']['std'].iloc[0] <= cutoff:
 					# CT std is under the threshold
 					break
 				# Will ignore one or all measurements
@@ -80,12 +86,13 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, preservevar, task):
 					#    d['Ignore'].loc[j] = True
 					break
 				# Will remove the measurement which is furthest from the mean
-				dx['Distance'] = (dx[feature] - dxg[feature]['mean'].iloc[0]) ** 2
-				j = dx.sort_values(by='Distance' , ascending=False).index[0]
+				dx['Distance'] = (dx[feature] - dxg2[feature]['mean'].iloc[0]) ** 2
+				j = dx.sort_values(by='Distance', ascending=False).index[0]
 				d['Outliers'].loc[j] = True
 				# check if the outlier should be kept if mean has high variation
 				if preservevar == 'True':
-					if abs((dxg[feature]['mean'].iloc[0]-dx[feature].median())/dx[feature].median()) < 0.1:
+					if abs((dxg2[feature]['mean'].iloc[0]-dx[feature].median())/dx[feature].median()) < 0.1:
+						# print('preserve: '+ str(abs((dxg2[feature]['mean'].iloc[0]-dx[feature].median())/dx[feature].median())))
 						d['Outliers'].loc[j] = False
 
 	return d[(d['Ignore'].eq(False))]
