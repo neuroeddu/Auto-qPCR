@@ -53,7 +53,7 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, preservevar, task):
 	d1 = d[f].groupby(['Sample Name' , 'Target Name']).agg({'CT': ['std']})
 
 	# print(tabulate(d1, headers='keys', tablefmt='psql'))
-	f = (d1['CT']['std'] > cutoff)
+	f = (d1['CT']['std'] >= cutoff)
 	d2 = d1[f]
 	# print(tabulate(d2, headers='keys', tablefmt='psql'))
 
@@ -76,7 +76,7 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, preservevar, task):
 				dxg2 = d[f].groupby(['Sample Name', 'Target Name']).agg({feature: [np.size, 'std', 'mean']})
 				print(tabulate(dxg1, headers='keys', tablefmt='psql'))
 
-				if dxg1['CT']['std'].iloc[0] <= cutoff:
+				if dxg1['CT']['std'].iloc[0] < cutoff:
 					# CT std is under the threshold
 					break
 				# Will ignore one or all measurements
