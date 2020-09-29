@@ -51,11 +51,9 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, preservevar, task):
 	# Calculate SSD for all sample groups
 	f = (d['Ignore'].eq(False)) & (d['Task'].str.lower() == task.lower())
 	d1 = d[f].groupby(['Sample Name' , 'Target Name']).agg({'CT': ['std']})
-<<<<<<< HEAD
-=======
+
 
 	# print(tabulate(d1, headers='keys', tablefmt='psql'))
->>>>>>> 1e1ac4f353b4caadea22b3c735d513584e58bfa3
 	f = (d1['CT']['std'] >= cutoff)
 	d2 = d1[f]
 	# print(tabulate(d2, headers='keys', tablefmt='psql'))
@@ -77,7 +75,7 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, preservevar, task):
 				dx = d[f].copy()
 				dxg1 = d[f].groupby(['Sample Name' , 'Target Name']).agg({'CT': [np.size , 'std' , 'mean']})
 				dxg2 = d[f].groupby(['Sample Name', 'Target Name']).agg({feature: [np.size, 'std', 'mean']})
-				print(tabulate(dxg1, headers='keys', tablefmt='psql'))
+				# print(tabulate(dxg1, headers='keys', tablefmt='psql'))
 
 				if dxg1['CT']['std'].iloc[0] < cutoff:
 					# CT std is under the threshold
