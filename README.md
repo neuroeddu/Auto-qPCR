@@ -4,7 +4,7 @@ A python program to process raw qPCR output files directly from the pcr machine
 The origninal version run in command line using a configuration file.  
 # Command Line python script instructions
 
-The initial version of this analysis program using command line can be found in the folder 'auto-q-pcr-command_line.
+The initial version of this analysis program using command line can be found in the folder 'auto-q-pcr-command_line'.
 
 The document 'Perpare your computer pythonScript.docx' details how to install the required packages.
 
