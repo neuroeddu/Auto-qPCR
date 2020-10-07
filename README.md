@@ -31,8 +31,8 @@ Steps to run a qPCR analysis from the command line. You must install python and 
 The analysis will run and the plots will all be displayed. The plots will be save and an xls file with the output data will be saved in the "data" folder.
 
 # To run a local GUI
-1. navigate to the folder 'Auto-q-pcr-frontend'. 
-$ cd Auto-q-pcr-frontend/
+1. navigate to the folder 'local-GUI'. You must be within the local-GUI folder or the program won't run.
+$ cd local-GUI/
 $ ls 
 application  main.py  requirements.txt  venv
 
