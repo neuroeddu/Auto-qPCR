@@ -1,4 +1,8 @@
 # Auto-qPCR
+
+See the web app version http://auto-q-pcr.com/
+
+
 A python program to process raw qPCR output files directly from the pcr machine
 
 The origninal version run in command line using a configuration file.  
