@@ -1,0 +1,7 @@
+Target Name,A,B,DF,p-value corrected,p-value,correction method,Paired,Parametric,Test,effect size,Bayes factor
+B2M,NST,GP,9,1,1,fdr_bh,False,True,T-Test,0,0.405
+B2M,NST,SN,12.62,1,1,fdr_bh,False,True,T-Test,0,0.405
+B2M,GP,SN,16,1,1,fdr_bh,False,True,T-Test,0,0.412
+NRXN3,NST,GP,9.41,0.0071,0.0047,fdr_bh,False,True,T-Test,-1.689,18.262
+NRXN3,NST,SN,8.48,0.0048,0.0016,fdr_bh,False,True,T-Test,-2.105,82.627
+NRXN3,GP,SN,16,0.0549,0.0549,fdr_bh,False,True,T-Test,-0.93,1.626

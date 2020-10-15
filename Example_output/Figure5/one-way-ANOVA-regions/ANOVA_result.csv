@@ -1,0 +1,3 @@
+Target Name,Source,DF,F,MS,SS,p-value,p-value corrected,measures,distribution,test,statistic,effect size
+B2M,Group,2,0.0,0.0,0.0,1.0,1.0,independent,parametric,ANOVA,NA,0.0
+NRXN3,Group,2,12.776,1.496,2.992,0.00015048420714165305,0.0003009684142833061,independent,parametric,ANOVA,NA,0.505

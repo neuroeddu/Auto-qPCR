@@ -1,0 +1,3 @@
+Target Name,DF,T,tail,paired,p-val,effect size,power,Bayes factor
+B2M,1.0,,two-sided,FALSE,,,,nan
+NRXN3,6.59,-3.144,two-sided,FALSE,0.01764166272300999,2.108,0.769,3.77

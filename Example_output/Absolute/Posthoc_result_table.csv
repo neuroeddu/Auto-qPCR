@@ -1,0 +1,19 @@
+Target Name,A,B,DF,p-value corrected,p-value,correction method,Paired,Parametric,Test,effect size,Bayes factor
+KCNJ6,IPSC,NPC,5,0.85667,0.73431,fdr_bh,True,True,T-Test,-0.237,0.394
+KCNJ6,IPSC,DA4W,5,0.00845,0.00282,fdr_bh,True,True,T-Test,-3.666,18.055
+KCNJ6,IPSC,DA6W,5,0.00845,0.00253,fdr_bh,True,True,T-Test,-3.676,19.613
+KCNJ6,NPC,DA4W,5,0.01157,0.00705,fdr_bh,True,True,T-Test,-3.04,8.983
+KCNJ6,NPC,DA6W,5,0.01157,0.00771,fdr_bh,True,True,T-Test,-3.051,8.393
+KCNJ6,DA4W,DA6W,5,0.85667,0.85667,fdr_bh,True,True,T-Test,-0.015,0.379
+SYP,IPSC,NPC,5,0.18543,0.17100,fdr_bh,True,True,T-Test,-1.064,0.878
+SYP,IPSC,DA4W,5,0.00010,0.00002,fdr_bh,True,True,T-Test,-11.357,982.674
+SYP,IPSC,DA6W,5,0.00018,0.00009,fdr_bh,True,True,T-Test,-8.189,271.523
+SYP,NPC,DA4W,5,0.00018,0.00012,fdr_bh,True,True,T-Test,-5.59,212.827
+SYP,NPC,DA6W,5,0.00018,0.00011,fdr_bh,True,True,T-Test,-4.83,224.836
+SYP,DA4W,DA6W,5,0.18543,0.18543,fdr_bh,True,True,T-Test,-0.474,0.832
+GRIA1,IPSC,NPC,5,0.06779,0.05649,fdr_bh,True,True,T-Test,-1.785,1.912
+GRIA1,IPSC,DA4W,5,0.03575,0.01192,fdr_bh,True,True,T-Test,-2.852,6.048
+GRIA1,IPSC,DA6W,5,0.03575,0.01137,fdr_bh,True,True,T-Test,-2.882,6.264
+GRIA1,NPC,DA4W,5,0.06779,0.03449,fdr_bh,True,True,T-Test,-0.998,2.741
+GRIA1,NPC,DA6W,5,0.06779,0.05190,fdr_bh,True,True,T-Test,-0.954,2.033
+GRIA1,DA4W,DA6W,5,0.35174,0.35174,fdr_bh,True,True,T-Test,0.065,0.557
