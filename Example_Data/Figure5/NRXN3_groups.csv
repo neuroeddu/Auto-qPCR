@@ -25,12 +25,12 @@ A11,FAM,Standard,,59.91%,30.14,0.1953,,,
 A11,TMR,Standard,,N/A,N/A,0.1953,,,
 A12,FAM,Standard,,45.13%,29.27,0.1953,,,
 A12,TMR,Standard,,N/A,N/A,0.1953,,,
-B1,FAM,Sample,B4bisNST,50.57%,30.71,0.1279,NST_Control,Control,NST
-B1,TMR,Sample,B4bisNST,N/A,N/A,,NST_Control,Control,NST
-B2,FAM,Sample,B4bisNST,45.00%,30.29,0.1696,NST_Control,Control,NST
-B2,TMR,Sample,B4bisNST,N/A,N/A,,NST_Control,Control,NST
-B3,FAM,Sample,B4bisNST,46.18%,30.2,0.1807,NST_Control,Control,NST
-B3,TMR,Sample,B4bisNST,N/A,N/A,,NST_Control,Control,NST
+B1,FAM,Sample,B4bisNST,50.57%,30.71,0.1279,STN_Control,Control,STN
+B1,TMR,Sample,B4bisNST,N/A,N/A,,STN_Control,Control,STN
+B2,FAM,Sample,B4bisNST,45.00%,30.29,0.1696,STN_Control,Control,STN
+B2,TMR,Sample,B4bisNST,N/A,N/A,,STN_Control,Control,STN
+B3,FAM,Sample,B4bisNST,46.18%,30.2,0.1807,STN_Control,Control,STN
+B3,TMR,Sample,B4bisNST,N/A,N/A,,STN_Control,Control,STN
 B4,FAM,Sample,B4bisGP,32.11%,26.6,2.053,GP_Control,Control,GP
 B4,TMR,Sample,B4bisGP,N/A,N/A,,GP_Control,Control,GP
 B5,FAM,Sample,B4bisGP,45.30%,28.43,0.5979,GP_Control,Control,GP
@@ -43,18 +43,18 @@ B8,TMR,Sample,B4bisSN,N/A,N/A,,SN_Control,Control,SN
 B8,FAM,Sample,B4bisSN,48.66%,28.39,0.6151,SN_Control,Control,SN
 B9,TMR,Sample,B4bisSN,N/A,N/A,,SN_Control,Control,SN
 B9,FAM,Sample,B4bisSN,35.46%,27.24,1.339,SN_Control,Control,SN
-B10,TMR,Sample,B6NST,N/A,N/A,,NST_Control,Control,NST
-B10,FAM,Sample,B6NST,62.45%,29.65,0.2622,NST_Control,Control,NST
-B11,TMR,Sample,B6NST,N/A,N/A,,NST_Control,Control,NST
-B11,FAM,Sample,B6NST,55.41%,29.68,0.2571,NST_Control,Control,NST
-B12,TMR,Sample,B6NST,N/A,N/A,,NST_Control,Control,NST
-B12,FAM,Sample,B6NST,73.88%,28.92,0.4286,NST_Control,Control,NST
-C1,FAM,Sample,R6 NST,61.64%,28.72,0.4903,NST_Control,Control,NST
-C1,TMR,Sample,R6 NST,N/A,N/A,,NST_Control,Control,NST
-C2,FAM,Sample,R6 NST,52.01%,29.03,0.3972,NST_Control,Control,NST
-C2,TMR,Sample,R6 NST,N/A,N/A,,NST_Control,Control,NST
-C3,FAM,Sample,R6 NST,59.43%,28.76,0.4771,NST_Control,Control,NST
-C3,TMR,Sample,R6 NST,N/A,N/A,,NST_Control,Control,NST
+B10,TMR,Sample,B6NST,N/A,N/A,,STN_Control,Control,STN
+B10,FAM,Sample,B6NST,62.45%,29.65,0.2622,STN_Control,Control,STN
+B11,TMR,Sample,B6NST,N/A,N/A,,STN_Control,Control,STN
+B11,FAM,Sample,B6NST,55.41%,29.68,0.2571,STN_Control,Control,STN
+B12,TMR,Sample,B6NST,N/A,N/A,,STN_Control,Control,STN
+B12,FAM,Sample,B6NST,73.88%,28.92,0.4286,STN_Control,Control,STN
+C1,FAM,Sample,R6 NST,61.64%,28.72,0.4903,STN_Control,Control,STN
+C1,TMR,Sample,R6 NST,N/A,N/A,,STN_Control,Control,STN
+C2,FAM,Sample,R6 NST,52.01%,29.03,0.3972,STN_Control,Control,STN
+C2,TMR,Sample,R6 NST,N/A,N/A,,STN_Control,Control,STN
+C3,FAM,Sample,R6 NST,59.43%,28.76,0.4771,STN_Control,Control,STN
+C3,TMR,Sample,R6 NST,N/A,N/A,,STN_Control,Control,STN
 C4,FAM,Sample,R6 GP,46.03%,27.07,1.5,GP_Control,Control,GP
 C4,TMR,Sample,R6 GP,N/A,N/A,,GP_Control,Control,GP
 C5,FAM,Sample,R6 GP,53.51%,26.83,1.761,GP_Control,Control,GP
@@ -67,12 +67,12 @@ C8,FAM,Sample,R6 SN,43.47%,29.04,0.3952,SN_Control,Control,SN
 C8,TMR,Sample,R6 SN,N/A,N/A,,SN_Control,Control,SN
 C9,FAM,Sample,R6 SN,55.63%,30.53,0.1449,SN_Control,Control,SN
 C9,TMR,Sample,R6 SN,N/A,N/A,,SN_Control,Control,SN
-C10,FAM,Sample,V3 NST,44.64%,30.69,0.1297,NST_Control,Control,NST
-C10,TMR,Sample,V3 NST,N/A,N/A,,NST_Control,Control,NST
-C11,FAM,Sample,V3 NST,53.10%,30.42,0.1554,NST_Control,Control,NST
-C11,TMR,Sample,V3 NST,N/A,N/A,,NST_Control,Control,NST
-C12,FAM,Sample,V3 NST,52.70%,30.2,0.1806,NST_Control,Control,NST
-C12,TMR,Sample,V3 NST,N/A,N/A,,NST_Control,Control,NST
+C10,FAM,Sample,V3 NST,44.64%,30.69,0.1297,STN_Control,Control,STN
+C10,TMR,Sample,V3 NST,N/A,N/A,,STN_Control,Control,STN
+C11,FAM,Sample,V3 NST,53.10%,30.42,0.1554,STN_Control,Control,STN
+C11,TMR,Sample,V3 NST,N/A,N/A,,STN_Control,Control,STN
+C12,FAM,Sample,V3 NST,52.70%,30.2,0.1806,STN_Control,Control,STN
+C12,TMR,Sample,V3 NST,N/A,N/A,,STN_Control,Control,STN
 D1,FAM,Sample,V3 GP,49.19%,29.08,0.3856,GP_Control,Control,GP
 D1,TMR,Sample,V3 GP,N/A,N/A,,GP_Control,Control,GP
 D2,FAM,Sample,V3 GP,53.23%,29.3,0.333,GP_Control,Control,GP
@@ -85,12 +85,12 @@ D5,FAM,Sample,V3 SN,44.25%,28.57,0.5431,SN_Control,Control,SN
 D5,TMR,Sample,V3 SN,N/A,N/A,,SN_Control,Control,SN
 D6,FAM,Sample,V3 SN,52.13%,27.9,0.8559,SN_Control,Control,SN
 D6,TMR,Sample,V3 SN,N/A,N/A,,SN_Control,Control,SN
-D7,FAM,Sample,V4 NST,55.25%,30.45,0.153,NST_Control,Control,NST
-D7,TMR,Sample,V4 NST,N/A,N/A,,NST_Control,Control,NST
-D8,FAM,Sample,V4 NST,34.94%,29.16,0.3645,NST_Control,Control,NST
-D8,TMR,Sample,V4 NST,N/A,N/A,,NST_Control,Control,NST
-D9,FAM,Sample,V4 NST,41.20%,29.27,0.3388,NST_Control,Control,NST
-D9,TMR,Sample,V4 NST,N/A,N/A,,NST_Control,Control,NST
+D7,FAM,Sample,V4 NST,55.25%,30.45,0.153,STN_Control,Control,STN
+D7,TMR,Sample,V4 NST,N/A,N/A,,STN_Control,Control,STN
+D8,FAM,Sample,V4 NST,34.94%,29.16,0.3645,STN_Control,Control,STN
+D8,TMR,Sample,V4 NST,N/A,N/A,,STN_Control,Control,STN
+D9,FAM,Sample,V4 NST,41.20%,29.27,0.3388,STN_Control,Control,STN
+D9,TMR,Sample,V4 NST,N/A,N/A,,STN_Control,Control,STN
 D10,FAM,Sample,V4 GP,40.68%,27.61,1.039,GP_Control,Control,GP
 D10,TMR,Sample,V4 GP,N/A,N/A,,GP_Control,Control,GP
 D11,FAM,Sample,V4 GP,53.25%,28.67,0.508,GP_Control,Control,GP
@@ -103,12 +103,12 @@ E2,FAM,Sample,V4 SN,50.08%,28.01,0.7909,SN_Control,Control,SN
 E2,TMR,Sample,V4 SN,N/A,N/A,,SN_Control,Control,SN
 E3,FAM,Sample,V4 SN,47.36%,28.31,0.6458,SN_Control,Control,SN
 E3,TMR,Sample,V4 SN,N/A,N/A,,SN_Control,Control,SN
-E4,FAM,Sample,R5bis NST,46.08%,30.13,0.1892,NST_Cocaine,Cocaine,NST
-E4,TMR,Sample,R5bis NST,N/A,N/A,,NST_Cocaine,Cocaine,NST
-E5,FAM,Sample,R5bis NST,41.54%,30.27,0.1727,NST_Cocaine,Cocaine,NST
-E5,TMR,Sample,R5bis NST,N/A,N/A,,NST_Cocaine,Cocaine,NST
-E6,FAM,Sample,R5bis NST,50.65%,30.72,0.127,NST_Cocaine,Cocaine,NST
-E6,TMR,Sample,R5bis NST,N/A,N/A,,NST_Cocaine,Cocaine,NST
+E4,FAM,Sample,R5bis NST,46.08%,30.13,0.1892,STN_Cocaine,Cocaine,STN
+E4,TMR,Sample,R5bis NST,N/A,N/A,,STN_Cocaine,Cocaine,STN
+E5,FAM,Sample,R5bis NST,41.54%,30.27,0.1727,STN_Cocaine,Cocaine,STN
+E5,TMR,Sample,R5bis NST,N/A,N/A,,STN_Cocaine,Cocaine,STN
+E6,FAM,Sample,R5bis NST,50.65%,30.72,0.127,STN_Cocaine,Cocaine,STN
+E6,TMR,Sample,R5bis NST,N/A,N/A,,STN_Cocaine,Cocaine,STN
 E7,FAM,Sample,R5bis GP,49.20%,28.97,0.416,GP_Cocaine,Cocaine,GP
 E7,TMR,Sample,R5bis GP,N/A,N/A,,GP_Cocaine,Cocaine,GP
 E8,FAM,Sample,R5bis GP,46.64%,28.44,0.5921,GP_Cocaine,Cocaine,GP
@@ -121,12 +121,12 @@ E11,FAM,Sample,R5bis SN,48.09%,32.01,0.05339,SN_Cocaine,Cocaine,SN
 E11,TMR,Sample,R5bis SN,N/A,N/A,,SN_Cocaine,Cocaine,SN
 E12,FAM,Sample,R5bis SN,58.59%,30.56,0.1418,SN_Cocaine,Cocaine,SN
 E12,TMR,Sample,R5bis SN,N/A,N/A,,SN_Cocaine,Cocaine,SN
-F1,FAM,Sample,R6bisNST,57.28%,29.84,0.2299,NST_Cocaine,Cocaine,NST
-F1,TMR,Sample,R6bisNST,N/A,N/A,,NST_Cocaine,Cocaine,NST
-F2,FAM,Sample,R6bisNST,52.86%,29.88,0.2245,NST_Cocaine,Cocaine,NST
-F2,TMR,Sample,R6bisNST,N/A,N/A,,NST_Cocaine,Cocaine,NST
-F3,FAM,Sample,R6bisNST,46.29%,29.06,0.3907,NST_Cocaine,Cocaine,NST
-F3,TMR,Sample,R6bisNST,N/A,N/A,,NST_Cocaine,Cocaine,NST
+F1,FAM,Sample,R6bisNST,57.28%,29.84,0.2299,STN_Cocaine,Cocaine,STN
+F1,TMR,Sample,R6bisNST,N/A,N/A,,STN_Cocaine,Cocaine,STN
+F2,FAM,Sample,R6bisNST,52.86%,29.88,0.2245,STN_Cocaine,Cocaine,STN
+F2,TMR,Sample,R6bisNST,N/A,N/A,,STN_Cocaine,Cocaine,STN
+F3,FAM,Sample,R6bisNST,46.29%,29.06,0.3907,STN_Cocaine,Cocaine,STN
+F3,TMR,Sample,R6bisNST,N/A,N/A,,STN_Cocaine,Cocaine,STN
 F4,FAM,Sample,R6bisGP,41.31%,26.07,2.936,GP_Cocaine,Cocaine,GP
 F4,TMR,Sample,R6bisGP,N/A,N/A,,GP_Cocaine,Cocaine,GP
 F5,FAM,Sample,R6bisGP,53.37%,26.98,1.588,GP_Cocaine,Cocaine,GP
@@ -139,12 +139,12 @@ F8,FAM,Sample,R6bisSN,60.97%,27.84,0.8894,SN_Cocaine,Cocaine,SN
 F8,TMR,Sample,R6bisSN,N/A,N/A,,SN_Cocaine,Cocaine,SN
 F9,FAM,Sample,R6bisSN,52.78%,26.88,1.707,SN_Cocaine,Cocaine,SN
 F9,TMR,Sample,R6bisSN,N/A,N/A,,SN_Cocaine,Cocaine,SN
-F10,FAM,Sample,R8bisNST,12.68%,26.45,2.282,NST_Cocaine,Cocaine,NST
-F10,TMR,Sample,R8bisNST,N/A,N/A,,NST_Cocaine,Cocaine,NST
-F11,FAM,Sample,R8bisNST,49.85%,28.6,0.5322,NST_Cocaine,Cocaine,NST
-F11,TMR,Sample,R8bisNST,N/A,N/A,,NST_Cocaine,Cocaine,NST
-F12,FAM,Sample,R8bisNST,61.86%,28.86,0.4468,NST_Cocaine,Cocaine,NST
-F12,TMR,Sample,R8bisNST,N/A,N/A,,NST_Cocaine,Cocaine,NST
+F10,FAM,Sample,R8bisNST,12.68%,26.45,2.282,STN_Cocaine,Cocaine,STN
+F10,TMR,Sample,R8bisNST,N/A,N/A,,STN_Cocaine,Cocaine,STN
+F11,FAM,Sample,R8bisNST,49.85%,28.6,0.5322,STN_Cocaine,Cocaine,STN
+F11,TMR,Sample,R8bisNST,N/A,N/A,,STN_Cocaine,Cocaine,STN
+F12,FAM,Sample,R8bisNST,61.86%,28.86,0.4468,STN_Cocaine,Cocaine,STN
+F12,TMR,Sample,R8bisNST,N/A,N/A,,STN_Cocaine,Cocaine,STN
 G1,TMR,Sample,R8bisGP,N/A,N/A,,GP_Cocaine,Cocaine,GP
 G1,FAM,Sample,R8bisGP,54.23%,28.1,0.7486,GP_Cocaine,Cocaine,GP
 G2,TMR,Sample,R8bisGP,N/A,N/A,,GP_Cocaine,Cocaine,GP
@@ -157,12 +157,12 @@ G5,TMR,Sample,R8bisSN,N/A,N/A,,SN_Cocaine,Cocaine,SN
 G5,FAM,Sample,R8bisSN,49.35%,28.53,0.5584,SN_Cocaine,Cocaine,SN
 G6,TMR,Sample,R8bisSN,N/A,N/A,,SN_Cocaine,Cocaine,SN
 G6,FAM,Sample,R8bisSN,58.63%,28.75,0.4802,SN_Cocaine,Cocaine,SN
-G7,TMR,Sample,V2NST,N/A,N/A,,NST_Cocaine,Cocaine,NST
-G7,FAM,Sample,V2NST,59.77%,29.44,0.3011,NST_Cocaine,Cocaine,NST
-G8,TMR,Sample,V2NST,N/A,N/A,,NST_Cocaine,Cocaine,NST
-G8,FAM,Sample,V2NST,52.15%,28.46,0.5855,NST_Cocaine,Cocaine,NST
-G9,TMR,Sample,V2NST,N/A,N/A,,NST_Cocaine,Cocaine,NST
-G9,FAM,Sample,V2NST,44.88%,29.27,0.3382,NST_Cocaine,Cocaine,NST
+G7,TMR,Sample,V2NST,N/A,N/A,,STN_Cocaine,Cocaine,STN
+G7,FAM,Sample,V2NST,59.77%,29.44,0.3011,STN_Cocaine,Cocaine,STN
+G8,TMR,Sample,V2NST,N/A,N/A,,STN_Cocaine,Cocaine,STN
+G8,FAM,Sample,V2NST,52.15%,28.46,0.5855,STN_Cocaine,Cocaine,STN
+G9,TMR,Sample,V2NST,N/A,N/A,,STN_Cocaine,Cocaine,STN
+G9,FAM,Sample,V2NST,44.88%,29.27,0.3382,STN_Cocaine,Cocaine,STN
 G10,TMR,Sample,V2GP,N/A,N/A,,GP_Cocaine,Cocaine,GP
 G10,FAM,Sample,V2GP,61.19%,27.2,1.374,GP_Cocaine,Cocaine,GP
 G11,FAM,Sample,V2GP,61.07%,26.68,1.942,GP_Cocaine,Cocaine,GP
@@ -175,12 +175,12 @@ H2,FAM,Sample,V2SN,69.75%,28.69,0.5014,SN_Cocaine,Cocaine,SN
 H2,TMR,Sample,V2SN,0.72%,21.01,,SN_Cocaine,Cocaine,SN
 H3,FAM,Sample,V2SN,47.47%,28.54,0.554,SN_Cocaine,Cocaine,SN
 H3,TMR,Sample,V2SN,N/A,N/A,,SN_Cocaine,Cocaine,SN
-H4,FAM,Sample,V8NST,45.72%,29.43,0.3034,NST_Cocaine,Cocaine,NST
-H4,TMR,Sample,V8NST,N/A,N/A,,NST_Cocaine,Cocaine,NST
-H5,FAM,Sample,V8NST,52.99%,30.73,0.1267,NST_Cocaine,Cocaine,NST
-H5,TMR,Sample,V8NST,N/A,N/A,,NST_Cocaine,Cocaine,NST
-H6,FAM,Sample,V8NST,8.00%,18.08,647.9,NST_Cocaine,Cocaine,NST
-H6,TMR,Sample,V8NST,N/A,N/A,,NST_Cocaine,Cocaine,NST
+H4,FAM,Sample,V8NST,45.72%,29.43,0.3034,STN_Cocaine,Cocaine,STN
+H4,TMR,Sample,V8NST,N/A,N/A,,STN_Cocaine,Cocaine,STN
+H5,FAM,Sample,V8NST,52.99%,30.73,0.1267,STN_Cocaine,Cocaine,STN
+H5,TMR,Sample,V8NST,N/A,N/A,,STN_Cocaine,Cocaine,STN
+H6,FAM,Sample,V8NST,8.00%,18.08,647.9,STN_Cocaine,Cocaine,STN
+H6,TMR,Sample,V8NST,N/A,N/A,,STN_Cocaine,Cocaine,STN
 H7,FAM,Sample,V8GP,49.62%,28.05,0.774,GP_Cocaine,Cocaine,GP
 H7,TMR,Sample,V8GP,N/A,N/A,,GP_Cocaine,Cocaine,GP
 H8,FAM,Sample,V8GP,110.72%,2.81,19600000,GP_Cocaine,Cocaine,GP
