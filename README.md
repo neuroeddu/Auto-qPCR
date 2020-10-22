@@ -1,5 +1,12 @@
 # Auto-qPCR
 
+Program conception: Rhalena Thomas and Gilles Maussion
+Program and web app design and management: Rhalena Thomas
+Command line data input and absolute model: Iveta Demirova
+Relative models and genomic instability: Eddie Cai  
+Web app and interface development, statistic and plotting: Gracia Gu
+
+
 See the web app version http://auto-q-pcr.com/
 
 
