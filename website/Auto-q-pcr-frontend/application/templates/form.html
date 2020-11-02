@@ -47,14 +47,15 @@
             <hr>
             <div class="form-group row">
                 <div class="col">
-                    <h4 class="required">Upload your data (.csv): </h4>
+                    <h4 class="required">Upload your data in the form of a comma separated file (.csv): </h4>
                 </div>
                 <div class="col">
                     <div class="help-tip" id="file-helptip">
-                    <p>Upload your data: Navigate to your folder of raw data csv files. These should be the output files
-                        from you PCR machine. Multiple spread sheets can be included. The data will
+                    <p>Upload your data: Navigate to your folder of raw data csv files * This must be a comma separated file.
+                        These should be the output files from you PCR machine.
+                        Multiple spread sheets can be included. The data will
                         be combined into a single analysis. Be sure to
-                        inclue the control genes you want to normalize. </p>
+                        include the control genes you will use to normalize. </p>
                     </div>
                 </div>
             </div>
@@ -71,7 +72,8 @@
                 </div>
                 <div class="col">
                     <div class="help-tip">
-                        <p>Description of the genes, quencher and task </p>
+                        <p> This is only needed if you have no target names within your csv file.
+                            You can also choose to filter out your quencher.  </p>
                     </div>
                 </div>
             </div>
@@ -92,7 +94,8 @@
                         <label for="genes" class="col col-form-label">If your file does not contain gene or target names, enter target names included in your file name: </label>
                         <div class="col">
                             <div class="help-tip">
-                                <p>Something</p>
+                                <p>If your dataframe doesn't contain the gene target names you must include the gene name in your csv file name.
+                                    Enter the gene names in as they are found in the file name. </p>
                             </div>
                         </div>
                     </div>
@@ -108,7 +111,7 @@
                         <label for="quencher" class="col col-form-label">Name of your quencher:</label>
                         <div class="col">
                             <div class="help-tip">
-                                <p>Something</p>
+                                <p>Enter the name of the quencher that will be filtered out. </p>
                             </div>
                         </div>
                     </div>
@@ -120,10 +123,11 @@
                 </div>
                 <div class="input-container">
                     <div class="row mb-0">
-                        <label for="task" class="col col-form-label">Name of your sample group in your task column: </label>
+                        <label for="task" class="col col-form-label">Name within the column 'Task' that identifies the unknown samples as
+                            opposed to the calibration curve or empty wells. Eg 'UNKNOWN', 'Sample': </label>
                         <div class="col">
                             <div class="help-tip">
-                                <p>Default: UNKNOWN</p>
+                                <p>Default: UNKNOWN </p>
                             </div>
                         </div>
                     </div>
@@ -285,7 +289,7 @@
                 </div>
                 <div class="col">
                     <div class="help-tip">
-                        <p>Based on your selections the appropriate statistic will be performed. For 2 groups: paired or
+                        <p> Based on your selections the appropriate statistic will be performed. For 2 groups: paired or
                             unpaired t-tests for normally distributed
                             data, non-paramentric equivalent MannWhitneyU tests are used. For more than 2 groups one way
                             ANOVA (normal distributions) or Kruskal-Wallis
@@ -332,7 +336,7 @@
                 </div>
                 <div class="row form-inline">
                     <div class="col-sm-4">
-                        <label class="radio-inline" style="padding-top: 2px;"><input type="radio" class="form-control" id="oneway" name="twoway" value="False" autocomplete="off" checked> One-way ANOVA </label>
+                        <label class="radio-inline" style="padding-top: 2px;"><input type="radio" class="form-control" id="oneway" name="twoway" value="False" autocomplete="off" checked> One-way ANOVA and t-tests </label>
                     </div>
                     <div class="col-sm-4">
                         <label class="radio-inline" style="padding-top: 2px;"><input type="radio" class="form-control" id="twoway" name="twoway" value="True" autocomplete="off">  Two-way ANOVA </label>
@@ -409,7 +413,7 @@
                         <p>Is it a time series repeated measures? </p>
                     </div>
                     <div class="col-sm-3">
-                        <label class="radio-inline"><input type="radio" name="option2" id="y_rm" value="True"> Yes --- measures are independent</label>
+                        <label class="radio-inline"><input type="radio" name="option2" id="y_rm" value="True"> Yes --- measures are dependent</label>
                     </div>
                     <div class="col-sm-3">
                         <label class="radio-inline"><input type="radio" name="option2" id="n_rm" value="False" checked> No --- measures are independent</label>
