@@ -6,4 +6,34 @@
             <h1>Welcome to Auto-qPCR.</h1>
         </div>
     </div>
+    <div class="row" id="home-content">
+        <div class="col-md-6 text center">
+            [placeholder for schematic]
+        </div>
+        <div class="col-md-6">
+            <p>
+                Auto-qPCR is a python based web app designed to process raw data files from thermal cycler machines. <br>
+<br>
+The source code for the program can be found at:
+<a href="https://github.com/neuroeddu/Auto-qPCR">https://github.com/neuroeddu/Auto-qPCR</a> <br>
+<br>
+
+Quantifying changes at the DNA and RNA levels are essential components of any molecular biology toolkit. As a result, analyses of DNA or RNA from cells using quantitative real time PCR techniques. However, the analysis of qPCR data includes many steps that are time consuming and cumbersome and can lead to mistakes. We developed Auto-qPCR to address this bottleneck: an open source software, written in Python, to automate the processing of raw output files from any qPCR machine using standard calculations that are usually performed manually. Auto-qPCR saves time and helps standardize analysis of qPCR experiments. Auto-qPCR is easy to use and does not require programming knowledge or software installation. We provide examples data for four different modes of data processing available in the program. <br>
+<br>
+1) Absolute model of RNA quantification using a calibration curve <br>
+2) Relative quantification model <br>
+	&nbsp;&nbsp;&nbsp;&nbsp;2) relative to endogenous control(s) (delta-CT) <br>
+	&nbsp;&nbsp;&nbsp;&nbsp;3) relative to endogenous control(s) and a reference sample <br>
+4) cDNA quantification to identify deletion or duplication events within the genome using a target reference and a reference sample (delta-delta-CT) <br>
+<br>
+<br>
+
+Program conception: Rhalena Thomas and Gilles Maussion <br>
+Program and web app design and management: Rhalena Thomas <br>
+Command line data input and absolute model: Iveta Demirova <br>
+Relative models and genomic instability: Eddie Cai <br>
+Web app and interface development, statistic and plotting: Gracia Gu <br>
+            </p>
+        </div>
+    </div>
 {% endblock %}
