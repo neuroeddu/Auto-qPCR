@@ -23,7 +23,7 @@
                     <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link {% if index %}active{% endif %}" href="{{ url_for('index') }}">Home</a></li>
                     <li class="nav-item"><a class="nav-link {% if form %}active{% endif %}" href="{{ url_for('form') }}">Auto-QPCR Analysis</a></li>
-                    <li class="nav-item"><a class="nav-link {% if user_guide %}active{% endif %}" href="{{ url_for('user_guide') }}">Help</a></li>
+                    <li class="nav-item"><a class="nav-link {% if help %}active{% endif %}" href="{{ url_for('help') }}">Help</a></li>
                     <li class="nav-item"><a class="nav-link {% if contact %}active{% endif %}" href="{{ url_for('contact') }}">Contact</a></li>
                 </ul>
             </div>
