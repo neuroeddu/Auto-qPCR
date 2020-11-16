@@ -2,24 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9665c7f6-6f54-410c-98ca-e3070a6b0862" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../auto-q-pcr-local_GUI/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../auto-q-pcr-local_GUI/templates/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/application/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/application/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/application/static/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/templates/help.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/templates/help.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/templates/includes/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/templates/includes/header.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Files_to_link_website/Front_page.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Files_to_link_website/Front_page.odt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Files_to_link_website/UserGuideTemp_Oct15_2020.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Files_to_link_website/sample data/Absolute/2019-04-25_124559-GAPDH.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Files_to_link_website/sample data/Absolute/2019-04-25_135946-ACTB.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Files_to_link_website/sample data/Absolute/2019-04-25_135946-KCNJ6.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Files_to_link_website/sample data/Absolute/2019-04-25_135946-SYP.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Files_to_link_website/sample data/Absolute/2019-04-26_161050-GRIA1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Files_to_link_website/sample data/INSTABILITY_example.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Files_to_link_website/sample data/Notes_on_Datasets.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Files_to_link_website/sample data/RELATIVE_example.csv" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,8 +11,39 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/routes.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/templates/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/application/templates/index.html" />
+      </list>
+    </option>
   </component>
   <component name="ProjectConfigurationFiles">
     <option name="files">
@@ -37,13 +52,14 @@
         <option value="$PROJECT_DIR$/.idea/misc.xml" />
         <option value="$PROJECT_DIR$/.idea/modules.xml" />
         <option value="$PROJECT_DIR$/.idea/vcs.xml" />
+        <option value="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/R_User_Library.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="60" />
+  <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="1321" />
+    <option name="width" value="1440" />
     <option name="height" value="877" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -52,7 +68,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -60,13 +75,32 @@
               <item name="Auto-q-pcr-frontend" type="b2602c69:ProjectViewProjectNode" />
               <item name="Auto-q-pcr-frontend" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Auto-q-pcr-frontend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Auto-q-pcr-frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Auto-q-pcr-frontend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Auto-q-pcr-frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Auto-q-pcr-frontend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Auto-q-pcr-frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -111,45 +145,65 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1605234212690</updated>
-      <workItem from="1605234214736" duration="360000" />
+      <workItem from="1605234214736" duration="533000" />
+      <workItem from="1605557224597" duration="20000" />
+      <workItem from="1605557370277" duration="184000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="360000" />
+    <option name="totallyTimeSpent" value="737000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="877" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="877" extended-state="0" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24964234" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25679544" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Python Console" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3299363" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3299363" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Database" />
-      <window_info anchor="right" id="R Packages" />
-      <window_info anchor="right" id="SciView" />
-      <window_info anchor="right" id="R Graphics" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="11" />
+      <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="R Graphics" order="4" />
+      <window_info anchor="right" id="R Packages" order="5" />
+      <window_info anchor="right" id="Database" order="6" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Auto_q_pcr_frontend$Auto_q_pcr_frontend.coverage" NAME="Auto-q-pcr-frontend Coverage Results" MODIFIED="1605234571208" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/Auto_q_pcr_frontend$Auto_q_pcr_frontend.coverage" NAME="Auto-q-pcr-frontend Coverage Results" MODIFIED="1605557414594" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/application/routes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>
