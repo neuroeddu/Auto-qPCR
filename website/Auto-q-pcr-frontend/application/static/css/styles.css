@@ -64,6 +64,10 @@ h1 {
     margin: 3% auto;
 }
 
+#home-image {
+    max-width: 100%;
+}
+
 #help-page {
     margin: 3% auto;
 }
