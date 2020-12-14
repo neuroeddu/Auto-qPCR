@@ -28,7 +28,7 @@ def _deactivate(args):
 _deactivate(["nondestructive"])
 aliases["deactivate"] = _deactivate
 
-$VIRTUAL_ENV = r"/Users/admin/Documents/GitHub/Auto-q-PCR-frontend/venv"
+$VIRTUAL_ENV = r"/Users/admin/Documents/GitHub/Auto-qPCR/website/Auto-q-pcr-frontend/venv"
 
 $_OLD_VIRTUAL_PATH = $PATH
 $PATH = $PATH[:]

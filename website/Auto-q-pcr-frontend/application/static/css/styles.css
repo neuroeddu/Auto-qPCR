@@ -6,6 +6,10 @@ header {
     font-family: "CartoGothicStdBold", Helvetica, "Helvetica Neue", Arial, sans serif;
 }
 
+.top {
+    min-height: 100%;
+}
+
 #logo {
     background-color: #ECEFF1;
     height: 100px;
@@ -50,6 +54,22 @@ li a.active {
 .footer {
     margin: 0px auto;
     padding: 20px 0px 20px 0px;
+}
+
+h1 {
+    margin: 2% auto;
+}
+
+#home-content {
+    margin: 3% auto;
+}
+
+#home-image {
+    max-width: 100%;
+}
+
+#help-page {
+    margin: 3% auto;
 }
 
 .help-tip {

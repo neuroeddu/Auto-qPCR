@@ -1,4 +1,4 @@
-#!/Users/admin/Documents/GitHub/Auto-q-PCR-frontend/venv/bin/python
+#!/Users/admin/Documents/GitHub/Auto-qPCR/website/Auto-q-pcr-frontend/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
