@@ -301,7 +301,7 @@ def help():
 @app.route('/help/<file_name>')
 def get_file(file_name):
 	try:
-		return send_from_directory(app.config['UPLOAD_FOLDER'], filename=file_name, as_attachment=True)
+		return send_from_directory(directory=app.config['UPLOAD_FOLDER'], filename=file_name, as_attachment=True)
 	except FileNotFoundError:
 		abort(404)
 
