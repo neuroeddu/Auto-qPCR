@@ -7,7 +7,7 @@ Relative models and genomic instability: Eddie Cai
 Web app and interface development, statistic and plotting: Gracia Gu
 
 
-See the web app version http://auto-q-pcr.com/
+See the web app version https://auto-q-pcr.com/
 
 
 A python program to process raw qPCR output files directly from the pcr machine
