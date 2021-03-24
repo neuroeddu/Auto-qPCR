@@ -10,7 +10,34 @@ Web app and interface development, statistic and plotting: Gracia Gu
 See the web app version https://auto-q-pcr.com/
 
 
-A python program to process raw qPCR output files directly from the pcr machine
+A python program to process spreadsheet output directly from qPCR thermocycler.
+
+# To run a local GUI
+1. navigate to the folder 'local-GUI'. You must be within the local-GUI folder or the program won't run.
+$ cd local-GUI/
+$ ls 
+application  main.py  requirements.txt  venv
+
+
+2. in command line type: python main.py  - this will run the program
+$ python main.py
+ * Serving Flask app "application" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+
+
+either a local browers will open or you will have the link in your terminal click open link and the GUI will open in your webbrowser (firefox, chrome).
+
+All the source scripts are available. Python scripts using flask to create a local server which works to process qPCR data and perform statistics.
+
+The file requirments.txt list packages needed to run the local server.
+
+3. In your local web browser follow the instructions and enter all the user input boxes. 
+
+
 
 The origninal version run in command line using a configuration file.  
 # Command Line python script instructions
@@ -41,27 +68,4 @@ Steps to run a qPCR analysis from the command line. You must install python and 
 
 The analysis will run and the plots will all be displayed. The plots will be save and an xls file with the output data will be saved in the "data" folder.
 
-# To run a local GUI
-1. navigate to the folder 'local-GUI'. You must be within the local-GUI folder or the program won't run.
-$ cd local-GUI/
-$ ls 
-application  main.py  requirements.txt  venv
 
-
-2. in command line type: python main.py  - this will run the program
-$ python main.py
- * Serving Flask app "application" (lazy loading)
- * Environment: production
-   WARNING: This is a development server. Do not use it in a production deployment.
-   Use a production WSGI server instead.
- * Debug mode: off
- * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-
-
-either a local browers will open or you will have the link in your terminal click open link and the GUI will open in your webbrowser (firefox, chrome).
-
-All the source scripts are available. Python scripts using flask to create a local server which works to process qPCR data and perform statistics.
-
-The file requirments.txt list packages needed to run the local server.
-
-3. In your local web browser follow the instructions and enter all the user input boxes. 
