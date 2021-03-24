@@ -5,7 +5,7 @@
     <div class="col-12 col-sm-8 offset-sm-2">
         <form method="POST" enctype="multipart/form-data">
             <div class="form-group row">
-                <div class="col-12">
+                <div class="col-10">
                     <p><b>All inputs are case insensitive. Separate with commas when multiple inputs are required. </b></p>
                     <div class="footnote">
                         <p>* fields are required</p>
@@ -142,8 +142,8 @@
             </fieldset>
             <hr>
             <div class="form-group row">
-                <div class="col-12">
-                    <h4>Enter settings for processing data </h4>
+                <div class="col-10">
+                    <h4>Enter genes and samples for normalization and setting for removing technical replicates</h4>
                 </div>
             </div>
             <div class="input-container">
@@ -158,13 +158,13 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="cgenes" name="cgenes" placeholder="Endogeneous control eg ACTIN or CHR4" autocomplete="off" required>
+                        <input type="text" class="form-control" id="cgenes" name="cgenes" placeholder="Endogeneous control eg ACTIN" autocomplete="off" required>
                     </div>
                 </div>
             </div>
             <div class="input-container">
                 <div class="form-group row mb-0">
-                    <label for="cutoff" class="col col-form-label">Cut-Off: </label>
+                    <label for="cutoff" class="col col-form-label"> Standard Deviation Cut-Off: </label>
                     <div class="col">
                         <div class="help-tip">
                             <p>Technical replicates for a given sample will be removed if the SD
@@ -233,43 +233,39 @@
             </div>
             <hr>
             <div class="form-group row">
-                <div class="col-12">
-                    <h4>Visualization options for bar charts</h4>
+                <div class="col-10">
+                    <h4>Enter order for genes and samples to appear on graphs</h4>
                 </div>
-            <div class="input-container">
+            	<div class="input-container">
                 <div class="form-group row mb-0">
                     <label for="target_order" class="col col-form-label">Enter target order (genes/chromosomes): </label>
-                    <div class="col">
-                    <div class="help-tip">
-                            <p> Enter the order you would like genes/chromosomes to appear on the plots.
-                            Use the exact/complete names. </p>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="target_order" name="target_sorter" placeholder="Target order (PAX6, GFAP, NESTIN)" autocomplete="off">
-                    </div>
-            </div>
-            <div class="input-container">
-                <div class="form-group row mb-0">
-                    <label for="sample_order" class="col col-form-label">Enter sample order (cell lines/conditions/timepoints): </label>
-                    <div class="col">
-                        <div class="help-tip">
-                            <p> Enter the order you would like genes/chromosomes to appear on the plots.
-                            Use the exact/complete names. The fields are case insensitive.  </p>
-                        </div>
-                    </div>
+                    	<div class="col">
+                        	<div class="help-tip">
+                            	    <p> Enter the order you would like genes/chromosomes to appear on the plots.
+                                        Use the exact/complete names. If left blank genes or chromosomes will appear in the order they are in the input spreadsheet.</p>
+                     		</div>
+                   	    </div>
+		        </div>
+                	<div class="form-group row">
+                    		<div class="col-sm-8">
+                        	   <input type="text" class="form-control" id="target_order" name="target_sorter" placeholder="Target order (PAX6, GFAP, NESTIN)" autocomplete="off">
+                    		</div>
+			    </div>
+            		</div>
+            	<div class="input-container">
+                    <div class="form-group row mb-0">
+                        <label for="sample_order" class="col col-form-label">Enter sample order (cell lines/conditions/timepoints): </label>
+                        <div class="col">
+                            <div class="help-tip">
+                                 <p> Enter the order you would like samples (cell lines, treatments, timepoints) to appear on the plots.
+                            Use the exact/complete names. The fields are case insensitive. By default the samples will appear in the same
+			    order as on the input spreadsheet.</p>
+                           </div>
+                      </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="sample_order" name="sample_sorter" placeholder="Sample order (iPSC, NPC, 4 Weeks Neurons)" autocomplete="off">
-                    </div>
-                </div>
-            </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="colnames" name="colnames" placeholder="Column names" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -303,25 +299,33 @@
             <fieldset class="form-group" id="stats_form">
                 <div class="row">
                     <div class="col-12">
-                        <p><b>Compare your samples: t-tests, one-way ANOVA, MannWhitneyU test, Friedman test, Kruskal-Wallis</b></p>
+                        <p><b> Enter informations to compare your samples.</b></p>
                     </div>
                 </div>
 		 </div>
 	    <div class="input-container">
                 <div class="form-group row mb-0">
-                    <label for="colnames" class="col col-form-label">Enter the column names you would like to include for statistical analysis: </label>
+                    <label for="colnames" class="col col-form-label">If your indepenent variables names are not in the sample name column, enter the column names you would like to include for statistical analysis: </label>
                     <div class="col">
                         <div class="help-tip">
-                            <p>Column names that indicate grouping of the data (e.g. treatments, time points). Do not
-                                enter column names for sample names and target names. </p>
+                            <p>Column names that indicate grouping of the data (e.g. treatments, time points). You need to have added this column during your experimental setup.</p>
                         </div>
-                     </div>                
+                     </div> 
+                 </div>		     
+		 <div class="form-group row">
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="colnames" name="colnames" placeholder="Column names" autocomplete="off">
+                    </div>
+                </div>
+            </div>
 		<div class="row mb-0">
                     <label for="quantity" class="col col-form-label">How many groups do you have? </label>
                     <div class="col">
                         <div class="help-tip">
                             <p> Groups can be different genes, time points, animals, treatments or any conditions
-                                    you wish to compare. Must be entered as they appear in the spreadsheet. </p>
+                                you wish to compare. The group names must be entered as they appear in the spreadsheet. 
+				The groups are the levels within a variable. If you want to compare three doses of a drug, 
+				(0, 1, 5, 10) then you have 4 groups </p>
                         </div>
                     </div>
                 </div>
@@ -332,15 +336,15 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-12">
-                        <p>How are your groups defined? </p>
+                        <p>Do you want to compare one or two variables? </p>
                     </div>
                 </div>
                 <div class="row form-inline">
                     <div class="col-sm-4">
-                        <label class="radio-inline" style="padding-top: 2px;"><input type="radio" class="form-control" id="oneway" name="twoway" value="False" autocomplete="off" checked> One-way ANOVA and t-tests </label>
+                        <label class="radio-inline" style="padding-top: 2px;"><input type="radio" class="form-control" id="oneway" name="twoway" value="False" autocomplete="off" checked> One variable (One-way ANOVA and t-tests) </label>
                     </div>
                     <div class="col-sm-4">
-                        <label class="radio-inline" style="padding-top: 2px;"><input type="radio" class="form-control" id="twoway" name="twoway" value="True" autocomplete="off">  Two-way ANOVA </label>
+                        <label class="radio-inline" style="padding-top: 2px;"><input type="radio" class="form-control" id="twoway" name="twoway" value="True" autocomplete="off"> Two variables (Two-way ANOVA) </label>
                     </div>
                 </div>
                 <div id="form-oneway">
@@ -411,24 +415,24 @@
                 </div>
                 <div class="row mb-0 mt-2">
                     <div class="col-sm-6">
-                        <p>Is it a time series repeated measures? </p>
+                        <p>Select if your measurements are dependend (repeated measures as in a time series) or independent </p>
                     </div>
                     <div class="col-sm-3">
-                        <label class="radio-inline"><input type="radio" name="option2" id="y_rm" value="True"> Yes --- measures are dependent</label>
+                        <label class="radio-inline"><input type="radio" name="option2" id="y_rm" value="True"> Dependent</label>
                     </div>
                     <div class="col-sm-3">
-                        <label class="radio-inline"><input type="radio" name="option2" id="n_rm" value="False" checked> No --- measures are independent</label>
+                        <label class="radio-inline"><input type="radio" name="option2" id="n_rm" value="False" checked> Independent</label>
                     </div>
                 </div>
                 <div class="row mb-0">
                     <div class="col-sm-6">
-                        <p>Is your data normally distributed? </p>
+                        <p>Select to use parametric or non-parametric test </p>
                     </div>
                     <div class="col-sm-3">
-                        <label class="radio-inline"><input type="radio" name="option4" id="y_nd" value="True" checked> Yes --- Parametric tests</label>
+                        <label class="radio-inline"><input type="radio" name="option4" id="y_nd" value="True" checked> Parametric tests</label>
                     </div>
                     <div class="col-sm-3">
-                        <label class="radio-inline"><input type="radio" name="option4" id="n_nd" value="False"> No --- Non-parametric tests</label>
+                        <label class="radio-inline"><input type="radio" name="option4" id="n_nd" value="False"> Non-parametric tests</label>
                     </div>
                 </div>
             </fieldset>
