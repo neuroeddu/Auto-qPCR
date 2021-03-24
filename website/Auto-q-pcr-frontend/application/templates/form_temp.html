@@ -19,7 +19,7 @@
                 </div>
                 <div class="col">
                     <div class="help-tip" id="model-helptip">
-                        <p>Choose your model based on the experimental design used in your Q-PCR. </p>
+                        <p>Choose your analysis model based on the experimental design. </p>
                     </div>
                 </div>
             </div>
@@ -47,12 +47,14 @@
             <hr>
             <div class="form-group row">
                 <div class="col">
-                    <h4 class="required">Upload your data in the form of a comma separated file (.csv): </h4>
+                    <h4 class="required">Upload your data in the form of spreadsheet (results.csv or results.txt): </h4>
                 </div>
                 <div class="col">
                     <div class="help-tip" id="file-helptip">
-                    <p>Upload your data: Navigate to your folder of raw data csv files * This must be a comma separated file.
-                        These should be the output files from you PCR machine.
+                    <p>Upload your data: Navigate to your folder of your qPCR results files.
+                        These should be the output files from you PCR machine or software.
+			The file(s) should contain the CT values and sample names and genes.
+			It doesn't matter how many rows are above the relevant data. 
                         Multiple spread sheets can be included. The data will
                         be combined into a single analysis. Be sure to
                         include the control genes you will use to normalize. </p>
@@ -68,18 +70,18 @@
             <hr>
             <div class="form-group row">
                 <div class="col">
-                    <h4>File information</h4>
+                    <h4>Additional File information or Quencher Filtering Options </h4>
                 </div>
                 <div class="col">
                     <div class="help-tip">
-                        <p> This is only needed if you have no target names within your csv file.
-                            You can also choose to filter out your quencher.  </p>
+                        <p> This is only needed if you have no target names (gene names) within your file.
+                            You can also choose to filter out your quencher sample if desired.  </p>
                     </div>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-sm-6">
-                    <p>Would you like to fill in file information? </p>
+                    <p>Would you like to fill in file information or filter a quencher? </p>
                 </div>
                 <div class="col-sm-2">
                     <label class="radio-inline"><input type="radio" name="file_info" id="y_fileinfo"> Yes</label>
@@ -94,8 +96,8 @@
                         <label for="genes" class="col col-form-label">If your file does not contain gene or target names, enter target names included in your file name: </label>
                         <div class="col">
                             <div class="help-tip">
-                                <p>If your dataframe doesn't contain the gene target names you must include the gene name in your csv file name.
-                                    Enter the gene names in as they are found in the file name. </p>
+                                <p>If your dataframe doesn't contain the gene target names you must include the gene name in your file name.
+                                    Enter the gene names in as they are found in the file name. Auto-q-PCR will add the target names to the output. </p>
                             </div>
                         </div>
                     </div>
@@ -127,7 +129,7 @@
                             opposed to the calibration curve or empty wells. Eg 'UNKNOWN', 'Sample': </label>
                         <div class="col">
                             <div class="help-tip">
-                                <p>Default: UNKNOWN </p>
+                                <p>The default is 'UNKNOWN'. If you data has a different label for the sample to measure add that here. </p>
                             </div>
                         </div>
                     </div>
@@ -141,7 +143,7 @@
             <hr>
             <div class="form-group row">
                 <div class="col-12">
-                    <h4>Options</h4>
+                    <h4>Enter settings for processing data </h4>
                 </div>
             </div>
             <div class="input-container">
@@ -156,7 +158,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="cgenes" name="cgenes" placeholder="Endogeneous control" autocomplete="off" required>
+                        <input type="text" class="form-control" id="cgenes" name="cgenes" placeholder="Endogeneous control eg ACTIN or CHR4" autocomplete="off" required>
                     </div>
                 </div>
             </div>
@@ -166,7 +168,7 @@
                     <div class="col">
                         <div class="help-tip">
                             <p>Technical replicates for a given sample will be removed if the SD
-                                of a given sample is above the threshold (default 0.3). </p>
+                                of a given sample is above the threshold (default 0.3). Adjust the cut-off to be lower for more stringent and higher to include more values. </p>
                         </div>
                     </div>
                 </div>
@@ -178,11 +180,12 @@
             </div>
             <div class="input-container">
                 <div class="form-group row mb-0">
-                    <label for="max_outliers" class="col col-form-label">Max Outliers </label>
+                    <label for="max_outliers" class="col col-form-label">Max proportion of technical replicates to remove </label>
                     <div class="col">
                         <div class="help-tip">
                             <p>Max proportion of replicates removed to reach the SD cut off.
-                                Default of 0.5 means that in 3 replicates only one can be removed. </p>
+                                Default of 0.5 means that in 3 replicates only one can be removed.
+				Increase this value to remove more replicates and decrease the value to remove fewer. </p>
                         </div>
                     </div>
                 </div>
@@ -197,7 +200,7 @@
                     <label for="preserve_var" class="col col-form-label">Preserve highly variable replicates </label>
                     <div class="col">
                         <div class="help-tip">
-                            <p>Preserve outliers if the sample has high variability </p>
+                            <p>Preserve outliers if the technical replicates have high variability across all the replicates and not clear outlier. </p>
                         </div>
                     </div>
                 </div>
@@ -224,31 +227,28 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="csample" name="csample" placeholder="Control sample" autocomplete="off">
+                        <input type="text" class="form-control" id="csample" name="csample" placeholder="Control sample (Normal, Control, Untreated)" autocomplete="off">
                     </div>
                 </div>
             </div>
             <hr>
             <div class="form-group row">
                 <div class="col-12">
-                    <h4>Visualization options</h4>
+                    <h4>Visualization options for bar charts</h4>
                 </div>
-            </div>
             <div class="input-container">
                 <div class="form-group row mb-0">
                     <label for="target_order" class="col col-form-label">Enter target order (genes/chromosomes): </label>
                     <div class="col">
-                        <div class="help-tip">
+                    <div class="help-tip">
                             <p> Enter the order you would like genes/chromosomes to appear on the plots.
                             Use the exact/complete names. </p>
-                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="target_order" name="target_sorter" placeholder="Target order" autocomplete="off">
+                        <input type="text" class="form-control" id="target_order" name="target_sorter" placeholder="Target order (PAX6, GFAP, NESTIN)" autocomplete="off">
                     </div>
-                </div>
             </div>
             <div class="input-container">
                 <div class="form-group row mb-0">
@@ -256,25 +256,16 @@
                     <div class="col">
                         <div class="help-tip">
                             <p> Enter the order you would like genes/chromosomes to appear on the plots.
-                            Use the exact/complete names. </p>
+                            Use the exact/complete names. The fields are case insensitive.  </p>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="sample_order" name="sample_sorter" placeholder="Sample order" autocomplete="off">
+                        <input type="text" class="form-control" id="sample_order" name="sample_sorter" placeholder="Sample order (iPSC, NPC, 4 Weeks Neurons)" autocomplete="off">
                     </div>
                 </div>
             </div>
-            <div class="input-container">
-                <div class="form-group row mb-0">
-                    <label for="colnames" class="col col-form-label">Enter the column names you would like to include for statistical analysis: </label>
-                    <div class="col">
-                        <div class="help-tip">
-                            <p>Column names that indicate grouping of the data (e.g. treatments, time points). Do not
-                                enter column names for sample names and target names. </p>
-                        </div>
-                    </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-8">
@@ -297,8 +288,8 @@
                             comparisons are performed on 3 or more groups. </p>
                     </div>
                 </div>
-            </div>
-            <div class="form-group row">
+                </div>
+		<div class="form-group row">
                 <div class="col-sm-6">
                     <p>Would you like to do statistical analysis? </p>
                 </div>
@@ -315,7 +306,17 @@
                         <p><b>Compare your samples: t-tests, one-way ANOVA, MannWhitneyU test, Friedman test, Kruskal-Wallis</b></p>
                     </div>
                 </div>
-                <div class="row mb-0">
+		 </div>
+	    <div class="input-container">
+                <div class="form-group row mb-0">
+                    <label for="colnames" class="col col-form-label">Enter the column names you would like to include for statistical analysis: </label>
+                    <div class="col">
+                        <div class="help-tip">
+                            <p>Column names that indicate grouping of the data (e.g. treatments, time points). Do not
+                                enter column names for sample names and target names. </p>
+                        </div>
+                     </div>                
+		<div class="row mb-0">
                     <label for="quantity" class="col col-form-label">How many groups do you have? </label>
                     <div class="col">
                         <div class="help-tip">
