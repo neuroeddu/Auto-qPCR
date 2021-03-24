@@ -1,16 +1,9 @@
 # Auto-qPCR
-
-Program conception: Rhalena Thomas and Gilles Maussion
-Program and web app design and management: Rhalena Thomas
-Command line data input and absolute model: Iveta Demirova
-Relative models and genomic instability: Eddie Cai  
-Web app and interface development, statistic and plotting: Gracia Gu
-
+A python program to process spreadsheet output directly from qPCR thermocycler.
 
 See the web app version https://auto-q-pcr.com/
 
-
-A python program to process spreadsheet output directly from qPCR thermocycler.
+Python scripts to run the program our found in this repository. 
 
 # To run a local GUI
 1. navigate to the folder 'local-GUI'. You must be within the local-GUI folder or the program won't run.
@@ -68,4 +61,9 @@ Steps to run a qPCR analysis from the command line. You must install python and 
 
 The analysis will run and the plots will all be displayed. The plots will be save and an xls file with the output data will be saved in the "data" folder.
 
+Program conception: Rhalena Thomas and Gilles Maussion
+Program and web app design and management: Rhalena Thomas
+Command line data input and absolute model: Iveta Demirova
+Relative models and genomic instability: Eddie Cai  
+Web app and interface development, statistic and plotting: Gracia Gu
 
