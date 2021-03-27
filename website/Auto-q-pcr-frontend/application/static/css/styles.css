@@ -171,6 +171,10 @@ hr {
     padding-bottom: 0;
 }
 
+.input-container {
+    padding: 0.2rem;
+}
+
 .form-inline input {
     margin-right: 4px;
 }

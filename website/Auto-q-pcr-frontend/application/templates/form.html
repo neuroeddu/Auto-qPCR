@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="row row-content">
-    <div class="col-12 col-sm-8 offset-sm-2">
+    <div class="col-6 col-sm-8 offset-sm-2">
         <form method="POST" enctype="multipart/form-data">
             <div class="form-group row">
                 <div class="col-12">
@@ -14,17 +14,10 @@
             </div>
             <hr>
             <div class="form-group row">
-                <div class="col">
+                <div class="col-12 col-md-3">
                     <h4 class="required">Select model</h4>
                 </div>
-                <div class="col">
-                    <div class="help-tip" id="model-helptip">
-                        <p>Choose your model based on the experimental design used in your Q-PCR. </p>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col offset-sm-1">
+                <div class="col-10 col-md-5">
                     <div class="radio">
                         <label class="col-form-label"><input type="radio" name="option" id="absolute" value="absolute"
                                                              checked required> Absolute </label>
@@ -41,6 +34,11 @@
                     <div class="radio">
                         <label class="col-form-label"><input type="radio" name="option" id="instability"
                                                              value="instability" required> Instability </label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="help-tip" id="model-helptip">
+                        <p>Choose your model based on the experimental design used in your Q-PCR. </p>
                     </div>
                 </div>
             </div>
@@ -146,7 +144,8 @@
             </div>
             <div class="input-container">
                 <div class="form-group row mb-0">
-                    <label for="cgenes" class="col col-form-label required">Enter target(s) for normalization (endogenous control gene(s)/chromosome(s)): </label>
+                    <label for="cgenes" class="col-6 control-label required">Enter target(s) for normalization (endogenous control gene(s)/chromosome(s)): </label>
+                    <input type="text" class="col-5 form-control" id="cgenes" name="cgenes" placeholder="Endogeneous control" autocomplete="off" required>
                     <div class="col">
                         <div class="help-tip">
                             <p>Gene or region to to normalize with (Actin, GAPDH, CHR4, B2M).
@@ -154,15 +153,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="cgenes" name="cgenes" placeholder="Endogeneous control" autocomplete="off" required>
-                    </div>
-                </div>
             </div>
             <div class="input-container">
                 <div class="form-group row mb-0">
-                    <label for="cutoff" class="col col-form-label">Cut-Off: </label>
+                    <label for="cutoff" class="col-6 control-label">Cut-Off: </label>
+                    <input type="number" class="col-5 form-control" id="cutoff" name="cutoff" value="0.3" step="any" placeholder="Cut-off" autocomplete="off">
                     <div class="col">
                         <div class="help-tip">
                             <p>Technical replicates for a given sample will be removed if the SD
@@ -170,15 +165,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" id="cutoff" name="cutoff" value="0.3" step="any" placeholder="Cut-off" autocomplete="off">
-                    </div>
-                </div>
             </div>
             <div class="input-container">
                 <div class="form-group row mb-0">
-                    <label for="max_outliers" class="col col-form-label">Max Outliers </label>
+                    <label for="max_outliers" class="col-6 control-label">Max Outliers </label>
+                    <input type="number" class="col-5 form-control" id="max_outliers" name="max_outliers" value="0.5" step="any" placeholder="Max outliers" autocomplete="off">
                     <div class="col">
                         <div class="help-tip">
                             <p>Max proportion of replicates removed to reach the SD cut off.
@@ -186,45 +177,32 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" id="max_outliers" name="max_outliers" value="0.5" step="any" placeholder="Max outliers" autocomplete="off">
-                    </div>
-                </div>
             </div>
             <div class="input-container">
                 <div class="form-group row mb-0">
-                    <label for="preserve_var" class="col col-form-label">Preserve highly variable replicates </label>
+                    <label for="preserve_var" class="col-6 control-label">Preserve highly variable replicates </label>
+                    <div class="col-sm-2">
+                        <label class="radio-inline"><input type="radio" name="preservevar" id="y_preservevar" value="True">Yes</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <label class="radio-inline"><input type="radio" name="preservevar" id="n_preservevar" value="False" checked>No</label>
+                    </div>
                     <div class="col">
                         <div class="help-tip">
                             <p>Preserve outliers if the sample has high variability </p>
                         </div>
                     </div>
                 </div>
-                <div class="row form-inline">
-                    <div class="col-sm-2">
-                        <label class="radio-inline"><input type="radio" name="preservevar" id="y_preservevar" value="True">
-                            Yes</label>
-                    </div>
-                    <div class="col-sm-2">
-                        <label class="radio-inline"><input type="radio" name="preservevar" id="n_preservevar" value="False" checked>
-                            No</label>
-                    </div>
-                </div>
             </div>
             <div class="input-container">
                 <div class="form-group row mb-0">
-                    <label for="csample" class="col col-form-label">Enter the control sample (calibrator/reference sample): <span id="specialStar" style="color: #FF0000">*</span></label>
+                    <label for="csample" class="col-6 control-label">Enter the control sample (calibrator/reference sample): <span id="specialStar" style="color: #FF0000">*</span></label>
+                    <input type="text" class="col-5 form-control" id="csample" name="csample" placeholder="Control sample" autocomplete="off">
                     <div class="col">
                         <div class="help-tip">
                             <p> The sample used as calibrator (compare with this sample) for the relative (delta delta CT)
                                 and for the instability models. </p>
                         </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="csample" name="csample" placeholder="Control sample" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -236,7 +214,8 @@
             </div>
             <div class="input-container">
                 <div class="form-group row mb-0">
-                    <label for="target_order" class="col col-form-label">Enter target order (genes/chromosomes): </label>
+                    <label for="target_order" class="col-6 control-label">Enter target order (genes/chromosomes): </label>
+                    <input type="text" class="col-5 form-control" id="target_order" name="target_sorter" placeholder="Target order" autocomplete="off">
                     <div class="col">
                         <div class="help-tip">
                             <p> Enter the order you would like genes/chromosomes to appear on the plots.
@@ -244,41 +223,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="target_order" name="target_sorter" placeholder="Target order" autocomplete="off">
-                    </div>
-                </div>
             </div>
             <div class="input-container">
                 <div class="form-group row mb-0">
-                    <label for="sample_order" class="col col-form-label">Enter sample order (cell lines/conditions/timepoints): </label>
+                    <label for="sample_order" class="col-6 control-label">Enter sample order (cell lines/conditions/timepoints): </label>
+                    <input type="text" class="col-5 form-control" id="sample_order" name="sample_sorter" placeholder="Sample order" autocomplete="off">
                     <div class="col">
                         <div class="help-tip">
                             <p> Enter the order you would like genes/chromosomes to appear on the plots.
                             Use the exact/complete names. </p>
                         </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="sample_order" name="sample_sorter" placeholder="Sample order" autocomplete="off">
-                    </div>
-                </div>
-            </div>
-            <div class="input-container">
-                <div class="form-group row mb-0">
-                    <label for="colnames" class="col col-form-label">Enter the column names you would like to include for statistical analysis: </label>
-                    <div class="col">
-                        <div class="help-tip">
-                            <p>Column names that indicate grouping of the data (e.g. treatments, time points). Do not
-                                enter column names for sample names and target names. </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="colnames" name="colnames" placeholder="Column names" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -315,18 +269,26 @@
                         <p><b>Compare your samples: t-tests, one-way ANOVA, MannWhitneyU test, Friedman test, Kruskal-Wallis</b></p>
                     </div>
                 </div>
+                <div class="form-group row mb-0">
+                    <label for="colnames" class="col-6 control-label">Enter the column names you would like to include
+                        for statistical analysis: </label>
+                    <input type="text" class="col-5 form-control" id="colnames" name="colnames" placeholder="Column names"
+                               autocomplete="off">
+                    <div class="col">
+                        <div class="help-tip">
+                            <p>Column names that indicate grouping of the data (e.g. treatments, time points). Do not
+                                enter column names for sample names and target names. </p>
+                        </div>
+                    </div>
+                </div>
                 <div class="row mb-0">
-                    <label for="quantity" class="col col-form-label">How many groups do you have? </label>
+                    <label for="quantity" class="col-6 control-label">How many groups do you have? </label>
+                    <input type="number" class="col-5 form-control" id="quantity" name="qty" min="1" placeholder="Quantity" autocomplete="off">
                     <div class="col">
                         <div class="help-tip">
                             <p> Groups can be different genes, time points, animals, treatments or any conditions
                                     you wish to compare. Must be entered as they appear in the spreadsheet. </p>
                         </div>
-                    </div>
-                </div>
-                <div class="row mb-1">
-                    <div class="col-sm-8">
-                        <input type="number" class="form-control" id="quantity" name="qty" min="1" placeholder="Quantity" autocomplete="off">
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -349,10 +311,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <label for="gcol" class="col-12 col-form-label" style="padding-top: 4px;"> Enter the name of your group column: </label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control"  id="gcol" name="gcol" placeholder="Group column name" autocomplete="off">
-                        </div>
+                        <label for="gcol" class="col-6 control-label" style="padding-top: 4px;"> Enter the name of your group column: </label>
+                        <input type="text" class="col-6 form-control"  id="gcol" name="gcol" placeholder="Group column name" autocomplete="off">
                     </div>
                     <div class="form-inline">
                         <div class="radio">
@@ -360,10 +320,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <label for="glist" class="col-12 col-form-label" style="padding-top: 4px;"> Enter the group names as they are indicated in the sample names: </label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control"  id="glist" name="glist" placeholder="Group names" autocomplete="off">
-                        </div>
+                        <label for="glist" class="col-6 control-label" style="padding-top: 4px;"> Enter the group names as they are indicated in the sample names: </label>
+                        <input type="text" class="col-6 form-control"  id="glist" name="glist" placeholder="Group names" autocomplete="off">
                     </div>
                 </div>
                 <div id="form-twoway">
@@ -372,14 +330,16 @@
                             <label class="col-form-label" style="padding-top: 2px;"><input type="radio" class="form-control" id="tw_gcol" name="option3" value="True" autocomplete="off">  I have a group columns </label>
                         </div>
                     </div>
-                    <div class="row">
-                        <label for="gcol1" class="col-12 col-form-label" style="padding-top: 4px;"> Enter the names of your group column for variable A: </label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control"  id="gcol1" name="gcol1" placeholder="Group column name" autocomplete="off">
+                    <div class="input-container">
+                        <div class="row">
+                            <label for="gcol1" class="col-6 control-label" style="padding-top: 4px;"> Enter the names of your group column for variable A: </label>
+                            <input type="text" class="col-6 form-control"  id="gcol1" name="gcol1" placeholder="Group column name" autocomplete="off">
                         </div>
-                        <label for="gcol2" class="col-12 col-form-label" style="padding-top: 4px;"> Enter the names of your group column for variable B: </label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control"  id="gcol2" name="gcol2" placeholder="Group column name" autocomplete="off">
+                    </div>
+                    <div class="input-container">
+                        <div class="row">
+                            <label for="gcol2" class="col-6 control-label" style="padding-top: 4px;"> Enter the names of your group column for variable B: </label>
+                            <input type="text" class="col-6 form-control"  id="gcol2" name="gcol2" placeholder="Group column name" autocomplete="off">
                         </div>
                     </div>
                     <div class="form-inline">
@@ -387,24 +347,28 @@
                             <label class="col-form-label"><input type="radio" class="form-control" id="tw_glist" name="option3" value="False" autocomplete="off">  My group names are within a column</label>
                         </div>
                     </div>
-                    <div class="row">
-                        <label for="colname1" class="col-12 col-form-label" style="padding-top: 4px;"> Enter the column name for variable A </label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control"  id="colname1" name="colname1" placeholder="Column name A" autocomplete="off">
-                        </div>
-                        <label for="glist1" class="col-12 col-form-label" style="padding-top: 4px;"> Enter the group names as they are indicated in the column (separate with commas) </label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control"  id="glist1" name="glist1" placeholder="Group names A" autocomplete="off">
+                    <div class="input-container">
+                        <div class="row">
+                            <label for="colname1" class="col-6 control-label" style="padding-top: 4px;"> Enter the column name for variable A </label>
+                            <input type="text" class="col-6 form-control"  id="colname1" name="colname1" placeholder="Column name A" autocomplete="off">
                         </div>
                     </div>
-                    <div class="row">
-                        <label for="colname2" class="col-12 col-form-label" style="padding-top: 4px;"> Enter the column name for variable B </label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control"  id="colname2" name="colname2" placeholder="Column name B" autocomplete="off">
+                    <div class="input-container">
+                        <div class="row">
+                            <label for="glist1" class="col-6 control-label" style="padding-top: 4px;"> Enter the group names as they are indicated in the column (separate with commas) </label>
+                            <input type="text" class="col-6 form-control"  id="glist1" name="glist1" placeholder="Group names A" autocomplete="off">
                         </div>
-                        <label for="glist2" class="col-12 col-form-label" style="padding-top: 4px;"> Enter the group names as they are indicated in the column (separate with commas) </label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control"  id="glist2" name="glist2" placeholder="Group names B" autocomplete="off">
+                    </div>
+                    <div class="input-container">
+                        <div class="row">
+                            <label for="colname2" class="col-6 control-label" style="padding-top: 4px;"> Enter the column name for variable B </label>
+                            <input type="text" class="col-6 form-control"  id="colname2" name="colname2" placeholder="Column name B" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <div class="row">
+                            <label for="glist2" class="col-6 control-label" style="padding-top: 4px;"> Enter the group names as they are indicated in the column (separate with commas) </label>
+                            <input type="text" class="col-6 form-control"  id="glist2" name="glist2" placeholder="Group names B" autocomplete="off">
                         </div>
                     </div>
                 </div>
