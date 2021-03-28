@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="row row-content">
-    <div class="col-6 col-sm-8 offset-sm-2">
+    <div class="col-6 col-sm-10 offset-sm-1">
         <form method="POST" enctype="multipart/form-data">
             <div class="form-group row">
                 <div class="col-12">
@@ -14,31 +14,39 @@
             </div>
             <hr>
             <div class="form-group row">
-                <div class="col-12 col-md-3">
+                <div class="col-10">
                     <h4 class="required">Select model</h4>
                 </div>
-                <div class="col-10 col-md-5">
+                <div class="col">
+                    <div class="help-tip" id="model-helptip">
+                        <p>Choose your model based on the experimental design used in your Q-PCR. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class= "col-md-3">
                     <div class="radio">
                         <label class="col-form-label"><input type="radio" name="option" id="absolute" value="absolute"
                                                              checked required> Absolute </label>
                     </div>
+                </div>
+                <div class= "col-md-3">
                     <div class="radio">
                         <label class="col-form-label"><input type="radio" name="option" id="relative_dCT"
                                                              value="relative_dCT" required> Relative (delta CT) </label>
                     </div>
+                </div>
+                <div class= "col-md-3">
                     <div class="radio">
                         <label class="col-form-label"><input type="radio" name="option" id="relative_ddCT"
                                                              value="relative_ddCT" required> Relative (delta delta CT)
                         </label>
                     </div>
+                </div>
+                <div class= "col-md-3">
                     <div class="radio">
                         <label class="col-form-label"><input type="radio" name="option" id="instability"
                                                              value="instability" required> Instability </label>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="help-tip" id="model-helptip">
-                        <p>Choose your model based on the experimental design used in your Q-PCR. </p>
                     </div>
                 </div>
             </div>
@@ -89,7 +97,9 @@
             <fieldset class="form-group" id="info_form">
                 <div class="input-container">
                     <div class="row mb-0">
-                        <label for="genes" class="col col-form-label">If your file does not contain gene or target names, enter target names included in your file name: </label>
+                        <label for="genes" class="col-6 control-label">If your file does not contain gene or target names, enter target names included in your file name: </label>
+                        <input type="text" class="col-5 form-control" id="genes" name="genes" placeholder="Target names"
+                                       autocomplete="off">
                         <div class="col">
                             <div class="help-tip">
                                 <p>If your dataframe doesn't contain the gene target names you must include the gene name in your csv file name.
@@ -97,143 +107,99 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="genes" name="genes" placeholder="Target names"
-                                       autocomplete="off">
-                        </div>
-                    </div>
                 </div>
                 <div class="input-container">
                     <div class="row mb-0">
-                        <label for="quencher" class="col col-form-label">Name of your quencher:</label>
+                        <label for="quencher" class="col-6 control-label">Name of your quencher:</label>
+                        <input type="text" class="col-5 form-control" id="quencher" name="quencher" placeholder="Quencher" autocomplete="off">
                         <div class="col">
                             <div class="help-tip">
                                 <p>Enter the name of the quencher that will be filtered out. </p>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="quencher" name="quencher" placeholder="Quencher" autocomplete="off">
-                        </div>
-                    </div>
                 </div>
                 <div class="input-container">
                     <div class="row mb-0">
-                        <label for="task" class="col col-form-label">Name within the column 'Task' that identifies the unknown samples as
+                        <label for="task" class="col-6 control-label">Name within the column 'Task' that identifies the unknown samples as
                             opposed to the calibration curve or empty wells. Eg 'UNKNOWN', 'Sample': </label>
+                        <input type="text" class="col-5 form-control" id="task" name="task" placeholder="Task" value="UNKNOWN" autocomplete="off" required>
                         <div class="col">
                             <div class="help-tip">
                                 <p>Default: UNKNOWN </p>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="task" name="task" placeholder="Task" value="UNKNOWN" autocomplete="off" required>
-                        </div>
-                    </div>
                 </div>
             </fieldset>
             <hr>
             <div class="form-group row">
-                <div class="col-12">
-                    <h4>Options</h4>
+                <div class="col-11">
+                    <h4>Normalization samples</h4>
                 </div>
-            </div>
-            <div class="input-container">
-                <div class="form-group row mb-0">
-                    <label for="cgenes" class="col-6 control-label required">Enter target(s) for normalization (endogenous control gene(s)/chromosome(s)): </label>
-                    <input type="text" class="col-5 form-control" id="cgenes" name="cgenes" placeholder="Endogeneous control" autocomplete="off" required>
-                    <div class="col">
-                        <div class="help-tip">
-                            <p>Gene or region to to normalize with (Actin, GAPDH, CHR4, B2M).
-                                Must be entered identically to the input spreadsheet.</p>
-                        </div>
+                <div class="col">
+                    <div class="help-tip">
+                        <p>Gene or region to to normalize with (Actin, GAPDH, CHR4, B2M).
+                                    Must be entered identically to the input spreadsheet. <br> The sample used as calibrator (compare with this sample) for the relative (delta delta CT)
+                                    and for the instability models. </p>
                     </div>
                 </div>
             </div>
             <div class="input-container">
                 <div class="form-group row mb-0">
-                    <label for="cutoff" class="col-6 control-label">Cut-Off: </label>
-                    <input type="number" class="col-5 form-control" id="cutoff" name="cutoff" value="0.3" step="any" placeholder="Cut-off" autocomplete="off">
-                    <div class="col">
-                        <div class="help-tip">
-                            <p>Technical replicates for a given sample will be removed if the SD
-                                of a given sample is above the threshold (default 0.3). </p>
-                        </div>
+                    <label for="cgenes" class="col-md-3 control-label required">Endogenous control gene(s)/chromosome(s): </label>
+                    <input type="text" class="col-md-3 form-control" id="cgenes" name="cgenes" placeholder="Endogeneous control" autocomplete="off" required>
+                    <label for="csample" class="col-md-3 control-label">Reference sample: <span id="specialStar" style="color: #FF0000">*</span></label>
+                    <input type="text" class="col-md-3 form-control" id="csample" name="csample" placeholder="Control sample" autocomplete="off">
+                </div>
+            </div>
+            <hr>
+            <div class="form-group row">
+                <div class="col-11">
+                    <h4>Options for removing technical replicates</h4>
+                </div>
+                <div class="col">
+                    <div class="help-tip">
+                        <p>Technical replicates for a given sample will be removed if the SD
+                                    of a given sample is above the threshold (default 0.3). <br> Max proportion of replicates removed to reach the SD cut off.
+                                    Default of 0.5 means that in 3 replicates only one can be removed. <br> Preserve outliers if the sample has high variability </p>
                     </div>
                 </div>
             </div>
             <div class="input-container">
                 <div class="form-group row mb-0">
-                    <label for="max_outliers" class="col-6 control-label">Max Outliers </label>
-                    <input type="number" class="col-5 form-control" id="max_outliers" name="max_outliers" value="0.5" step="any" placeholder="Max outliers" autocomplete="off">
-                    <div class="col">
-                        <div class="help-tip">
-                            <p>Max proportion of replicates removed to reach the SD cut off.
-                                Default of 0.5 means that in 3 replicates only one can be removed. </p>
-                        </div>
+                    <label for="cutoff" class="col-md-2 control-label">SD cut-Off: </label>
+                    <input type="number" class="col-md-1 form-control" id="cutoff" name="cutoff" value="0.3" step="any" placeholder="Cut-off" autocomplete="off">
+                    <label for="max_outliers" class="col-md-2 control-label">Max proportion: </label>
+                    <input type="number" class="col-md-1 form-control" id="max_outliers" name="max_outliers" value="0.5" step="any" placeholder="Max outliers" autocomplete="off">
+                    <label for="preserve_var" class="col-md-4 control-label">Preserve highly variable replicates: </label>
+                    <div class="col-md-1">
+                        <label class="radio-inline"><input type="radio" name="preservevar" id="y_preservevar" value="True"> Yes</label>
                     </div>
-                </div>
-            </div>
-            <div class="input-container">
-                <div class="form-group row mb-0">
-                    <label for="preserve_var" class="col-6 control-label">Preserve highly variable replicates </label>
-                    <div class="col-sm-2">
-                        <label class="radio-inline"><input type="radio" name="preservevar" id="y_preservevar" value="True">Yes</label>
-                    </div>
-                    <div class="col-sm-2">
-                        <label class="radio-inline"><input type="radio" name="preservevar" id="n_preservevar" value="False" checked>No</label>
-                    </div>
-                    <div class="col">
-                        <div class="help-tip">
-                            <p>Preserve outliers if the sample has high variability </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="input-container">
-                <div class="form-group row mb-0">
-                    <label for="csample" class="col-6 control-label">Enter the control sample (calibrator/reference sample): <span id="specialStar" style="color: #FF0000">*</span></label>
-                    <input type="text" class="col-5 form-control" id="csample" name="csample" placeholder="Control sample" autocomplete="off">
-                    <div class="col">
-                        <div class="help-tip">
-                            <p> The sample used as calibrator (compare with this sample) for the relative (delta delta CT)
-                                and for the instability models. </p>
-                        </div>
+                    <div class="col-md-1">
+                        <label class="radio-inline"><input type="radio" name="preservevar" id="n_preservevar" value="False" checked> No</label>
                     </div>
                 </div>
             </div>
             <hr>
             <div class="form-group row">
-                <div class="col-12">
+                <div class="col-11">
                     <h4>Visualization options</h4>
                 </div>
-            </div>
-            <div class="input-container">
-                <div class="form-group row mb-0">
-                    <label for="target_order" class="col-6 control-label">Enter target order (genes/chromosomes): </label>
-                    <input type="text" class="col-5 form-control" id="target_order" name="target_sorter" placeholder="Target order" autocomplete="off">
-                    <div class="col">
-                        <div class="help-tip">
-                            <p> Enter the order you would like genes/chromosomes to appear on the plots.
+                <div class="col">
+                    <div class="help-tip">
+                        <p> Enter the order you would like genes/chromosomes to appear on the plots.
+                            Use the exact/complete names. <br> Enter the order you would like cell lines/conditions/timepoints to appear on the plots.
                             Use the exact/complete names. </p>
-                        </div>
                     </div>
                 </div>
             </div>
             <div class="input-container">
                 <div class="form-group row mb-0">
-                    <label for="sample_order" class="col-6 control-label">Enter sample order (cell lines/conditions/timepoints): </label>
-                    <input type="text" class="col-5 form-control" id="sample_order" name="sample_sorter" placeholder="Sample order" autocomplete="off">
-                    <div class="col">
-                        <div class="help-tip">
-                            <p> Enter the order you would like genes/chromosomes to appear on the plots.
-                            Use the exact/complete names. </p>
-                        </div>
-                    </div>
+                    <label for="target_order" class="col-md-2 control-label">Target order: </label>
+                    <input type="text" class="col-md-4 form-control" id="target_order" name="target_sorter" placeholder="Target order" autocomplete="off">
+                    <label for="sample_order" class="col-md-2 control-label">Sample order: </label>
+                    <input type="text" class="col-md-4 form-control" id="sample_order" name="sample_sorter" placeholder="Sample order" autocomplete="off">
                 </div>
             </div>
             <hr>
