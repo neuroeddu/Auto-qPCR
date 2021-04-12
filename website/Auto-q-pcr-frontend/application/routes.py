@@ -161,8 +161,27 @@ def transform_view():
 
 		logger.info('Clean data and summary data are created')
 
-		plots = plot.plots(summary_data, model, targets, samples)
-		plots2 = plot.plots_wo_controls(summary_data, model, targets, samples, cgenes)
+
+		# Get target and sample sorting 
+
+		targets_sorted = targets
+		samples_sorted = samples
+
+		if target_sorter != '':
+			targets_sorted = [sorter.strip() for sorter in target_sorter.split(',')]
+		
+		if sample_sorter != '':
+			samples_sorted = [sorter.strip() for sorter in sample_sorter.split(',')]
+
+		# filter data to only have targets and samples that are mentionned
+
+		summary_data = summary_data.loc[targets_sorted, slice(None), :]
+		summary_data = summary_data.loc[slice(None), samples_sorted, :]
+
+		#plots
+
+		plots = plot.plots(summary_data, model, targets_sorted, samples_sorted)
+		plots2 = plot.plots_wo_controls(summary_data, model, targets_sorted, samples_sorted, cgenes)
 
 		logger.info('Plots of the summary data are created.')
 
@@ -223,18 +242,18 @@ def transform_view():
 				# output grouped plots
 				if len(group_plot) == 2:
 					buf = io.BytesIO()
-					group_plot[0].savefig(buf)
+					group_plot[0].savefig(buf, bbox_inches='tight')
 					image_name = 'Plot_by_groups.png'
 					myzip.writestr(image_name, buf.getvalue())
 					buf.close()
 					buf = io.BytesIO()
-					group_plot[1].savefig(buf)
+					group_plot[1].savefig(buf, bbox_inches='tight')
 					image_name2 = 'Plot_by_targets.png'
 					myzip.writestr(image_name2, buf.getvalue())
 					buf.close()
 				else:
 					buf = io.BytesIO()
-					group_plot[0].savefig(buf)
+					group_plot[0].savefig(buf, bbox_inches='tight')
 					image_name = 'Group1_vs_Group2.png'
 					myzip.writestr(image_name, buf.getvalue())
 					buf.close()
@@ -246,30 +265,30 @@ def transform_view():
 			# individual plots
 			for i in range(len(plots) - 2):
 				buf = io.BytesIO()
-				plots[i].savefig(buf)
+				plots[i].savefig(buf, bbox_inches='tight')
 				if model != 'instability':
 					image_name = targets[i] + '.png'
 					myzip.writestr(image_name, buf.getvalue())
 			# grouped plots by sample and by genes
 			buf = io.BytesIO()
-			plots[len(plots) - 2].savefig(buf)
+			plots[len(plots) - 2].savefig(buf, bbox_inches='tight')
 			image_name = 'Sample_Groups.png'
 			myzip.writestr(image_name, buf.getvalue())
 			buf.close()
 			buf = io.BytesIO()
-			plots[len(plots) - 1].savefig(buf)
+			plots[len(plots) - 1].savefig(buf, bbox_inches='tight')
 			image_name = 'All_Targets.png'
 			myzip.writestr(image_name, buf.getvalue())
 			buf.close()
 			if model != 'instability':
 				# plots with endogeneous controls removed
 				buf = io.BytesIO()
-				plots2[0].savefig(buf)
+				plots2[0].savefig(buf, bbox_inches='tight')
 				image_name = 'Sample_Groups (without endogenous controls).png'
 				myzip.writestr(image_name, buf.getvalue())
 				buf.close()
 				buf = io.BytesIO()
-				plots2[1].savefig(buf)
+				plots2[1].savefig(buf, bbox_inches='tight')
 				image_name = 'All_Targets (without endogenous controls).png'
 				myzip.writestr(image_name, buf.getvalue())
 				buf.close()
