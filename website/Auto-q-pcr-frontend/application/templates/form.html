@@ -6,7 +6,7 @@
         <form method="POST" enctype="multipart/form-data">
             <div class="form-group row">
                 <div class="col-12">
-                    <p><b>All inputs are case insensitive. Separate with commas when multiple inputs are required. </b></p>
+                    <p><b>All inputs are case insensitive. Separate with commas when multiple inputs are required and do not leave spaces. </b></p>
                     <div class="footnote">
                         <p>* fields are required</p>
                     </div>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="col">
                     <div class="help-tip" id="model-helptip">
-                        <p>Choose your model based on the experimental design used in your Q-PCR. </p>
+                        <p>Choose your model based on your qPCR design. </p>
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="col">
                     <div class="help-tip" id="file-helptip">
-                    <p>Upload your data: Navigate to your folder of raw data csv files * This must be a comma separated file.
+                    <p>Upload your data: Navigate to your folder of raw data files * This must be a either a csv (comma separated file)or a txt (tab separated file).
                         These should be the output files from you PCR machine.
                         Multiple spread sheets can be included. The data will
                         be combined into a single analysis. Be sure to
@@ -78,8 +78,8 @@
                 </div>
                 <div class="col">
                     <div class="help-tip">
-                        <p> This is only needed if you have no target names within your csv file.
-                            You can also choose to filter out your quencher.  </p>
+                        <p> This is only needed if you have an irregular file or you wish to filter out a quencher.  If your file contains no target you can indicate the target (gene) names in the file names and input these here.
+                            You can also choose to filter out your quencher or probe.  </p>
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@
                                        autocomplete="off">
                         <div class="col">
                             <div class="help-tip">
-                                <p>If your dataframe doesn't contain the gene target names you must include the gene name in your csv file name.
+                                <p>If your dataframe doesn't contain the gene target names you must include the gene name in the file name.
                                     Enter the gene names in as they are found in the file name. </p>
                             </div>
                         </div>
@@ -121,9 +121,8 @@
                 </div>
                 <div class="input-container">
                     <div class="row mb-0">
-                        <label for="task" class="col-6 control-label">Name within the column 'Task' that identifies the unknown samples as
-                            opposed to the calibration curve or empty wells. Eg 'UNKNOWN', 'Sample': </label>
-                        <input type="text" class="col-5 form-control" id="task" name="task" placeholder="Task" value="UNKNOWN" autocomplete="off" required>
+                        <label for="task" class="col-6 control-label">Name within the column 'Task' or 'Content' that identifies the unknown samples: </label>
+                        <input type="text" class="col-5 form-control" id="task" name="task" placeholder="Task" value="UNKNOWN/Sample/Unk" autocomplete="off" required>
                         <div class="col">
                             <div class="help-tip">
                                 <p>Default: UNKNOWN </p>
@@ -229,10 +228,21 @@
                     <label class="radio-inline"><input type="radio" name="stats" id="n_stats" checked> No</label>
                 </div>
             </div>
-            <fieldset class="form-group" id="stats_form">
-                <div class="row">
-                    <div class="col-12">
-                        <p><b>Compare your samples: t-tests, one-way ANOVA, MannWhitneyU test, Friedman test, Kruskal-Wallis</b></p>
+            <fieldset class="form-group" id="stats_form">    
+            <div class="row">
+                    <div class="col-12">		    
+		   </div>                
+		</div>
+                <div class="form-group row mb-0">
+                    <label for="colnames" class="col-6 control-label">Enter the column names you would like to include
+                        for statistical analysis: </label>
+                    <input type="text" class="col-5 form-control" id="colnames" name="colnames" placeholder="Column names"
+                               autocomplete="off">
+                    <div class="col">
+                        <div class="help-tip">
+                            <p>Column names that indicate grouping of the data (e.g. treatments, time points). Do not
+                                enter column names for sample names and target names. </p>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row mb-0">
@@ -263,6 +273,14 @@
                         <h4>
                             Identify your groups (variables)
                         </h4>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <p>How are your groups defined? </p>
+                    </div>
+                </div>
+                <div class="row form-inline">
+                    <div class="col-sm-4">
+                        <label class="radio-inline" style="padding-top: 2px;"><input type="radio" class="form-control" id="oneway" name="twoway" value="False" autocomplete="off" checked> One-way ANOVA and t-tests </label>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-5">
@@ -280,6 +298,19 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <label for="gcol" class="col-6 control-label" style="padding-top: 4px;"> Enter the name of your group column: </label>
+                        <input type="text" class="col-6 form-control"  id="gcol" name="gcol" placeholder="Group column name" autocomplete="off">
+                    </div>
+                    <div class="form-inline">
+                        <div class="radio">
+                            <label class="col-form-label"><input type="radio" class="form-control" id="opt_glist" name="option3" value="False" autocomplete="off">  My group names are within my sample names</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="glist" class="col-6 control-label" style="padding-top: 4px;"> Enter the group names as they are indicated in the sample names: </label>
+                        <input type="text" class="col-6 form-control"  id="glist" name="glist" placeholder="Group names" autocomplete="off">
+                    </div>
                     <div class="row form-inline">
                         <div class="col-sm-5">
                             <p>How many variables do you want to compare? </p>
@@ -289,6 +320,17 @@
                         </div>
                         <div class="col-sm-3">
                             <label class="radio-inline" style="padding-top: 2px;"><input type="radio" class="form-control" id="twoway" name="twoway" value="True" autocomplete="off">  Two </label>
+                    </div>
+                    <div class="input-container">
+                        <div class="row">
+                            <label for="gcol1" class="col-6 control-label" style="padding-top: 4px;"> Enter the names of your group column for variable A: </label>
+                            <input type="text" class="col-6 form-control"  id="gcol1" name="gcol1" placeholder="Group column name" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <div class="row">
+                            <label for="gcol2" class="col-6 control-label" style="padding-top: 4px;"> Enter the names of your group column for variable B: </label>
+                            <input type="text" class="col-6 form-control"  id="gcol2" name="gcol2" placeholder="Group column name" autocomplete="off">
                         </div>
                         <div class="col">
                             <div class="help-tip" id="model-helptip">

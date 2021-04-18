@@ -31,10 +31,17 @@ def plots(dataframe, model, targets, samples):
 	ncol_t = len(targets) // 10 + 1
 
 	plots = []
+	
+	# ------------------------------------------------------------ #
 	# Absolute: bar plot for each gene, a grouped bar plot by samples and a grouped bar plot by genes
+	# ------------------------------------------------------------ #
+
 	if model == 'absolute':
 		plot_by_samples = plt.figure(figsize=figsize)
 		counter = 0
+		# ------------------------------------------------------------ #
+		# Absolute bar plot for each gene 
+		# ------------------------------------------------------------ #
 		for item in targets:
 			sample = list(dataframe.loc[item, 'NormQuant']['mean'])
 			x = np.arange(len(samples))
@@ -62,6 +69,10 @@ def plots(dataframe, model, targets, samples):
 			plt.bar(x2, sample, yerr=list(dataframe.loc[item, 'NormSEM']['mean']), align='center',
 					error_kw=error_kw, width=barwidth, edgecolor='white', label=item)
 			counter += 1
+
+		# ------------------------------------------------------------ #
+		# Absolute grouped bar plot by samples
+		# ------------------------------------------------------------ #
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.yticks(fontsize=fs)
 		# plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
@@ -77,6 +88,10 @@ def plots(dataframe, model, targets, samples):
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_samples)
+
+		# ------------------------------------------------------------ #
+		# Absolute grouped bar plot by samples
+		# ------------------------------------------------------------ #
 
 		plot_by_genes = plt.figure(figsize=figsize)
 		counter = 0
@@ -103,9 +118,15 @@ def plots(dataframe, model, targets, samples):
 		plt.close()
 		plots.append(plot_by_genes)
 
+	# ------------------------------------------------------------ #
 	# Genomic stability: grouped by chromosomes and by cell lines
+	# ------------------------------------------------------------ #
+
 	elif model == 'stability':
+
+		# ------------------------------------------------------------ #
 		# plot grouped by DNA regions
+		# ------------------------------------------------------------ #
 		plot_by_samples = plt.figure(figsize=figsize)
 		counter = 0
 		for item in targets:
@@ -130,7 +151,10 @@ def plots(dataframe, model, targets, samples):
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_samples)
+
+		# ------------------------------------------------------------ #
 		# plot grouped by chromosomes
+		# ------------------------------------------------------------ #
 		plot_by_chrs = plt.figure(figsize=figsize)
 		counter = 0
 		for item in samples:
@@ -156,10 +180,16 @@ def plots(dataframe, model, targets, samples):
 		plt.close()
 		plots.append(plot_by_chrs)
 
+	# ------------------------------------------------------------ #
 	# relative deltaCT and delta delta CT: plots for each gene and grouped plots by samples and genes
+	# ------------------------------------------------------------ #
 	else:
 		plot_by_samples = plt.figure(figsize=figsize)
 		counter = 0
+
+		# ------------------------------------------------------------ #
+		# Relative plot for each genes
+		# ------------------------------------------------------------ #
 		for item in targets:
 			plot = plt.figure(figsize=sfigsize)
 			sample = list(dataframe.loc[item, 'rq']['mean'])
@@ -190,6 +220,11 @@ def plots(dataframe, model, targets, samples):
 			plt.bar(x2, sample, yerr=list(dataframe.loc[item, 'rqSEM']['mean']), align='center',
 					error_kw=error_kw, width=barwidth, edgecolor='white', label=item)
 			counter += 1
+
+		# ------------------------------------------------------------ #
+		# Relative grouped plot by sample
+		# ------------------------------------------------------------ #
+
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.yticks(fontsize=fs)
 		# plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
@@ -208,7 +243,10 @@ def plots(dataframe, model, targets, samples):
 		# plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_samples)
-		# grouped by genes
+		
+		# ------------------------------------------------------------ #
+		# Relative grouped plot by gene
+		# ------------------------------------------------------------ #
 		plot_by_genes = plt.figure(figsize=figsize)
 		counter = 0
 		for item in samples:
@@ -240,7 +278,11 @@ def plots(dataframe, model, targets, samples):
 	return plots
 
 
+
+# ------------------------------------------------------------ #
 # grouped plots with endogeneous control removed by samples and genes for absolute and relative models
+# ------------------------------------------------------------ #
+
 def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 	targets = [t for t in targets if t.lower() not in cgenes.lower().split(',')]
 	dataframe = dataframe.loc[targets, slice(None), :]
@@ -260,9 +302,14 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 		figsize = (len(targets) * len(samples)*1.6, 25)
 
 	plots = []
-
+	# ------------------------------------------------------------ #
 	# Absolute: a grouped bar plot by genes and a grouped bar plot by cell lines
+	# ------------------------------------------------------------ #
 	if model == 'absolute':
+
+		# ------------------------------------------------------------ #
+		# Absolute: a grouped bar plot by samples
+		# ------------------------------------------------------------ #
 		plot_by_samples = plt.figure(figsize=figsize)
 		counter = 0
 		for item in targets:
@@ -289,7 +336,10 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 		plt.tight_layout()
 		plt.close()
 		plots.append(plot_by_samples)
-
+	
+		# ------------------------------------------------------------ #
+		# Absolute: a grouped bar plot by genes
+		# ------------------------------------------------------------ #
 		plot_by_genes = plt.figure(figsize=figsize)
 		counter = 0
 		for item in samples:
@@ -316,7 +366,16 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 		plt.close()
 		plots.append(plot_by_genes)
 
+
+	# ------------------------------------------------------------ #
+	# Stability and Relative: a grouped bar plot by samples
+	# ------------------------------------------------------------ #
 	elif model != 'stability':
+
+		# ------------------------------------------------------------ #
+		# Stability and Relative: a grouped bar plot by samples
+		# ------------------------------------------------------------ #
+
 		plot_by_samples = plt.figure(figsize=figsize)
 		counter = 0
 		for item in targets:
@@ -346,7 +405,9 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 		plt.close()
 		plots.append(plot_by_samples)
 
-		# grouped by genes
+		# ------------------------------------------------------------ #
+		# Stability and Relative: a grouped bar plot by genes
+		# ------------------------------------------------------------ #
 		plot_by_genes = plt.figure(figsize=figsize)
 		counter = 0
 		for item in samples:
@@ -378,8 +439,10 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 
 	return plots
 
-
+# ------------------------------------------------------------ #
 # plot by user defined groups in stats
+# ------------------------------------------------------------ #
+
 def plot_by_groups(df, model, targets, cgenes, tw):
 	if tw == 'False':
 		# list of groups
@@ -398,10 +461,19 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 		ncol_g = len(groups) // 10 + 1
 
 		plots = []
+
+		# ------------------------------------------------------------ #
+		# Stability
+		# ------------------------------------------------------------ #
+
 		if model == 'absolute':
 			# remove endogeneous control genes
 			targets = [t for t in targets if t.lower() not in cgenes.lower().split(',')]
+
+			# ------------------------------------------------------------ #
 			# grouped by groups on the x-axis
+			# ------------------------------------------------------------ #
+
 			counter = 0
 			plot_by_group = plt.figure(figsize=figsize)
 			for t in targets:
@@ -431,7 +503,11 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 			plt.tight_layout()
 			plt.close()
 			plots.append(plot_by_group)
+
+			# ------------------------------------------------------------ #
 			# grouped by targets on the x-axis
+			# ------------------------------------------------------------ #
+
 			counter = 0
 			plot_by_target = plt.figure(figsize=figsize)
 			for g in groups:
@@ -460,8 +536,15 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 			plt.tight_layout()
 			plt.close()
 			plots.append(plot_by_target)
+
+		# ------------------------------------------------------------ #
+		# Stability
+		# ------------------------------------------------------------ #
+
 		elif model == 'stability':
+			# ------------------------------------------------------------ #
 			# grouped by groups on the x-axis
+			# ------------------------------------------------------------ #
 			counter = 0
 			plot_by_group = plt.figure(figsize=figsize)
 			for t in targets:
@@ -491,7 +574,10 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 			plt.tight_layout()
 			plt.close()
 			plots.append(plot_by_group)
+
+			# ------------------------------------------------------------ #
 			# grouped by groups on the x-axis
+			# ------------------------------------------------------------ #
 			counter = 0
 			plot_by_target = plt.figure(figsize=figsize)
 			for g in groups:
@@ -521,10 +607,18 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 			plt.tight_layout()
 			plt.close()
 			plots.append(plot_by_target)
+
+		# ------------------------------------------------------------ #
+		# Relative
+		# ------------------------------------------------------------ #
 		else:
 			# remove endogeneous control genes
 			targets = [t for t in targets if t.lower() not in cgenes.lower().split(',')]
+
+			# ------------------------------------------------------------ #
 			# grouped by groups on the x-axis
+			# ------------------------------------------------------------ #
+
 			counter = 0
 			plot_by_group = plt.figure(figsize=figsize)
 			for t in targets:
@@ -557,7 +651,11 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 			plt.tight_layout()
 			plt.close()
 			plots.append(plot_by_group)
+
+			# ------------------------------------------------------------ #
 			# grouped by groups on the x-axis
+			# ------------------------------------------------------------ #
+
 			counter = 0
 			plot_by_target = plt.figure(figsize=figsize)
 			for g in groups:
@@ -606,8 +704,14 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 
 		plots = []
 
+		# ------------------------------------------------------------ #
+		# Absolute
+		# ------------------------------------------------------------ #
+
 		if model == 'absolute':
+			# ------------------------------------------------------------ #
 			# grouped by groups on the x-axis
+			# ------------------------------------------------------------ #
 			counter = 0
 			plot = plt.figure(figsize=figsize)
 			for g1 in group1:
@@ -635,6 +739,11 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 			plt.gca().tick_params(width=5)
 			plt.tight_layout()
 			plt.close()
+
+		# ------------------------------------------------------------ #
+		# Stability
+		# ------------------------------------------------------------ #
+
 		elif model == 'stability':
 			# grouped by groups on the x-axis
 			counter = 0
@@ -664,8 +773,17 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 			plt.gca().tick_params(width=5)
 			plt.tight_layout()
 			plt.close()
+
+
+		# ------------------------------------------------------------ #
+		# Relative
+		# ------------------------------------------------------------ #
+
 		else:
+			# ------------------------------------------------------------ #
 			# grouped by groups on the x-axis
+			# ------------------------------------------------------------ #
+			
 			counter = 0
 			plot = plt.figure(figsize=figsize)
 			for g1 in group1:
