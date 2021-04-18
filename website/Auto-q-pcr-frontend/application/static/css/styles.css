@@ -167,6 +167,10 @@ hr {
   border-top: 1px solid rgba(0, 0, 0, 0.5);
 }
 
+h4 {
+    font-size: 1.2em;
+}
+
 .col-form-label{
     padding-bottom: 0;
 }
