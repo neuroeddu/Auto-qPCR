@@ -6,7 +6,7 @@
         <form method="POST" enctype="multipart/form-data">
             <div class="form-group row">
                 <div class="col-12">
-                    <p><b>All inputs are case insensitive. Separate with commas when multiple inputs are required. </b></p>
+                    <p><b>All inputs are case insensitive. Separate with commas when multiple inputs are required and do not leave spaces. </b></p>
                     <div class="footnote">
                         <p>* fields are required</p>
                     </div>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="col">
                     <div class="help-tip" id="model-helptip">
-                        <p>Choose your model based on the experimental design used in your Q-PCR. </p>
+                        <p>Choose your model based on your qPCR design. </p>
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="col">
                     <div class="help-tip" id="file-helptip">
-                    <p>Upload your data: Navigate to your folder of raw data csv files * This must be a comma separated file.
+                    <p>Upload your data: Navigate to your folder of raw data files * This must be a either a csv (comma separated file)or a txt (tab separated file).
                         These should be the output files from you PCR machine.
                         Multiple spread sheets can be included. The data will
                         be combined into a single analysis. Be sure to
@@ -78,8 +78,8 @@
                 </div>
                 <div class="col">
                     <div class="help-tip">
-                        <p> This is only needed if you have no target names within your csv file.
-                            You can also choose to filter out your quencher.  </p>
+                        <p> This is only needed if you have an irregular file or you wish to filter out a quencher.  If your file contains no target you can indicate the target (gene) names in the file names and input these here.
+                            You can also choose to filter out your quencher or probe.  </p>
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@
                                        autocomplete="off">
                         <div class="col">
                             <div class="help-tip">
-                                <p>If your dataframe doesn't contain the gene target names you must include the gene name in your csv file name.
+                               <p>If your dataframe doesn't contain the gene target names you must include the gene name in the file name.
                                     Enter the gene names in as they are found in the file name. </p>
                             </div>
                         </div>
@@ -121,7 +121,7 @@
                 </div>
                 <div class="input-container">
                     <div class="row mb-0">
-                         <label for="task" class="col-6 control-label">Name within the column 'Task' or 'Content' that identifies the unknown samples: </label>
+                        <label for="task" class="col-6 control-label">Name within the column 'Task' or 'Content' that identifies the unknown samples: </label>
                         <input type="text" class="col-5 form-control" id="task" name="task" placeholder="Task" value="UNKNOWN/Sample/Unk" autocomplete="off" required>
                         <div class="col">
                             <div class="help-tip">
