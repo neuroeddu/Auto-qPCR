@@ -52,7 +52,7 @@
             </div>
             <hr>
             <div class="form-group row">
-                <div class="col">
+                <div class="col-11">
                     <h4 class="required">Upload your data in the form of a comma separated file (.csv): </h4>
                 </div>
                 <div class="col">
@@ -248,7 +248,7 @@
                     </div>
                 </div>
                 <div class="row mb-0">
-                    <label for="quantity" class="col-6 control-label">How many groups do you have? </label>
+                    <label for="quantity" class="col-6 control-label">How many groups do you have (number of conditions to compare) </label>
                     <input type="number" class="col-5 form-control" id="quantity" name="qty" min="1" placeholder="Quantity" autocomplete="off">
                     <div class="col">
                         <div class="help-tip">
@@ -257,107 +257,142 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mt-2">
-                    <div class="col-12">
-                        <p>How are your groups defined? </p>
+                <hr>
+                <div>
+                    <div>
+                        <h4>
+                            Identify your groups (variables)
+                        </h4>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-5">
+                            <p>Where are your groups? </p>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="radio-inline"><input type="radio" id="opt-gcol" name="option3" value="True"> Group columns</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="radio-inline"><input type="radio" id="opt-glist" name="option3" value="False"> Within sample names</label>
+                        </div>
+                        <div class="col">
+                            <div class="help-tip" id="model-helptip">
+                                <p>Something </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-inline">
+                        <div class="col-sm-5">
+                            <p>How many variables do you want to compare? </p>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="radio-inline" style="padding-top: 2px;"><input type="radio" class="form-control" id="oneway" name="twoway" value="False" autocomplete="off" checked> One </label>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="radio-inline" style="padding-top: 2px;"><input type="radio" class="form-control" id="twoway" name="twoway" value="True" autocomplete="off">  Two </label>
+                        </div>
+                        <div class="col">
+                            <div class="help-tip" id="model-helptip">
+                                <p>Something </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-container" id="col-form">
+                        <div class="input-container"  id="group-col">
+                            <div class="form-group row">
+                                <label for="gcol" class="col-md-6 control-label" style="padding-top: 4px;"> Enter the your group
+                                    column name: </label>
+                                <input type="text" class="col-md-5 form-control" id="gcol" name="gcol"
+                                       placeholder="Group column name" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="input-container" id="group-col2">
+                            <div class="form-group row">
+                                <label for="gcol1" class="col-6 control-label" style="padding-top: 4px;"> Enter the names of
+                                    your group column for variable A: </label>
+                                <input type="text" class="col-5 form-control" id="gcol1" name="gcol1"
+                                       placeholder="Group column name" autocomplete="off">
+                            </div>
+                            <div class="form-group row">
+                                <label for="gcol2" class="col-6 control-label" style="padding-top: 4px;"> Enter the names of
+                                    your group column for variable B: </label>
+                                <input type="text" class="col-5 form-control" id="gcol2" name="gcol2"
+                                       placeholder="Group column name" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-container" id="list-form">
+                        <div class="input-container" id="group-list">
+                            <div class="form-group row">
+                                <label for="glist" class="col-md-6 control-label" style="padding-top: 4px;"> Enter your
+                                    groups: </label>
+                                <input type="text" class="col-md-5 form-control" id="glist" name="glist" placeholder="Group names"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="input-container" id="group-list2">
+                            <div class="form-group row">
+                                <label for="colname1" class="col-md-6 control-label" style="padding-top: 4px;"> Enter the column
+                                    name for variable A </label>
+                                <input type="text" class="col-md-5 form-control" id="colname1" name="colname1"
+                                       placeholder="Column name A" autocomplete="off">
+                            </div>
+                            <div class="form-group row">
+                                <label for="glist1" class="col-md-6 control-label" style="padding-top: 4px;"> Enter the group names
+                                    as they are indicated in the column (separate with commas) </label>
+                                <input type="text" class="col-md-5 form-control" id="glist1" name="glist1"
+                                       placeholder="Group names A" autocomplete="off">
+                            </div>
+                            <div class="form-group row">
+                                <label for="colname2" class="col-md-6 control-label" style="padding-top: 4px;"> Enter the column
+                                    name for variable B </label>
+                                <input type="text" class="col-md-5 form-control" id="colname2" name="colname2"
+                                       placeholder="Column name B" autocomplete="off">
+                            </div>
+                            <div class="form-group row">
+                                <label for="glist2" class="col-md-6 control-label" style="padding-top: 4px;"> Enter the group names
+                                    as they are indicated in the column (separate with commas) </label>
+                                <input type="text" class="col-md-5 form-control" id="glist2" name="glist2"
+                                       placeholder="Group names B" autocomplete="off">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="row form-inline">
-                    <div class="col-sm-4">
-                        <label class="radio-inline" style="padding-top: 2px;"><input type="radio" class="form-control" id="oneway" name="twoway" value="False" autocomplete="off" checked> One-way ANOVA and t-tests </label>
-                    </div>
-                    <div class="col-sm-4">
-                        <label class="radio-inline" style="padding-top: 2px;"><input type="radio" class="form-control" id="twoway" name="twoway" value="True" autocomplete="off">  Two-way ANOVA </label>
-                    </div>
+                <hr>
+                <div>
+                    <h4>
+                        Select Parameters
+                    </h4>
                 </div>
-                <div id="form-oneway">
-                    <div class="form-inline ">
-                        <div class="radio">
-                            <label class="col-form-label" style="padding-top: 2px;"><input type="radio" class="form-control" id="opt_gcol" name="option3" value="True" autocomplete="off">  I have a group column </label>
-                        </div>
+                <div class="row mb-0">
+                    <div class="col-sm-5">
+                        <p>Type of tests </p>
                     </div>
-                    <div class="row">
-                        <label for="gcol" class="col-6 control-label" style="padding-top: 4px;"> Enter the name of your group column: </label>
-                        <input type="text" class="col-6 form-control"  id="gcol" name="gcol" placeholder="Group column name" autocomplete="off">
+                    <div class="col-sm-3">
+                        <label class="radio-inline"><input type="radio" name="option4" id="y_nd" value="True" checked>Parametric</label>
                     </div>
-                    <div class="form-inline">
-                        <div class="radio">
-                            <label class="col-form-label"><input type="radio" class="form-control" id="opt_glist" name="option3" value="False" autocomplete="off">  My group names are within my sample names</label>
-                        </div>
+                    <div class="col-sm-3">
+                        <label class="radio-inline"><input type="radio" name="option4" id="n_nd" value="False">Non-parametric</label>
                     </div>
-                    <div class="row">
-                        <label for="glist" class="col-6 control-label" style="padding-top: 4px;"> Enter the group names as they are indicated in the sample names: </label>
-                        <input type="text" class="col-6 form-control"  id="glist" name="glist" placeholder="Group names" autocomplete="off">
-                    </div>
-                </div>
-                <div id="form-twoway">
-                    <div class="form-inline ">
-                        <div class="radio">
-                            <label class="col-form-label" style="padding-top: 2px;"><input type="radio" class="form-control" id="tw_gcol" name="option3" value="True" autocomplete="off">  I have a group columns </label>
-                        </div>
-                    </div>
-                    <div class="input-container">
-                        <div class="row">
-                            <label for="gcol1" class="col-6 control-label" style="padding-top: 4px;"> Enter the names of your group column for variable A: </label>
-                            <input type="text" class="col-6 form-control"  id="gcol1" name="gcol1" placeholder="Group column name" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="input-container">
-                        <div class="row">
-                            <label for="gcol2" class="col-6 control-label" style="padding-top: 4px;"> Enter the names of your group column for variable B: </label>
-                            <input type="text" class="col-6 form-control"  id="gcol2" name="gcol2" placeholder="Group column name" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="form-inline">
-                        <div class="radio">
-                            <label class="col-form-label"><input type="radio" class="form-control" id="tw_glist" name="option3" value="False" autocomplete="off">  My group names are within a column</label>
-                        </div>
-                    </div>
-                    <div class="input-container">
-                        <div class="row">
-                            <label for="colname1" class="col-6 control-label" style="padding-top: 4px;"> Enter the column name for variable A </label>
-                            <input type="text" class="col-6 form-control"  id="colname1" name="colname1" placeholder="Column name A" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="input-container">
-                        <div class="row">
-                            <label for="glist1" class="col-6 control-label" style="padding-top: 4px;"> Enter the group names as they are indicated in the column (separate with commas) </label>
-                            <input type="text" class="col-6 form-control"  id="glist1" name="glist1" placeholder="Group names A" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="input-container">
-                        <div class="row">
-                            <label for="colname2" class="col-6 control-label" style="padding-top: 4px;"> Enter the column name for variable B </label>
-                            <input type="text" class="col-6 form-control"  id="colname2" name="colname2" placeholder="Column name B" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="input-container">
-                        <div class="row">
-                            <label for="glist2" class="col-6 control-label" style="padding-top: 4px;"> Enter the group names as they are indicated in the column (separate with commas) </label>
-                            <input type="text" class="col-6 form-control"  id="glist2" name="glist2" placeholder="Group names B" autocomplete="off">
+                    <div class="col">
+                        <div class="help-tip" id="model-helptip">
+                            <p>Something </p>
                         </div>
                     </div>
                 </div>
                 <div class="row mb-0 mt-2">
-                    <div class="col-sm-6">
-                        <p>Is it a time series repeated measures? </p>
+                    <div class="col-sm-5">
+                        <p>Type of measurements </p>
                     </div>
                     <div class="col-sm-3">
-                        <label class="radio-inline"><input type="radio" name="option2" id="y_rm" value="True"> Yes --- measures are dependent</label>
+                        <label class="radio-inline"><input type="radio" name="option2" id="y_rm" value="True">Repeated/dependent</label>
                     </div>
                     <div class="col-sm-3">
-                        <label class="radio-inline"><input type="radio" name="option2" id="n_rm" value="False" checked> No --- measures are independent</label>
+                        <label class="radio-inline"><input type="radio" name="option2" id="n_rm" value="False" checked>Independent</label>
                     </div>
-                </div>
-                <div class="row mb-0">
-                    <div class="col-sm-6">
-                        <p>Is your data normally distributed? </p>
-                    </div>
-                    <div class="col-sm-3">
-                        <label class="radio-inline"><input type="radio" name="option4" id="y_nd" value="True" checked> Yes --- Parametric tests</label>
-                    </div>
-                    <div class="col-sm-3">
-                        <label class="radio-inline"><input type="radio" name="option4" id="n_nd" value="False"> No --- Non-parametric tests</label>
+                    <div class="col">
+                        <div class="help-tip" id="model-helptip">
+                            <p>Something </p>
+                        </div>
                     </div>
                 </div>
             </fieldset>
