@@ -13,6 +13,9 @@ from application import absolute , relative , stability
 def process_data(data , model , quencher, task, cgenes , cutoff , max_outliers , preservevar, target_sorter=None , sample_sorter=None , csample=None, colnames=None):
 	"""This filters the data and processes the selected model, returning a list of output dataframes"""
 	# Transforms certain columns from string to numeric
+	
+	#print(data.head())
+	
 	cols = ['CT' , 'Quantity']
 	data[cols] = data[cols].apply(pandas.to_numeric , errors='coerce')
 

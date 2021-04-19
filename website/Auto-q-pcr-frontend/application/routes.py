@@ -66,12 +66,22 @@ def transform_view():
 			# print(i)
 
 			stream.seek(0)
-			filedata = pd.read_csv(stream,
-								   skip_blank_lines=True,
-								   skipinitialspace=True,
-								   engine='python',
-								   encoding="utf-8",
-								   header=i)
+			if item.filename.endswith(".csv"):
+
+				filedata = pd.read_csv(stream,
+									skip_blank_lines=True,
+									skipinitialspace=True,
+									engine='python',
+									encoding="utf-8",
+									header=i)
+			else:
+				filedata = pd.read_csv(stream,
+									#skip_blank_lines=True,
+									#skipinitialspace=True,
+									#engine='python',
+									#encoding="utf-8",
+									header=i-1,
+									sep = '\t')
 
 			# print(filedata)
 			filedata['filename'] = item.filename
