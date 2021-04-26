@@ -178,12 +178,24 @@ def transform_view():
 		samples_sorted = samples
 
 		if target_sorter != '':
-			targets_sorted = [sorter.strip() for sorter in target_sorter.split(',')]
+			targets_sorted = []
+			targets_sort_names = [sorter.strip() for sorter in target_sorter.split(',')]
 		
-		if sample_sorter != '':
-			samples_sorted = [sorter.strip() for sorter in sample_sorter.split(',')]
+			for name in targets_sort_names:
+				for target in targets:
+					if name in target and not (target in targets_sorted):
+						targets_sorted.append(target)
 
+		if sample_sorter != '':
+			samples_sorted = []
+			samples_sort_names = [sorter.strip() for sorter in sample_sorter.split(',')]
+
+			for name in samples_sort_names:
+				for sample in samples:
+					if name in sample and not (sample in samples_sorted):
+						samples_sorted.append(sample)
 		# filter data to only have targets and samples that are mentionned
+
 
 		summary_data = summary_data.loc[targets_sorted, slice(None), :]
 		summary_data = summary_data.loc[slice(None), samples_sorted, :]
