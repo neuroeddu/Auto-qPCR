@@ -20,8 +20,8 @@ def process(data, colnames, target_sorter, sample_sorter):
 	data_controls_ct = data[control_filter].groupby(['Sample Name', 'filename'], sort=False).agg({'CT': 'mean'})
 
 	# print("Combined Endogenous Control CT Means and SSD")
-	print(data_controls_ct)
-	print(data['filename'])
+	#print(data_controls_ct)
+	#print(data['filename'])
 	# Create rq column
 	for i , row in enumerate(data_controls_ct.itertuples(name=None) , 1):
 		print(row[0])

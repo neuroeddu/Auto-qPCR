@@ -88,6 +88,7 @@ def transform_view():
 			# print(filedata)
 			filedata['filename'] = item.filename
 			filedata.rename(columns=regex_rename.rx_rename, inplace=True)
+			filedata = filedata.loc[:,~filedata.columns.duplicated()]
 			data = data.append(filedata, ignore_index=True, sort=True)
 
 		# stream.seek(0)
