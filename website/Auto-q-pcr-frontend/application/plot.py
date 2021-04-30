@@ -12,6 +12,8 @@ error_kw = dict(lw=4, capsize=7, capthick=4)
 
 def plots(dataframe, model, targets, samples):
 
+	plt.switch_backend('agg')
+
 	if len(samples)*len(targets) < 5:
 		figsize = (20, 25)
 	elif len(samples)*len(targets) < 10:
@@ -287,6 +289,8 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 	targets = [t for t in targets if t.lower() not in cgenes.lower().split(',')]
 	dataframe = dataframe.loc[targets, slice(None), :]
 
+	plt.switch_backend('agg')
+
 	# number of columns in the legend
 	ncol_s = len(samples) // 10 + 1
 	ncol_t = len(targets) // 10 + 1
@@ -444,6 +448,9 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 # ------------------------------------------------------------ #
 
 def plot_by_groups(df, model, targets, cgenes, tw):
+
+	plt.switch_backend('agg')
+
 	if tw == 'False':
 		# list of groups
 		groups = df['Group'].drop_duplicates(keep='first').values.tolist()

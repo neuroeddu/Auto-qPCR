@@ -3,7 +3,7 @@ import re
 
 def rx_rename(col_name):
 	# compiles regular expressions
-	rct = re.compile('((?<![\w _])[(]*c[()ycle ]*t[)hreshold]*(?![\w\W]))', re.IGNORECASE)
+	rct = re.compile('((?<![\w _])[(]*c[()ycle ]*t[)hreshold]*(?![\w\W]))|CQ', re.IGNORECASE)
 	rquant = re.compile('((?<![\w _])[(]*quant[ity)]*\Z(?! sd)(?! mean))|(?<![\w _])(ng)\Z(?! sd)', re.IGNORECASE)
 	rsamp = re.compile('(samp)+|(chrom)+|(desc)+', re.IGNORECASE)
 	rtarg = re.compile('(targ)+|(gene)+', re.IGNORECASE)

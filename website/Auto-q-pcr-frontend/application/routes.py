@@ -8,6 +8,7 @@ import datetime
 from zipfile import ZipFile
 import re
 from application import regex_rename, AUTOqPCR, statistics, plot
+import traceback
 
 
 @app.route('/')
@@ -55,7 +56,8 @@ def transform_view():
 					break
 				# if not h.replace(",",""):
 				# i += 1
-				if h.upper().startswith("WELL"):
+
+				if h.strip(' ,."').upper().startswith("WELL"):
 					break
 				i += 1
 			if i == -1:
@@ -324,10 +326,11 @@ def transform_view():
 		# flash('Your data has been processed successfully!', 'success')
 	except Exception as e:
 		logger.error('Error occurred: ' + str(e))
+		logger.error(traceback.format_exc())
 		response = make_response(log_stream.getvalue())
 		response.headers['Content-Type'] = 'text/plain'
 		response.headers['Content-Disposition'] = 'attachment; filename=log_'+date_string+'.txt'
-		log_stream.flush()
+		log_stream.flush()	
 		# # alert
 		# flash('Sorry, something went wrong. Please check log.txt file.', 'danger')
 
