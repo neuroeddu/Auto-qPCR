@@ -15,6 +15,8 @@ def process_data(data , model , quencher, task, cgenes , cutoff , max_outliers ,
 	# Transforms certain columns from string to numeric
 	
 	#print(data.head())
+
+	data = data[data['Task'].str.contains(task, na=False, case=False)]
 	
 	cols = ['CT']
 	data[cols] = data[cols].apply(pandas.to_numeric , errors='coerce')
@@ -64,6 +66,7 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, preservevar, task):
 	f = (d1['CT']['std'] >= cutoff)
 	d2 = d1[f]
 	# print(tabulate(d2, headers='keys', tablefmt='psql'))
+
 
 	if not d2.empty:
 		# Mark all outliers
