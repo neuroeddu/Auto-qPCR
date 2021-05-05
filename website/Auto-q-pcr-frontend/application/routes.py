@@ -161,6 +161,13 @@ def transform_view():
 					'\nColumn Name B: ' + colname2 + '\nGroup names for column A: ' + glist1 + '\nGroup names for column B: '
 					+ glist2 + '\nRepeated measures: ' + rm + '\n' + 'Normal distribution: ' + nd)
 
+		#logger.info(data['CT'])
+
+		if len(data[data['CT'].str.contains('Undetermined', na = False)]) > 0:
+			data.replace('Undetermined', 40,  inplace=True)
+			logger.info('Replaced "Undetermined" values with 40')
+
+
 		clean_data, summary_data, summary_data_w_group, targets, samples = AUTOqPCR.process_data(data, model, quencher,
 																								 task, cgenes, cutoff,
 																								 max_outliers, preservevar,

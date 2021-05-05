@@ -15,7 +15,6 @@ def process_data(data , model , quencher, task, cgenes , cutoff , max_outliers ,
 	# Transforms certain columns from string to numeric
 	
 	#print(data.head())
-
 	data = data[data['Task'].str.contains(task, na=False, case=False)]
 	
 	cols = ['CT']
