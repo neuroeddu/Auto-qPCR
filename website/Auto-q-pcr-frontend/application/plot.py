@@ -204,9 +204,9 @@ def plots(dataframe, model, targets, samples):
 			plt.yticks(fontsize=fs)
 
 			if model == 'relative_dCT':
-				plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
+				plt.ylabel(r'RQ$_{ΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 			else:
-				plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
+				plt.ylabel(r'RQ$_{ΔΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1))
 			# set axes width
 			plt.gca().spines['bottom'].set_linewidth(5)
@@ -231,9 +231,9 @@ def plots(dataframe, model, targets, samples):
 		plt.yticks(fontsize=fs)
 		# plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative_dCT':
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
+			plt.ylabel(r'RQ$_{ΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
+			plt.ylabel(r'RQ$_{ΔΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_t)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
@@ -262,9 +262,9 @@ def plots(dataframe, model, targets, samples):
 		plt.yticks(fontsize=fs)
 		# plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative_dCT':
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
+			plt.ylabel(r'RQ$_{ΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
+			plt.ylabel(r'RQ$_{ΔΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_s)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
@@ -394,9 +394,9 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 		plt.yticks(fontsize=fs)
 		# plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative':
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
+			plt.ylabel(r'RQ$_{ΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
+			plt.ylabel(r'RQ$_{ΔΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_t)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
@@ -426,9 +426,9 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 		plt.yticks(fontsize=fs)
 		# plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative_dCT':
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
+			plt.ylabel(r'RQ$_{ΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
-			plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
+			plt.ylabel(r'RQ$_{ΔΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_s)
 		# set axes width
 		plt.gca().spines['bottom'].set_linewidth(5)
@@ -644,9 +644,9 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 			plt.yticks(fontsize=fs)
 			# plt.xlabel('Groups', fontsize=fs+10, fontweight='bold', labelpad=20)
 			if model == 'relative_dCT':
-				plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
+				plt.ylabel(r'RQ$_{ΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 			else:
-				plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
+				plt.ylabel(r'RQ$_{ΔΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_t)
 			# set axes width
 			plt.gca().spines['bottom'].set_linewidth(5)
@@ -680,9 +680,9 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 				plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 				plt.yticks(fontsize=fs)
 			if model == 'relative_dCT':
-				plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
+				plt.ylabel(r'RQ$_{ΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 			else:
-				plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs+10, fontweight='bold', labelpad=20)
+				plt.ylabel(r'RQ$_{ΔΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_g)
 			# set axes width
 			plt.gca().spines['bottom'].set_linewidth(5)
@@ -809,9 +809,9 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 					   rotation='vertical', fontsize=fs)
 			plt.yticks(fontsize=fs)
 			if model == 'relative_dCT':
-				plt.ylabel(r'Relative Quantification (RQ$_{ΔCT}$)', fontsize=fs + 10, fontweight='bold', labelpad=20)
+				plt.ylabel(r'RQ$_{ΔCT}$', fontsize=fs + 10, fontweight='bold', labelpad=20)
 			else:
-				plt.ylabel(r'Relative Quantification (RQ$_{ΔΔCT}$)', fontsize=fs + 10, fontweight='bold', labelpad=20)
+				plt.ylabel(r'RQ$_{ΔΔCT}$', fontsize=fs + 10, fontweight='bold', labelpad=20)
 			plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_g1)
 			# set axes width
 			plt.gca().spines['bottom'].set_linewidth(5)
