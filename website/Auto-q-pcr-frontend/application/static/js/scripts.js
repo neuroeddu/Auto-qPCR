@@ -52,11 +52,18 @@ document.getElementById("y_stats").onclick = function() {
 };
 
 document.getElementById("n_stats").onclick = function() {
+	document.getElementById("colnames").value = "";
 	document.getElementById("quantity").value = "";
-	document.getElementById("opt_gcol").checked = true;
-	document.getElementById("opt_glist").checked = false;
+	document.getElementById("opt-gcol").checked = true;
+	document.getElementById("opt-glist").checked = false;
 	document.getElementById("glist").value = "";
+	document.getElementById("glist1").value = "";
+	document.getElementById("glist2").value = "";
 	document.getElementById("gcol").value = "";
+	document.getElementById("gcol1").value = "";
+	document.getElementById("gcol2").value = "";
+	document.getElementById("colname1").value = "";
+	document.getElementById("colname2").value = "";
 	document.getElementById("y_rm").checked = false;
 	document.getElementById("n_rm").checked = true;
 	document.getElementById("y_nd").checked = true;
