@@ -8,6 +8,7 @@ import datetime
 from zipfile import ZipFile
 import re
 from application import regex_rename, AUTOqPCR, statistics, plot
+import traceback
 
 
 @app.route('/')
@@ -55,7 +56,8 @@ def transform_view():
 					break
 				# if not h.replace(",",""):
 				# i += 1
-				if h.upper().startswith("WELL"):
+
+				if h.strip(' ,."').upper().startswith("WELL"):
 					break
 				i += 1
 			if i == -1:
@@ -66,16 +68,27 @@ def transform_view():
 			# print(i)
 
 			stream.seek(0)
-			filedata = pd.read_csv(stream,
-								   skip_blank_lines=True,
-								   skipinitialspace=True,
-								   engine='python',
-								   encoding="utf-8",
-								   header=i)
+			if item.filename.endswith(".csv"):
+
+				filedata = pd.read_csv(stream,
+									skip_blank_lines=True,
+									skipinitialspace=True,
+									engine='python',
+									encoding="utf-8",
+									header=i)
+			else:
+				filedata = pd.read_csv(stream,
+									#skip_blank_lines=True,
+									#skipinitialspace=True,
+									#engine='python',
+									#encoding="utf-8",
+									header=i-1,
+									sep = '\t')
 
 			# print(filedata)
 			filedata['filename'] = item.filename
 			filedata.rename(columns=regex_rename.rx_rename, inplace=True)
+			filedata = filedata.loc[:,~filedata.columns.duplicated()]
 			data = data.append(filedata, ignore_index=True, sort=True)
 
 		# stream.seek(0)
@@ -148,6 +161,13 @@ def transform_view():
 					'\nColumn Name B: ' + colname2 + '\nGroup names for column A: ' + glist1 + '\nGroup names for column B: '
 					+ glist2 + '\nRepeated measures: ' + rm + '\n' + 'Normal distribution: ' + nd)
 
+		#logger.info(data['CT'])
+
+		if len(data[data['CT'].str.contains('Undetermined', na = False)]) > 0:
+			data.replace('Undetermined', 40,  inplace=True)
+			logger.info('Replaced "Undetermined" values with 40')
+
+
 		clean_data, summary_data, summary_data_w_group, targets, samples = AUTOqPCR.process_data(data, model, quencher,
 																								 task, cgenes, cutoff,
 																								 max_outliers, preservevar,
@@ -161,8 +181,39 @@ def transform_view():
 
 		logger.info('Clean data and summary data are created')
 
-		plots = plot.plots(summary_data, model, targets, samples)
-		plots2 = plot.plots_wo_controls(summary_data, model, targets, samples, cgenes)
+
+		# Get target and sample sorting 
+
+		targets_sorted = targets
+		samples_sorted = samples
+
+		if target_sorter != '':
+			targets_sorted = []
+			targets_sort_names = [sorter.strip() for sorter in target_sorter.split(',')]
+		
+			for name in targets_sort_names:
+				for target in targets:
+					if name in target and not (target in targets_sorted):
+						targets_sorted.append(target)
+
+		if sample_sorter != '':
+			samples_sorted = []
+			samples_sort_names = [sorter.strip() for sorter in sample_sorter.split(',')]
+
+			for name in samples_sort_names:
+				for sample in samples:
+					if name in sample and not (sample in samples_sorted):
+						samples_sorted.append(sample)
+		# filter data to only have targets and samples that are mentionned
+
+
+		summary_data = summary_data.loc[targets_sorted, slice(None), :]
+		summary_data = summary_data.loc[slice(None), samples_sorted, :]
+
+		#plots
+
+		plots = plot.plots(summary_data, model, targets_sorted, samples_sorted)
+		plots2 = plot.plots_wo_controls(summary_data, model, targets_sorted, samples_sorted, cgenes)
 
 		logger.info('Plots of the summary data are created.')
 
@@ -223,18 +274,18 @@ def transform_view():
 				# output grouped plots
 				if len(group_plot) == 2:
 					buf = io.BytesIO()
-					group_plot[0].savefig(buf)
+					group_plot[0].savefig(buf, bbox_inches='tight')
 					image_name = 'Plot_by_groups.png'
 					myzip.writestr(image_name, buf.getvalue())
 					buf.close()
 					buf = io.BytesIO()
-					group_plot[1].savefig(buf)
+					group_plot[1].savefig(buf, bbox_inches='tight')
 					image_name2 = 'Plot_by_targets.png'
 					myzip.writestr(image_name2, buf.getvalue())
 					buf.close()
 				else:
 					buf = io.BytesIO()
-					group_plot[0].savefig(buf)
+					group_plot[0].savefig(buf, bbox_inches='tight')
 					image_name = 'Group1_vs_Group2.png'
 					myzip.writestr(image_name, buf.getvalue())
 					buf.close()
@@ -246,30 +297,30 @@ def transform_view():
 			# individual plots
 			for i in range(len(plots) - 2):
 				buf = io.BytesIO()
-				plots[i].savefig(buf)
+				plots[i].savefig(buf, bbox_inches='tight')
 				if model != 'instability':
 					image_name = targets[i] + '.png'
 					myzip.writestr(image_name, buf.getvalue())
 			# grouped plots by sample and by genes
 			buf = io.BytesIO()
-			plots[len(plots) - 2].savefig(buf)
+			plots[len(plots) - 2].savefig(buf, bbox_inches='tight')
 			image_name = 'Sample_Groups.png'
 			myzip.writestr(image_name, buf.getvalue())
 			buf.close()
 			buf = io.BytesIO()
-			plots[len(plots) - 1].savefig(buf)
+			plots[len(plots) - 1].savefig(buf, bbox_inches='tight')
 			image_name = 'All_Targets.png'
 			myzip.writestr(image_name, buf.getvalue())
 			buf.close()
 			if model != 'instability':
 				# plots with endogeneous controls removed
 				buf = io.BytesIO()
-				plots2[0].savefig(buf)
+				plots2[0].savefig(buf, bbox_inches='tight')
 				image_name = 'Sample_Groups (without endogenous controls).png'
 				myzip.writestr(image_name, buf.getvalue())
 				buf.close()
 				buf = io.BytesIO()
-				plots2[1].savefig(buf)
+				plots2[1].savefig(buf, bbox_inches='tight')
 				image_name = 'All_Targets (without endogenous controls).png'
 				myzip.writestr(image_name, buf.getvalue())
 				buf.close()
@@ -283,10 +334,11 @@ def transform_view():
 		# flash('Your data has been processed successfully!', 'success')
 	except Exception as e:
 		logger.error('Error occurred: ' + str(e))
+		logger.error(traceback.format_exc())
 		response = make_response(log_stream.getvalue())
 		response.headers['Content-Type'] = 'text/plain'
 		response.headers['Content-Disposition'] = 'attachment; filename=log_'+date_string+'.txt'
-		log_stream.flush()
+		log_stream.flush()	
 		# # alert
 		# flash('Sorry, something went wrong. Please check log.txt file.', 'danger')
 
@@ -298,7 +350,7 @@ def help():
 	return render_template('help.html', help=True)
 
 
-@app.route('/help/<file_name>')
+@app.route('/help/<path:file_name>')
 def get_file(file_name):
 	try:
 		return send_from_directory(directory=app.config['UPLOAD_FOLDER'], filename=file_name, as_attachment=True)

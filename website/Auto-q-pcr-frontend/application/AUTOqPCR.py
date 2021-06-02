@@ -13,7 +13,11 @@ from application import absolute , relative , stability
 def process_data(data , model , quencher, task, cgenes , cutoff , max_outliers , preservevar, target_sorter=None , sample_sorter=None , csample=None, colnames=None):
 	"""This filters the data and processes the selected model, returning a list of output dataframes"""
 	# Transforms certain columns from string to numeric
-	cols = ['CT' , 'Quantity']
+	
+	#print(data.head())
+	data = data[data['Task'].str.contains(task, na=False, case=False)]
+	
+	cols = ['CT']
 	data[cols] = data[cols].apply(pandas.to_numeric , errors='coerce')
 
 	# Marks the Control Genes in a new column in the dataframe
@@ -25,10 +29,14 @@ def process_data(data , model , quencher, task, cgenes , cutoff , max_outliers ,
 	for col in cols:
 		data.loc[data[col].isnull() , 'Ignore'] = True
 	# ignore rows if they correspond to signal from the quencher
-	data['Ignore'].mask(data['Reporter'].str.lower() == quencher.lower(), True, inplace=True)
+	if quencher != "":
+		data['Ignore'].mask(data['Reporter'].str.lower() == quencher.lower(), True, inplace=True)
 
 	# Calls the different processing models depending on the model argument
 	if model == 'absolute':
+
+		cols = ['Quantity']
+		data[cols] = data[cols].apply(pandas.to_numeric , errors='coerce')
 		data = cleanup_outliers(data, "Quantity", cutoff, max_outliers, preservevar, task)
 		data, data_summary, data_summary_w_group, targets, samples = absolute.process(data, colnames, target_sorter, sample_sorter)
 
@@ -57,6 +65,7 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, preservevar, task):
 	f = (d1['CT']['std'] >= cutoff)
 	d2 = d1[f]
 	# print(tabulate(d2, headers='keys', tablefmt='psql'))
+
 
 	if not d2.empty:
 		# Mark all outliers

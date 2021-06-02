@@ -6,7 +6,7 @@
         <form method="POST" enctype="multipart/form-data">
             <div class="form-group row">
                 <div class="col-12">
-                    <p><b>All inputs are case insensitive. Separate with commas when multiple inputs are required. </b></p>
+                    <p><b>All inputs are case insensitive. Separate with commas when multiple inputs are required and do not leave spaces. </b></p>
                     <div class="footnote">
                         <p>* fields are required</p>
                     </div>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="col">
                     <div class="help-tip" id="model-helptip">
-                        <p>Choose your model based on the experimental design used in your Q-PCR. </p>
+                        <p>Choose your model based on your qPCR design. </p>
                     </div>
                 </div>
             </div>
@@ -33,13 +33,13 @@
                 <div class= "col-md-3">
                     <div class="radio">
                         <label class="col-form-label"><input type="radio" name="option" id="relative_dCT"
-                                                             value="relative_dCT" required> Relative (delta CT) </label>
+                                                             value="relative_dCT" required> Relative (&#916;CT) </label>
                     </div>
                 </div>
                 <div class= "col-md-3">
                     <div class="radio">
                         <label class="col-form-label"><input type="radio" name="option" id="relative_ddCT"
-                                                             value="relative_ddCT" required> Relative (delta delta CT)
+                                                             value="relative_ddCT" required> Relative (&#916;&#916;CT)
                         </label>
                     </div>
                 </div>
@@ -53,11 +53,11 @@
             <hr>
             <div class="form-group row">
                 <div class="col-11">
-                    <h4 class="required">Upload your data in the form of a comma separated file (.csv): </h4>
+                    <h4 class="required">Upload your data (results.csv or results.txt): </h4>
                 </div>
                 <div class="col">
                     <div class="help-tip" id="file-helptip">
-                    <p>Upload your data: Navigate to your folder of raw data csv files * This must be a comma separated file.
+                    <p>Upload your data: Navigate to your folder of raw data files * This must be a either a csv (comma separated file) or a txt (tab separated file).
                         These should be the output files from you PCR machine.
                         Multiple spread sheets can be included. The data will
                         be combined into a single analysis. Be sure to
@@ -67,7 +67,7 @@
             </div>
             <div class="form-group row">
                 <div class="col">
-                    <input type="file" class="custom-file-input" id="file-input" name="file[]" accept=".csv" multiple required>
+                    <input type="file" class="custom-file-input" id="file-input" name="file[]" accept=".csv,.txt" multiple required>
                     <label class="custom-file-label" for="file-input">Choose file</label>
                 </div>
             </div>
@@ -78,8 +78,8 @@
                 </div>
                 <div class="col">
                     <div class="help-tip">
-                        <p> This is only needed if you have no target names within your csv file.
-                            You can also choose to filter out your quencher.  </p>
+                        <p> This is only needed if you have an irregular file or you wish to filter out a quencher.  If your file contains no target you can indicate the target (gene) names in the file names and input these here.
+                            You can also choose to filter out your quencher or probe.  </p>
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@
                                        autocomplete="off">
                         <div class="col">
                             <div class="help-tip">
-                                <p>If your dataframe doesn't contain the gene target names you must include the gene name in your csv file name.
+                               <p>If your dataframe doesn't contain the gene target names you must include the gene name in the file name.
                                     Enter the gene names in as they are found in the file name. </p>
                             </div>
                         </div>
@@ -121,12 +121,11 @@
                 </div>
                 <div class="input-container">
                     <div class="row mb-0">
-                        <label for="task" class="col-6 control-label">Name within the column 'Task' that identifies the unknown samples as
-                            opposed to the calibration curve or empty wells. Eg 'UNKNOWN', 'Sample': </label>
+                        <label for="task" class="col-6 control-label">Name within the column 'Task' or 'Content' that identifies the unknown samples: </label>
                         <input type="text" class="col-5 form-control" id="task" name="task" placeholder="Task" value="UNKNOWN" autocomplete="off" required>
                         <div class="col">
                             <div class="help-tip">
-                                <p>Default: UNKNOWN </p>
+                                <p>This is the "Task" or "Content" file and is by default listed as UNKNOWN. Could be "Sample" or "Unk. If you enter a partial work the column will be searched for anything containing the letters." </p>
                             </div>
                         </div>
                     </div>
@@ -135,12 +134,12 @@
             <hr>
             <div class="form-group row">
                 <div class="col-11">
-                    <h4>Normalization samples</h4>
+                    <h4>Normalization options</h4>
                 </div>
                 <div class="col">
                     <div class="help-tip">
                         <p>Gene or region to to normalize with (Actin, GAPDH, CHR4, B2M).
-                                    Must be entered identically to the input spreadsheet. <br> The sample used as calibrator (compare with this sample) for the relative (delta delta CT)
+                                    Must be entered identically to the input spreadsheet. <br> The sample used as calibrator (compare with this sample) for the relative (&#916;&#916;CT)
                                     and for the instability models. </p>
                     </div>
                 </div>
@@ -232,7 +231,6 @@
             <fieldset class="form-group" id="stats_form">
                 <div class="row">
                     <div class="col-12">
-                        <p><b>Compare your samples: t-tests, one-way ANOVA, MannWhitneyU test, Friedman test, Kruskal-Wallis</b></p>
                     </div>
                 </div>
                 <div class="form-group row mb-0">
@@ -276,7 +274,7 @@
                         </div>
                         <div class="col">
                             <div class="help-tip" id="model-helptip">
-                                <p>Something </p>
+                                <p>Select which column will have your group names (the levels of the variable to compare).  If you added the groups in your sample names select sample names.  Otherwise you must have a column with the group names.  If you have not indicated the groups/variables in your raw data you will not be able to do statistics with this module. </p>
                             </div>
                         </div>
                     </div>
@@ -292,7 +290,7 @@
                         </div>
                         <div class="col">
                             <div class="help-tip" id="model-helptip">
-                                <p>Something </p>
+                                <p>Select one variable for a one-way anova. For example you have three doses of a drug, this is one variable "Dose of Drug".  If you have two genotypes and three doses of a drug, this is two variables "Genotype" and "Dose of Drug". </p>
                             </div>
                         </div>
                     </div>
@@ -375,7 +373,7 @@
                     </div>
                     <div class="col">
                         <div class="help-tip" id="model-helptip">
-                            <p>Something </p>
+                            <p>Parametric test should be used on samples with a normal distribution.  Tests for normality require more than the usual number of biological replicates used in a qPCR experiment.  The users knowledge of the data type will need to suffice.</p>
                         </div>
                     </div>
                 </div>
@@ -391,7 +389,7 @@
                     </div>
                     <div class="col">
                         <div class="help-tip" id="model-helptip">
-                            <p>Something </p>
+                            <p>Dependent measurements are measurements from the same sample or cell line.  Using this option reduces the effect of biological variation that is masking the effect that is being measured.  However, this cannot be used if the measurements are independed. </p>
                         </div>
                     </div>
                 </div>
