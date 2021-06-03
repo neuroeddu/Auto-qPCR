@@ -163,7 +163,7 @@ def transform_view():
 
 		#logger.info(data['CT'])
 
-		if len(data[data['CT'].str.contains('Undetermined', na = False)]) > 0:
+		if len(data[data['CT'].astype(str).str.contains('Undetermined', na = False)]) > 0:
 			data.replace('Undetermined', 40,  inplace=True)
 			logger.info('Replaced "Undetermined" values with 40')
 
