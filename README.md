@@ -67,3 +67,5 @@ Command line data input and absolute model: Iveta Demirova
 Relative models and genomic instability: Eddie Cai  
 Web app and interface development, statistic and plotting: Gracia Gu
 
+This repository is managed by Rhalena Thomas.  The auto-qPCR webapp is maintained by Rhalena Thomas. 
+
