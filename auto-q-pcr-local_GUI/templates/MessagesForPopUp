@@ -1,0 +1,59 @@
+Colour scheme to match the neuro somewhat
+
+
+
+
+
+question marker purple  #3A1B8C
+blue boarder top #  #72E8F0
+
+
+
+
+
+
+
+
+
+
+
+<div class="help-tip">
+                                <p>Absolute quantification estimates the quantity of transcripts in unknown genes in the sample compared to a calibration curve of the total sample RNA in the sample. The data used will be the “quantiy (ng)” or cDNA.</p>
+                            </div>
+
+
+
+
+
+ <p>Upload your data: Nativage to your folder of raw data csv files. These should be the output files
+                                from you PCR machine.
+                                If you don't have a csv use excel to save a csv file.
+                                You can included multiple spread sheets.  The data will
+                                be combined into a single analysis. For separate analysis
+                                you must separately upload and analyze the data. Be sure to
+                                inclue the control genes you want to normalize. </p>    <!--text ins
+
+
+<div class="help-tip">
+                            <p>Endogenous control genes: These are the housekeeping or reference
+                            genes you wish to normalize agains. Actin or GADPH are common options.
+                            You must enter the gene names exactly as they appear in your data spread sheet.
+                            You many enter multiple control genes.  Separate the genes with commas.
+                            The average of the techinical replicates will be used to calculate expression values.
+                            </p>
+                        </div>
+
+
+
+
+<div class="help-tip">
+                            <p> Techical replicate for a given sample will be removed if the SD
+                                of a given sample is above the threshold (default 0.3).
+                               
+Replicates will be removed until the SD is below the cuttoff.
+ </p>
+
+ Max Outliers:
+                        <div class="help-tip">
+                            <p> How many technical replicates can be removed to reach the standard deviation cut off about?
+                                The default of 0.5 means that in 3  technical replicates only one can be removed. </p>

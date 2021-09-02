@@ -62,6 +62,7 @@ Steps to run a qPCR analysis from the command line. You must install python and 
 The analysis will run and the plots will all be displayed. The plots will be save and an xls file with the output data will be saved in the "data" folder.
 
 Program conception: Rhalena Thomas and Gilles Maussion
+<<<<<<< HEAD
 
 Program and web app design and management: Rhalena Thomas
 
@@ -73,3 +74,10 @@ Web app and interface development, statistic and plotting: Gracia Gu
 
 This repository is managed by Rhalena Thomas.  The auto-qPCR webapp is maintained by Rhalena Thomas. 
 
+=======
+Program and web app design and management: Rhalena Thomas
+Command line data input and absolute model: Iveta Demirova
+Relative models and genomic instability: Eddie Cai  
+Web app and interface development, statistic and plotting: Gracia Gu
+
+>>>>>>> old_autoqPCR/master

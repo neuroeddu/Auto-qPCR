@@ -1,0 +1,15 @@
+Target Name,A,B,DF,p-value corrected,p-value,correction method,Paired,Parametric,Test,effect size,Bayes factor
+B2M,NST,GP,9.0,1.0,1.0,fdr_bh,False,True,T-Test,0.0,0.405
+B2M,NST,SN,12.62,1.0,1.0,fdr_bh,False,True,T-Test,0.0,0.405
+B2M,GP,SN,16.0,1.0,1.0,fdr_bh,False,True,T-Test,0.0,0.412
+B2M,Control,Cocaine,18.54,,1.0,,False,True,T-Test,0.0,0.354
+B2M,Control,Cocaine,8.0,1.0,1.0,fdr_bh,False,True,T-Test,0.0,0.492
+B2M,Control,Cocaine,1.0,,,fdr_bh,False,True,T-Test,,nan
+B2M,Control,Cocaine,4.97,0.6201592907556709,0.31007964537783544,fdr_bh,False,True,T-Test,-0.709,0.733
+NRXN3,NST,GP,9.41,0.007096523639932067,0.004731015759954711,fdr_bh,False,True,T-Test,-1.689,18.262
+NRXN3,NST,SN,8.48,0.004834822118395066,0.0016116073727983553,fdr_bh,False,True,T-Test,-2.105,82.627
+NRXN3,GP,SN,16.0,0.05485093350357167,0.05485093350357167,fdr_bh,False,True,T-Test,-0.93,1.626
+NRXN3,Control,Cocaine,22.74,,0.13374377856298073,,False,True,T-Test,-0.551,0.858
+NRXN3,Control,Cocaine,8.0,0.9976889914016578,0.9976889914016578,fdr_bh,False,True,T-Test,0.002,0.492
+NRXN3,Control,Cocaine,6.59,0.05292498816902998,0.01764166272300999,fdr_bh,False,True,T-Test,-1.873,3.77
+NRXN3,Control,Cocaine,4.65,0.6190291656794035,0.41268611045293563,fdr_bh,False,True,T-Test,-0.48,0.645

@@ -1,0 +1,10 @@
+Target Name,Contrast,DF,p-value corrected,p-value,F value,MS,SS,statistic,effect size,
+NRXN3,Group1: Region,2,0.0004,0.0001,13.662,1.445,2.891,NA,0.554,
+NRXN3,Group2: Treatment,1,0.2265,0.0755,3.48,0.368,0.368,NA,0.137,
+NRXN3,Group1 * Group2,2,1.0000,0.3513,1.097,0.116,0.232,NA,0.091,
+,,,,,,,,,,
+Target Name,Contrast,DF,p-value corrected,p-value,correction method,Paired,Parametric,Test,effect size,Bayes factor
+NRXN3,all:     Control vs Cocaine,23,NA,0.1337,,False,True,T-Test,-0.551,0.858
+NRXN3,NST:  Control vs Cocaine,8,0.9977,0.9977,fdr_bh,False,True,T-Test,0.002,0.492
+NRXN3,GP:   Control vs Cocaine,7,0.0529,0.0176,fdr_bh,False,True,T-Test,-1.873,3.77
+NRXN3,SN:   Control vs Cocaine,5,0.6190,0.4127,fdr_bh,False,True,T-Test,-0.48,0.645

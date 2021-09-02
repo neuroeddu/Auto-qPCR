@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3f778734-bc92-43b6-9935-ff329e05eb1e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../UserGuideTemp.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../../UserGuideTemp.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../auto-q-pcr-command_line/Prepare your computer pythonScript.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../../auto-q-pcr-command_line/Prepare your computer pythonScript.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Auto-q-pcr-frontend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Auto-q-pcr-frontend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/AUTOqPCR.py" beforeDir="false" afterPath="$PROJECT_DIR$/application/AUTOqPCR.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/application/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/application/plot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/regex_rename.py" beforeDir="false" afterPath="$PROJECT_DIR$/application/regex_rename.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/relative.py" beforeDir="false" afterPath="$PROJECT_DIR$/application/relative.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/application/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/static/images/schematic.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/static/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/static/js/scripts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/templates/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/templates/form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/templates/help.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/templates/help.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/activate" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/activate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/activate.csh" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/activate.csh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/activate.fish" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/activate.fish" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/activate.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/activate.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/activate.xsh" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/activate.xsh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/activate_this.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/activate_this.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/chardetect" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/chardetect" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/easy_install" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/easy_install" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/easy_install-3.7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/f2py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/f2py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/f2py3" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/f2py3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/f2py3.7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/flask" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/flask" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/pip" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/pip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/pip3" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/pip3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/pip3.7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/python" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/python" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/python-config" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/python3.7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/tabulate" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/tabulate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/wheel" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/wheel" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/include/python3.7m" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="JupyterTrust" id="8aba5cee-4508-47eb-bb42-1607866ae4e2" />
+  <component name="ProjectId" id="1tOqpM2CSB7GSSpyKIoHEKETH9G" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3f778734-bc92-43b6-9935-ff329e05eb1e" name="Default Changelist" comment="" />
+      <created>1622650665466</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1622650665466</updated>
+      <workItem from="1622650666801" duration="44000" />
+      <workItem from="1622650754765" duration="932000" />
+      <workItem from="1622651759361" duration="21000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
