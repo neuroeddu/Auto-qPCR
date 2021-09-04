@@ -33,9 +33,7 @@ The file requirments.txt list packages needed to run the local server.
 
 4. In your local web browser follow the instructions and enter all the user input boxes. 
 
-
-
-The origninal version run in command line using a configuration file.  
+ 
 # Command Line python script instructions
 
 The initial version of this analysis program using command line can be found in the folder 'auto-q-pcr-command_line'.
@@ -64,6 +62,9 @@ Steps to run a qPCR analysis from the command line. You must install python and 
 
 The analysis will run and the plots will all be displayed. The plots will be save and an xls file with the output data will be saved in the "data" folder.
 
+
+# Authorship
+
 Program conception: Rhalena Thomas and Gilles Maussion
 
 Program and web app design and management: Rhalena Thomas
@@ -76,10 +77,5 @@ Web app and interface development, statistic and plotting: Gracia Gu
 
 This repository is managed by Rhalena Thomas.  The auto-qPCR webapp is maintained by Rhalena Thomas. 
 
-=======
-Program and web app design and management: Rhalena Thomas
-Command line data input and absolute model: Iveta Demirova
-Relative models and genomic instability: Eddie Cai  
-Web app and interface development, statistic and plotting: Gracia Gu
+# Licencing
 
->>>>>>> old_autoqPCR/master
