@@ -65,7 +65,6 @@ Steps to run a qPCR analysis from the command line. You must install python and 
 The analysis will run and the plots will all be displayed. The plots will be save and an xls file with the output data will be saved in the "data" folder.
 
 Program conception: Rhalena Thomas and Gilles Maussion
-<<<<<<< HEAD
 
 Program and web app design and management: Rhalena Thomas
 
