@@ -1,5 +1,0 @@
-Started
-Model: absolute
-
-Error occurred: Number of manager items must equal union of block items
-# manager items: 14, # tot_items: 18
