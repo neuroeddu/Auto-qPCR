@@ -5,14 +5,17 @@ See the web app version https://auto-q-pcr.com/
 
 Python scripts to run the program our found in this repository. 
 
-# To run a local GUI
-1. navigate to the folder 'local-GUI'. You must be within the local-GUI folder or the program won't run.
-$ cd local-GUI/
-$ ls 
-application  main.py  requirements.txt  venv
+# To run a locally 
+Local installation:
+Clone this github repository
 
+1. navigate to the folder 'website/Auto-q-pcr-frontend'. You must be within the local-GUI folder or the program won't run.
+$ cd website/Auto-q-pcr-frontend/
 
-2. in command line type: python main.py  - this will run the program
+2. install requirments or create a virtual enviroment.
+--- add instructions -----
+
+3. in command line type: python main.py  - this will run the program 
 $ python main.py
  * Serving Flask app "application" (lazy loading)
  * Environment: production
@@ -28,7 +31,7 @@ All the source scripts are available. Python scripts using flask to create a loc
 
 The file requirments.txt list packages needed to run the local server.
 
-3. In your local web browser follow the instructions and enter all the user input boxes. 
+4. In your local web browser follow the instructions and enter all the user input boxes. 
 
 
 
