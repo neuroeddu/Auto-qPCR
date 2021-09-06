@@ -402,11 +402,8 @@
             </div>
             <hr>
             <div class="form-group row">
-                <div class="g-recaptcha" data-sitekey="6Le3c7oZAAAAABcRAcJ_baCtSOYH8uQJMCFQqGgg"></div>
-            </div>
-            <div class="form-group row">
                 <div class="col-12">
-                    <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" id="submit" class="btn btn-primary g-recaptcha" data-sitekey="6Leez0scAAAAABGh2lnYzulZgHWCV3YOfC7IOTAB" data-callback="onSubmite" data-action="submit">Submit</button>
                     <button id="clear" class="btn btn-secondary">Clear</button>
                 </div>
             </div>
@@ -414,5 +411,11 @@
     </div>
 </div>
 <script type="text/javascript" src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+<script src="https://www.google.com/recaptcha/api.js"></script>
+<script>
+   function onSubmit(token) {
+     document.getElementById("demo-form").submit();
+   }
+ </script>
 
 {% endblock %}
