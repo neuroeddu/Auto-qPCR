@@ -12,8 +12,8 @@ Clone this github repository
 1. navigate to the folder 'website/Auto-q-pcr-frontend'. You must be within the local-GUI folder or the program won't run.
 $ cd website/Auto-q-pcr-frontend/
 
-2. install requirments or create a virtual enviroment.
---- add instructions -----
+2. create a virtual environment and install requirements, and run the program.
+$ run.sh
 
 3. in command line type: python main.py  - this will run the program 
 $ python main.py
