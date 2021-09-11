@@ -1,3 +1,19 @@
+# Auto-q-PCR is a program for analysis of qPCR data for absolute and relative quantification
+# Copyright (C) 2021 Rhalena Thomas, Eddie Cai, Gracia Gu and Iva Demirova
+#This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation,  version 3 of the License.
+
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+
+
+#########################################################################################################
+
+
+
 import logging
 from flask import render_template, request, make_response, send_from_directory, abort, flash
 from flask_mail import Message
