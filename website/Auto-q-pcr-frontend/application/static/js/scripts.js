@@ -119,7 +119,7 @@ document.getElementById("twoway").onclick = function() {
 	document.getElementById("gcol2").value = "";
 }
 
-// clear form
+//clear form
 document.getElementById("clear").onclick = function() {
 	location.reload();
 };
