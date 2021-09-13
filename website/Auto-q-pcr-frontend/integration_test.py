@@ -72,7 +72,7 @@ class IntegrationTest(unittest.TestCase):
         if len(test_data[test_data['CT'].astype(str).str.contains('Undetermined', na = False)]) > 0:
             test_data.replace('Undetermined', 40,  inplace=True)
 
-        clean_data, summary_data, summary_data_w_group, targets, samples = AUTOqPCR.process_data(test_data, "relative_dCT", "",
+        clean_data, summary_data, summary_data_w_group, targets, samples = AUTOqPCR.process_data(test_data, "absolute", "",
 																								 "UNKNOWN", "ACTB,GAPDH", 0.3,
 																								 0.5, False,
 																								 "",
@@ -80,7 +80,7 @@ class IntegrationTest(unittest.TestCase):
 																								 "")
 
         
-        clean_data_results = pd.read_csv("test_output/Absolute/clean_data.csv")
+        clean_data_results = pd.read_csv("test_output/Absolute/clean_data.csv", index_col=0)
 
         pd.testing.assert_frame_equal(clean_data, clean_data_results)
 
