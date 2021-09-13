@@ -1,0 +1,415 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row row-content">
+    <div class="col-6 col-sm-10 offset-sm-1">
+        <form method="POST" enctype="multipart/form-data" id="qpcr-form">
+            <div class="form-group row">
+                <div class="col-12">
+                    <p><b>All inputs are case insensitive. Separate with commas when multiple inputs are required and do not leave spaces. </b></p>
+                    <div class="footnote">
+                        <p>* fields are required</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group row">
+                <div class="col-10">
+                    <h4 class="required">Select model</h4>
+                </div>
+                <div class="col">
+                    <div class="help-tip" id="model-helptip">
+                        <p>Choose your model based on your qPCR design. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class= "col-md-3">
+                    <div class="radio">
+                        <label class="col-form-label"><input type="radio" name="option" id="absolute" value="absolute"
+                                                             checked required> Absolute </label>
+                    </div>
+                </div>
+                <div class= "col-md-3">
+                    <div class="radio">
+                        <label class="col-form-label"><input type="radio" name="option" id="relative_dCT"
+                                                             value="relative_dCT" required> Relative (&#916;CT) </label>
+                    </div>
+                </div>
+                <div class= "col-md-3">
+                    <div class="radio">
+                        <label class="col-form-label"><input type="radio" name="option" id="relative_ddCT"
+                                                             value="relative_ddCT" required> Relative (&#916;&#916;CT)
+                        </label>
+                    </div>
+                </div>
+                <div class= "col-md-3">
+                    <div class="radio">
+                        <label class="col-form-label"><input type="radio" name="option" id="instability"
+                                                             value="instability" required> Instability </label>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group row">
+                <div class="col-11">
+                    <h4 class="required">Upload your data (results.csv or results.txt): </h4>
+                </div>
+                <div class="col">
+                    <div class="help-tip" id="file-helptip">
+                    <p>Upload your data: Navigate to your folder of raw data files * This must be a either a csv (comma separated file) or a txt (tab separated file).
+                        These should be the output files from you PCR machine.
+                        Multiple spread sheets can be included. The data will
+                        be combined into a single analysis. Be sure to
+                        include the control genes you will use to normalize. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <input type="file" class="custom-file-input" id="file-input" name="file[]" accept=".csv,.txt" multiple required>
+                    <label class="custom-file-label" for="file-input">Choose file</label>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group row">
+                <div class="col">
+                    <h4>File information</h4>
+                </div>
+                <div class="col">
+                    <div class="help-tip">
+                        <p> This is only needed if you have an irregular file or you wish to filter out a quencher.  If your file contains no target you can indicate the target (gene) names in the file names and input these here.
+                            You can also choose to filter out your quencher or probe.  </p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <p>Would you like to fill in file information? </p>
+                </div>
+                <div class="col-sm-2">
+                    <label class="radio-inline"><input type="radio" name="file_info" id="y_fileinfo"> Yes</label>
+                </div>
+                <div class="col-sm-2">
+                    <label class="radio-inline"><input type="radio" name="file_info" id="n_fileinfo" checked> No</label>
+                </div>
+            </div>
+            <fieldset class="form-group" id="info_form">
+                <div class="input-container">
+                    <div class="row mb-0">
+                        <label for="genes" class="col-6 control-label">If your file does not contain gene or target names, enter target names included in your file name: </label>
+                        <input type="text" class="col-5 form-control" id="genes" name="genes" placeholder="Target names"
+                                       autocomplete="off">
+                        <div class="col">
+                            <div class="help-tip">
+                               <p>If your dataframe doesn't contain the gene target names you must include the gene name in the file name.
+                                    Enter the gene names in as they are found in the file name. </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="row mb-0">
+                        <label for="quencher" class="col-6 control-label">Name of your quencher:</label>
+                        <input type="text" class="col-5 form-control" id="quencher" name="quencher" placeholder="Quencher" autocomplete="off">
+                        <div class="col">
+                            <div class="help-tip">
+                                <p>Enter the name of the quencher that will be filtered out. </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="row mb-0">
+                        <label for="task" class="col-6 control-label">Name within the column 'Task' or 'Content' that identifies the unknown samples: </label>
+                        <input type="text" class="col-5 form-control" id="task" name="task" placeholder="Task" value="UNKNOWN" autocomplete="off" required>
+                        <div class="col">
+                            <div class="help-tip">
+                                <p>This is the "Task" or "Content" file and is by default listed as UNKNOWN. Could be "Sample" or "Unk. If you enter a partial work the column will be searched for anything containing the letters." </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <hr>
+            <div class="form-group row">
+                <div class="col-11">
+                    <h4>Normalization options</h4>
+                </div>
+                <div class="col">
+                    <div class="help-tip">
+                        <p>Gene or region to to normalize with (Actin, GAPDH, CHR4, B2M).
+                                    Must be entered identically to the input spreadsheet. <br> The sample used as calibrator (compare with this sample) for the relative (&#916;&#916;CT)
+                                    and for the instability models. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="input-container">
+                <div class="form-group row mb-0">
+                    <label for="cgenes" class="col-md-3 control-label required">Endogenous control gene(s)/chromosome(s): </label>
+                    <input type="text" class="col-md-3 form-control" id="cgenes" name="cgenes" placeholder="Endogeneous control" autocomplete="off" required>
+                    <label for="csample" class="col-md-3 control-label">Reference sample: <span id="specialStar" style="color: #FF0000">*</span></label>
+                    <input type="text" class="col-md-3 form-control" id="csample" name="csample" placeholder="Control sample" autocomplete="off">
+                </div>
+            </div>
+            <hr>
+            <div class="form-group row">
+                <div class="col-11">
+                    <h4>Options for removing technical replicates</h4>
+                </div>
+                <div class="col">
+                    <div class="help-tip">
+                        <p>Technical replicates for a given sample will be removed if the CT-SD
+                                    of a given sample is above the threshold (default 0.3). <br> Max proportion of replicates removed to reach the CT-SD cut off.
+                                    Default of 0.5 means that in 3 replicates only one can be removed. <br> Preserve outliers if the sample has high variability </p>
+                    </div>
+                </div>
+            </div>
+            <div class="input-container">
+                <div class="form-group row mb-0">
+                    <label for="cutoff" class="col-md-2 control-label">CT-SD cut-off: </label>
+                    <input type="number" class="col-md-1 form-control" id="cutoff" name="cutoff" value="0.3" step="any" placeholder="Cut-off" autocomplete="off">
+                    <label for="max_outliers" class="col-md-2 control-label">Max proportion: </label>
+                    <input type="number" class="col-md-1 form-control" id="max_outliers" name="max_outliers" value="0.5" step="any" placeholder="Max outliers" autocomplete="off">
+                    <label for="preserve_var" class="col-md-4 control-label">Preserve highly variable replicates: </label>
+                    <div class="col-md-1">
+                        <label class="radio-inline"><input type="radio" name="preservevar" id="y_preservevar" value="True"> Yes</label>
+                    </div>
+                    <div class="col-md-1">
+                        <label class="radio-inline"><input type="radio" name="preservevar" id="n_preservevar" value="False" checked> No</label>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group row">
+                <div class="col-11">
+                    <h4>Visualization options</h4>
+                </div>
+                <div class="col">
+                    <div class="help-tip">
+                        <p> Enter the order you would like genes/chromosomes to appear on the plots.
+                            Use the exact/complete names. <br> Enter the order you would like cell lines/conditions/timepoints to appear on the plots.
+                            Use the exact/complete names. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="input-container">
+                <div class="form-group row mb-0">
+                    <label for="target_order" class="col-md-2 control-label">Target order: </label>
+                    <input type="text" class="col-md-4 form-control" id="target_order" name="target_sorter" placeholder="Target order" autocomplete="off">
+                    <label for="sample_order" class="col-md-2 control-label">Sample order: </label>
+                    <input type="text" class="col-md-4 form-control" id="sample_order" name="sample_sorter" placeholder="Sample order" autocomplete="off">
+                </div>
+            </div>
+            <hr>
+            <div class="form-group row">
+                <div class="col">
+                    <h4>Statistics</h4>
+                </div>
+                <div class="col">
+                    <div class="help-tip">
+                        <p> Based on your selections the appropriate statistic will be performed. For 2 groups: paired or
+                            unpaired t-tests for normally distributed
+                            data, non-paramentric equivalent MannWhitneyU tests are used. For more than 2 groups one way
+                            ANOVA (normal distributions) or Kruskal-Wallis
+                            independent measures) or Friedman test (repeated measures) will be used. Post hoc
+                            comparisons are performed on 3 or more groups. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <p>Would you like to do statistical analysis? </p>
+                </div>
+                <div class="col-sm-2">
+                    <label class="radio-inline"><input type="radio" name="stats" id="y_stats"> Yes</label>
+                </div>
+                <div class="col-sm-2">
+                    <label class="radio-inline"><input type="radio" name="stats" id="n_stats" checked> No</label>
+                </div>
+            </div>
+            <fieldset class="form-group" id="stats_form">
+                <div class="row">
+                    <div class="col-12">
+                    </div>
+                </div>
+                <div class="form-group row mb-0">
+                    <label for="colnames" class="col-6 control-label">If your group names are not within the sample names, enter the column names that contain your groups: </label>
+                    <input type="text" class="col-5 form-control" id="colnames" name="colnames" placeholder="Column names"
+                               autocomplete="off">
+                    <div class="col">
+                        <div class="help-tip">
+                            <p>Column names that indicate grouping of the data (e.g. treatments, time points). Do not
+                                enter column names for sample names and target names. If your sample name contains the group variable names, leave this field empty. </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-0">
+                    <label for="quantity" class="col-6 control-label">How many groups do you have (number of conditions to compare) </label>
+                    <input type="number" class="col-5 form-control" id="quantity" name="qty" min="1" placeholder="Quantity" autocomplete="off">
+                    <div class="col">
+                        <div class="help-tip">
+                            <p> Groups can be different genes, time points, animals, treatments or any conditions
+                                    you wish to compare. Must be entered as they appear in the spreadsheet. </p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <div>
+                        <h4>
+                            Identify your groups (variables)
+                        </h4>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-5">
+                            <p>Where are your groups? </p>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="radio-inline"><input type="radio" id="opt-gcol" name="option3" value="True"> Group columns</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="radio-inline"><input type="radio" id="opt-glist" name="option3" value="False"> Within sample names</label>
+                        </div>
+                        <div class="col">
+                            <div class="help-tip" id="model-helptip">
+                                <p>Select which column will have your group names (the levels of the variable to compare).  If you added the groups in your sample names select sample names.  Otherwise you must have a column with the group names.  If you have not indicated the groups/variables in your raw data you will not be able to do statistics with this module. </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-inline">
+                        <div class="col-sm-5">
+                            <p>How many variables do you want to compare? </p>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="radio-inline" style="padding-top: 2px;"><input type="radio" class="form-control" id="oneway" name="twoway" value="False" autocomplete="off" checked> One </label>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="radio-inline" style="padding-top: 2px;"><input type="radio" class="form-control" id="twoway" name="twoway" value="True" autocomplete="off">  Two </label>
+                        </div>
+                        <div class="col">
+                            <div class="help-tip" id="model-helptip">
+                                <p>Select one variable for a one-way anova. For example you have three doses of a drug, this is one variable "Dose of Drug".  If you have two genotypes and three doses of a drug, this is two variables "Genotype" and "Dose of Drug". </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-container" id="col-form">
+                        <div class="input-container"  id="group-col">
+                            <div class="form-group row">
+                                <label for="gcol" class="col-md-6 control-label" style="padding-top: 4px;"> Enter the your group
+                                    column name: </label>
+                                <input type="text" class="col-md-5 form-control" id="gcol" name="gcol"
+                                       placeholder="Group column name" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="input-container" id="group-col2">
+                            <div class="form-group row">
+                                <label for="gcol1" class="col-6 control-label" style="padding-top: 4px;"> Enter the names of
+                                    your group column for variable A: </label>
+                                <input type="text" class="col-5 form-control" id="gcol1" name="gcol1"
+                                       placeholder="Group column name" autocomplete="off">
+                            </div>
+                            <div class="form-group row">
+                                <label for="gcol2" class="col-6 control-label" style="padding-top: 4px;"> Enter the names of
+                                    your group column for variable B: </label>
+                                <input type="text" class="col-5 form-control" id="gcol2" name="gcol2"
+                                       placeholder="Group column name" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-container" id="list-form">
+                        <div class="input-container" id="group-list">
+                            <div class="form-group row">
+                                <label for="glist" class="col-md-6 control-label" style="padding-top: 4px;"> Enter your
+                                    groups: </label>
+                                <input type="text" class="col-md-5 form-control" id="glist" name="glist" placeholder="Group names"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="input-container" id="group-list2">
+                            <div class="form-group row">
+                                <label for="colname1" class="col-md-6 control-label" style="padding-top: 4px;"> Enter the column
+                                    name for variable A </label>
+                                <input type="text" class="col-md-5 form-control" id="colname1" name="colname1"
+                                       placeholder="Column name A" autocomplete="off">
+                            </div>
+                            <div class="form-group row">
+                                <label for="glist1" class="col-md-6 control-label" style="padding-top: 4px;"> Enter the group names
+                                    as they are indicated in the column (separate with commas) </label>
+                                <input type="text" class="col-md-5 form-control" id="glist1" name="glist1"
+                                       placeholder="Group names A" autocomplete="off">
+                            </div>
+                            <div class="form-group row">
+                                <label for="colname2" class="col-md-6 control-label" style="padding-top: 4px;"> Enter the column
+                                    name for variable B </label>
+                                <input type="text" class="col-md-5 form-control" id="colname2" name="colname2"
+                                       placeholder="Column name B" autocomplete="off">
+                            </div>
+                            <div class="form-group row">
+                                <label for="glist2" class="col-md-6 control-label" style="padding-top: 4px;"> Enter the group names
+                                    as they are indicated in the column (separate with commas) </label>
+                                <input type="text" class="col-md-5 form-control" id="glist2" name="glist2"
+                                       placeholder="Group names B" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <h4>
+                        Select Parameters
+                    </h4>
+                </div>
+                <div class="row mb-0">
+                    <div class="col-sm-5">
+                        <p>Type of tests </p>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="radio-inline"><input type="radio" name="option4" id="y_nd" value="True" checked>Parametric</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="radio-inline"><input type="radio" name="option4" id="n_nd" value="False">Non-parametric</label>
+                    </div>
+                    <div class="col">
+                        <div class="help-tip" id="model-helptip">
+                            <p>Parametric test should be used on samples with a normal distribution.  Tests for normality require more than the usual number of biological replicates used in a qPCR experiment.  The users knowledge of the data type will need to suffice.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-0 mt-2">
+                    <div class="col-sm-5">
+                        <p>Type of measurements </p>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="radio-inline"><input type="radio" name="option2" id="y_rm" value="True">Repeated/dependent</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="radio-inline"><input type="radio" name="option2" id="n_rm" value="False" checked>Independent</label>
+                    </div>
+                    <div class="col">
+                        <div class="help-tip" id="model-helptip">
+                            <p>Dependent measurements are measurements from the same sample or cell line.  Using this option reduces the effect of biological variation that is masking the effect that is being measured.  However, this cannot be used if the measurements are independed. </p>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <hr>
+            <div class="form-group row">
+                 <div class="col-12">
+                    <h4>Plots will be automatically generated.</h4>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group row">
+                <div class="col-12">
+                    <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" id="clear" class="btn btn-secondary">Clear</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+
+
+{% endblock %}

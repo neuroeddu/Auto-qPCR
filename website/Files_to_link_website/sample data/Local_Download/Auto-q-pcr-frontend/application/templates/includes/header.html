@@ -1,0 +1,32 @@
+<header>
+	<div class="container">
+		<div class="row row-header">
+			<div class="col-6">
+				<img src="{{ url_for('static', filename='images/neuro_logo.png') }}"
+                     alt="the neuro logo" id="logo">
+			</div>
+			<div id="headerTitle" class="offset-2 col-4">
+				<h1 style="text-align: center; font-size: 200%; white-space: nowrap;">Auto-qPCR</h1>
+				<h2 style="text-align: center; font-size: 150%; white-space: nowrap;">NeuroEDDU</h2>
+			</div>
+		</div>
+	</div>
+</header>
+
+<nav class="navbar navbar-dark navbar-expand-sm align-self-center">
+	<div class="container-fluid">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="Navbar">
+            <div class="container">
+                    <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link {% if index %}active{% endif %}" href="{{ url_for('index') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link {% if form %}active{% endif %}" href="{{ url_for('form') }}">Auto-QPCR Analysis</a></li>
+                    <li class="nav-item"><a class="nav-link {% if help %}active{% endif %}" href="{{ url_for('help') }}">Help</a></li>
+                    <li class="nav-item"><a class="nav-link {% if contact %}active{% endif %}" href="{{ url_for('contact') }}">Contact</a></li>
+                </ul>
+            </div>
+		</div>
+	</div>
+</nav>
