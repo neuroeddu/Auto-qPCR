@@ -14,7 +14,7 @@
 
 # run the model (absolute, relative dCT, relative ddCT, instability) selected in the GUI 
 
-VERSION = "0.1.7"  # Eddie what does this refer to?
+VERSION = "0.1.7"
 QUALITY = ""
 
 import pandas
