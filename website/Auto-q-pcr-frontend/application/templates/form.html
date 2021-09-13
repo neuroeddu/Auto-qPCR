@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row row-content">
     <div class="col-6 col-sm-10 offset-sm-1">
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data" id="qpcr-form">
             <div class="form-group row">
                 <div class="col-12">
                     <p><b>All inputs are case insensitive. Separate with commas when multiple inputs are required and do not leave spaces. </b></p>
@@ -403,19 +403,14 @@
             <hr>
             <div class="form-group row">
                 <div class="col-12">
-                    <button type="submit" id="submit" class="btn btn-primary g-recaptcha" data-sitekey="6Leez0scAAAAABGh2lnYzulZgHWCV3YOfC7IOTAB" data-callback="onSubmite" data-action="submit">Submit</button>
-                    <button id="clear" class="btn btn-secondary">Clear</button>
+                    <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" id="clear" class="btn btn-secondary">Clear</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
 <script type="text/javascript" src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-<script src="https://www.google.com/recaptcha/api.js"></script>
-<script>
-   function onSubmit(token) {
-     document.getElementById("demo-form").submit();
-   }
- </script>
+
 
 {% endblock %}

@@ -9,7 +9,7 @@
             <div>
                 <p>Please fill out the form below or email us at: neuroeddu.mni&#64mcgill.ca</p>
             </div>
-            <form action="{{ url_for('contact') }}" method="POST">
+            <form action="{{ url_for('contact') }}" method="POST" id="contact-form">
                 <div class="form-group row">
                     <label for="name" class="col-md-3 col-form-label required">Name</label>
                     <div class="col-md-9">
@@ -47,18 +47,12 @@
                 </div>
                 <div class="form-group row">
                     <div class="offset-md-3 col-md-9">
-                        <button type="submit" value="submit" class="btn btn-primary g-recaptcha" data-sitekey="6Leez0scAAAAABGh2lnYzulZgHWCV3YOfC7IOTAB" data-callback="onSubmite" data-action="submit"">Send Feedback</button>
+                        <button class="btn btn-primary">Send Feedback</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <script src="https://www.google.com/recaptcha/api.js"></script>
-    <script>
-       function onSubmit(token) {
-         document.getElementById("demo-form").submit();
-       }
-     </script>
 
 {% endblock %}
 
