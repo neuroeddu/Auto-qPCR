@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/rhalena/Desktop/GITHUB/NeurEDDU/Auto-qPCR/website/Files_to_link_website/Local_download/Auto-q-pcr-frontend/local-env"
+set -gx VIRTUAL_ENV "/home/rhalena/Desktop/GITHUB/NeurEDDU/Auto-qPCR/website/Files_to_link_website/sample data/Local_Download/Auto-q-pcr-frontend/local-env"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
