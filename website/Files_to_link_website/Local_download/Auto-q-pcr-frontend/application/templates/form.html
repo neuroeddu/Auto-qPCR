@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row row-content">
     <div class="col-6 col-sm-10 offset-sm-1">
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data" id="qpcr-form">
             <div class="form-group row">
                 <div class="col-12">
                     <p><b>All inputs are case insensitive. Separate with commas when multiple inputs are required and do not leave spaces. </b></p>
@@ -234,14 +234,13 @@
                     </div>
                 </div>
                 <div class="form-group row mb-0">
-                    <label for="colnames" class="col-6 control-label">Enter the column names you would like to include
-                        for statistical analysis: </label>
+                    <label for="colnames" class="col-6 control-label">If your group names are not within the sample names, enter the column names that contain your groups: </label>
                     <input type="text" class="col-5 form-control" id="colnames" name="colnames" placeholder="Column names"
                                autocomplete="off">
                     <div class="col">
                         <div class="help-tip">
                             <p>Column names that indicate grouping of the data (e.g. treatments, time points). Do not
-                                enter column names for sample names and target names. </p>
+                                enter column names for sample names and target names. If your sample name contains the group variable names, leave this field empty. </p>
                         </div>
                     </div>
                 </div>
@@ -403,19 +402,14 @@
             <hr>
             <div class="form-group row">
                 <div class="col-12">
-		    <button type="submit" id="submit" class="btn btn-primary">Submit</button>                   
-                    <button id="clear" class="btn btn-secondary">Clear</button>
+                    <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" id="clear" class="btn btn-secondary">Clear</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
 <script type="text/javascript" src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-<script src="https://www.google.com/recaptcha/api.js"></script>
-<script>
-   function onSubmit(token) {
-     document.getElementById("demo-form").submit();
-   }
- </script>
+
 
 {% endblock %}

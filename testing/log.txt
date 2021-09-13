@@ -1,11 +1,11 @@
 Started
-Model: relative_dCT
+Model: absolute
 
 Files upload complete.
 Gene names if they are included in file names: 
 Quencher: 
 Task: UNKNOWN
-Endogenous control genes: ACTB,GAPDH
+Endogenous control genes: GAPDH,ACTB
 Cut-off: 0.3
 Maximum Outliers: 0.5
 Preserve highly variable replicates: False
@@ -13,15 +13,16 @@ Target Order:
 Sample Order: 
 Control Sample: 
 Additional column names: 
-Number of groups: None
+Number of groups: 4
 Group column name: 
-Group name: 
+Group name: IPSC,NPC,DA4W,DA6W
 Column name A: 
 Column Name B: 
 Group names for column A: 
 Group names for column B: 
 Repeated measures: False
 Normal distribution: True
-NumExpr defaulting to 8 threads.
 Clean data and summary data are created
 Plots of the summary data are created.
+Statistics output data are created.
+Plots of statistics output are created.
