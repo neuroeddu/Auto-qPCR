@@ -1,0 +1,81 @@
+,,,,,,,,,
+,,,,,,,,,
+Well / Set,Dye,Content,Description,Efficiency,C(t),ng,T_R,Treatment,Region
+A1,FAM,Blank,,N/A,N/A,,,,
+A1,TMR,Blank,,N/A,N/A,,,,
+A10,FAM,Standard,,50.03%,27.95,0.7813,,,
+A10,TMR,Standard,,N/A,N/A,0.7813,,,
+A11,FAM,Standard,,59.91%,30.14,0.1953,,,
+A11,TMR,Standard,,N/A,N/A,0.1953,,,
+A12,FAM,Standard,,45.13%,29.27,0.1953,,,
+A12,TMR,Standard,,N/A,N/A,0.1953,,,
+A2,FAM,Blank,,N/A,N/A,,,,
+A2,TMR,Blank,,N/A,N/A,,,,
+A3,FAM,Standard,,57.11%,21.89,50,,,
+A3,TMR,Standard,,N/A,N/A,50,,,
+A4,FAM,Standard,,61.64%,22.98,50,,,
+A4,TMR,Standard,,N/A,N/A,50,,,
+A5,FAM,Standard,,45.63%,24.81,12.5,,,
+A5,TMR,Standard,,N/A,N/A,12.5,,,
+A6,FAM,Standard,,47.71%,23.93,12.5,,,
+A6,TMR,Standard,,N/A,N/A,12.5,,,
+A7,FAM,Standard,,50.65%,26.01,3.125,,,
+A7,TMR,Standard,,N/A,N/A,3.125,,,
+A8,FAM,Standard,,47.14%,25.96,3.125,,,
+A8,TMR,Standard,,N/A,N/A,3.125,,,
+A9,FAM,Standard,,44.88%,28.03,0.7813,,,
+A9,TMR,Standard,,N/A,N/A,0.7813,,,
+B4,FAM,Sample,B4bisGP,32.11%,26.6,2.053,GP_Control,Control,GP
+B4,TMR,Sample,B4bisGP,N/A,N/A,,GP_Control,Control,GP
+B5,FAM,Sample,B4bisGP,45.30%,28.43,0.5979,GP_Control,Control,GP
+B5,TMR,Sample,B4bisGP,N/A,N/A,,GP_Control,Control,GP
+B6,TMR,Sample,B4bisGP,N/A,N/A,,GP_Control,Control,GP
+B6,FAM,Sample,B4bisGP,47.44%,28.18,0.708,GP_Control,Control,GP
+C4,FAM,Sample,R6 GP,46.03%,27.07,1.5,GP_Control,Control,GP
+C4,TMR,Sample,R6 GP,N/A,N/A,,GP_Control,Control,GP
+C5,FAM,Sample,R6 GP,53.51%,26.83,1.761,GP_Control,Control,GP
+C5,TMR,Sample,R6 GP,N/A,N/A,,GP_Control,Control,GP
+C6,FAM,Sample,R6 GP,43.63%,26.86,1.729,GP_Control,Control,GP
+C6,TMR,Sample,R6 GP,N/A,N/A,,GP_Control,Control,GP
+D1,FAM,Sample,V3 GP,49.19%,29.08,0.3856,GP_Control,Control,GP
+D1,TMR,Sample,V3 GP,N/A,N/A,,GP_Control,Control,GP
+D10,FAM,Sample,V4 GP,40.68%,27.61,1.039,GP_Control,Control,GP
+D10,TMR,Sample,V4 GP,N/A,N/A,,GP_Control,Control,GP
+D11,FAM,Sample,V4 GP,53.25%,28.67,0.508,GP_Control,Control,GP
+D11,TMR,Sample,V4 GP,N/A,N/A,,GP_Control,Control,GP
+D12,FAM,Sample,V4 GP,52.69%,28.3,0.6525,GP_Control,Control,GP
+D12,TMR,Sample,V4 GP,N/A,N/A,,GP_Control,Control,GP
+D2,FAM,Sample,V3 GP,53.23%,29.3,0.333,GP_Control,Control,GP
+D2,TMR,Sample,V3 GP,N/A,N/A,,GP_Control,Control,GP
+D3,FAM,Sample,V3 GP,50.26%,28.22,0.6867,GP_Control,Control,GP
+D3,TMR,Sample,V3 GP,N/A,N/A,,GP_Control,Control,GP
+E7,FAM,Sample,R5bis GP,49.20%,28.97,0.416,GP_Cocaine,Cocaine,GP
+E7,TMR,Sample,R5bis GP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+E8,FAM,Sample,R5bis GP,46.64%,28.44,0.5921,GP_Cocaine,Cocaine,GP
+E8,TMR,Sample,R5bis GP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+E9,FAM,Sample,R5bis GP,50.45%,28.31,0.6481,GP_Cocaine,Cocaine,GP
+E9,TMR,Sample,R5bis GP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+F4,FAM,Sample,R6bisGP,41.31%,26.07,2.936,GP_Cocaine,Cocaine,GP
+F4,TMR,Sample,R6bisGP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+F5,FAM,Sample,R6bisGP,53.37%,26.98,1.588,GP_Cocaine,Cocaine,GP
+F5,TMR,Sample,R6bisGP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+F6,FAM,Sample,R6bisGP,44.54%,25.96,3.179,GP_Cocaine,Cocaine,GP
+F6,TMR,Sample,R6bisGP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+G1,TMR,Sample,R8bisGP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+G1,FAM,Sample,R8bisGP,54.23%,28.1,0.7486,GP_Cocaine,Cocaine,GP
+G10,TMR,Sample,V2GP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+G10,FAM,Sample,V2GP,61.19%,27.2,1.374,GP_Cocaine,Cocaine,GP
+G11,FAM,Sample,V2GP,61.07%,26.68,1.942,GP_Cocaine,Cocaine,GP
+G11,TMR,Sample,V2GP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+G12,FAM,Sample,V2GP,61.99%,26.93,1.649,GP_Cocaine,Cocaine,GP
+G12,TMR,Sample,V2GP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+G2,TMR,Sample,R8bisGP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+G2,FAM,Sample,R8bisGP,53.24%,28.95,0.4201,GP_Cocaine,Cocaine,GP
+G3,FAM,Sample,R8bisGP,49.84%,28.1,0.7473,GP_Cocaine,Cocaine,GP
+G3,TMR,Sample,R8bisGP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+H7,FAM,Sample,V8GP,49.62%,28.05,0.774,GP_Cocaine,Cocaine,GP
+H7,TMR,Sample,V8GP,N/A,N/A,,GP_Cocaine,Cocaine,GP
+H8,FAM,Sample,V8GP,110.72%,2.81,19600000,GP_Cocaine,Cocaine,GP
+H8,TMR,Sample,V8GP,7.58%,6.97,,GP_Cocaine,Cocaine,GP
+H9,FAM,Sample,V8GP,57.41%,27.95,0.8275,GP_Cocaine,Cocaine,GP
+H9,TMR,Sample,V8GP,N/A,N/A,,GP_Cocaine,Cocaine,GP

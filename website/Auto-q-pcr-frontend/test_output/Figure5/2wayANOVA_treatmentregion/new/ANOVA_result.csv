@@ -1,0 +1,7 @@
+Target Name,Source,DF,F,MS,SS,p-value,p-value corrected,measures,distribution,test,statistic,effect size
+NRXN3,Group1,1.0,3.48,0.368,0.368,0.07549534547302546,0.2264860364190764,independent,parametric,ANOVA,NA,0.137
+NRXN3,Group2,2.0,13.662,1.445,2.891,0.00013900573237621668,0.00041701719712865004,independent,parametric,ANOVA,NA,0.554
+NRXN3,Group1 * Group2,2.0,1.097,0.116,0.232,0.3513027976650306,1.0,independent,parametric,ANOVA,NA,0.091
+B2M,Group1,1.0,0.553,0.0,0.0,0.4651300207213992,1.0,independent,parametric,ANOVA,NA,0.025
+B2M,Group2,2.0,7.5,0.0,0.0,0.00328448662884113,0.00985345988652339,independent,parametric,ANOVA,NA,0.405
+B2M,Group1 * Group2,2.0,1.455,0.0,0.0,0.25507385860251086,0.7652215758075326,independent,parametric,ANOVA,NA,0.117

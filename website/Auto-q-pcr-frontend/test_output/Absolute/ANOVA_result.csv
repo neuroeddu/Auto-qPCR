@@ -1,0 +1,6 @@
+Target Name,Source,DF,F,MS,SS,p-value,p-value corrected,measures,distribution,test,statistic,effect size
+GAPDH,Group,3,5.491,0.046,0.137,0.00951,0.04753,dependent,parametric,ANOVA,NA,0.523
+ACTB,Group,3,6.958,0.038,0.115,0.00372,0.01859,dependent,parametric,ANOVA,NA,0.582
+KCNJ6,Group,3,22.925,20.724,62.172,0.00001,0.00004,dependent,parametric,ANOVA,NA,0.821
+SYP,Group,3,114.917,58.478,175.433,0.00000,0.00000,dependent,parametric,ANOVA,NA,0.958
+GRIA1,Group,3,11.24,10.081,30.243,0.00040,0.00201,dependent,parametric,ANOVA,NA,0.692
