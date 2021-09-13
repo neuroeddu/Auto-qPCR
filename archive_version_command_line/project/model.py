@@ -4,7 +4,6 @@ from pathlib import Path
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
 import helpers as h
 import config #as c
 import warnings
@@ -65,7 +64,6 @@ def run_model(wdir, d, cfg):
     
     # Calculate Mean (Endogenous Control Mean) and SSD for all Controls
     f1 = (d['Ignore'].eq(False)) & (d['Task'] == 'UNKNOWN') & (d['Control'].eq(True))
-    d1 = d[f1].groupby(['Target Name','Sample Name']).agg({'Quantity': [np.size, 'mean', 'std']})
     d1_1 = d[f1].groupby(['Target Name','Sample Order','Sample Name']).agg({'Quantity': [np.size, 'mean', 'std']})
     s = "Endogenous Control Quantity Means and SSD"
     if h.verbosity == h.LOG_DEBUG:    
