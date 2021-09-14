@@ -5,7 +5,7 @@ This repository contains the python and flask scripts that are used to create th
 
 See the web app version https://auto-q-pcr.com/
 
-# To run a locally in development mode
+# To run locally in development mode
 Clone this github repository
 
 1. navigate to the folder 'website/Auto-q-pcr-frontend'. You must be within the local-GUI folder or the program won't run.
