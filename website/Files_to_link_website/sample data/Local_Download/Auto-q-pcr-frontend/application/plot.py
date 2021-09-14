@@ -23,7 +23,7 @@ import numpy as np
 fs = 80
 barwidth = 0.75
 error_kw = dict(lw=4, capsize=7, capthick=4)
-# fc = '#F0F0F0'
+
 
 
 def plots(dataframe, model, targets, samples):
@@ -164,7 +164,6 @@ def plots(dataframe, model, targets, samples):
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -192,7 +191,6 @@ def plots(dataframe, model, targets, samples):
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -215,7 +213,7 @@ def plots(dataframe, model, targets, samples):
 			x2 = x * len(targets) + barwidth * counter
 			plt.bar(x, sample, yerr=list(dataframe.loc[item, 'rqSEM']['mean']), align='center',
 					error_kw=error_kw, width=barwidth, edgecolor='white', label=item)
-			# plt.xlabel(item, fontsize=fs+10, fontweight='bold', labelpad=20)
+			
 			plt.xticks([i for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 			plt.yticks(fontsize=fs)
 
@@ -229,7 +227,6 @@ def plots(dataframe, model, targets, samples):
 			plt.gca().spines['left'].set_linewidth(5)
 			plt.gca().spines['top'].set_visible(False)
 			plt.gca().spines['right'].set_visible(False)
-			# plt.gca().set_facecolor(fc)
 			plt.gca().tick_params(width=5)
 			plt.tight_layout()
 			plt.close(plot)
@@ -256,7 +253,6 @@ def plots(dataframe, model, targets, samples):
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		# plt.tight_layout()
 		plt.close()
@@ -276,7 +272,6 @@ def plots(dataframe, model, targets, samples):
 
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		# plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative_dCT':
 			plt.ylabel(r'RQ$_{ΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
@@ -287,7 +282,6 @@ def plots(dataframe, model, targets, samples):
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -343,7 +337,6 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		# plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_t)
 		# set axes width
@@ -351,7 +344,6 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -372,7 +364,6 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		# plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_s)
 		# set axes width
@@ -380,7 +371,6 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -408,7 +398,6 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		# plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative':
 			plt.ylabel(r'RQ$_{ΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
@@ -419,7 +408,6 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -440,7 +428,6 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		# plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative_dCT':
 			plt.ylabel(r'RQ$_{ΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
@@ -451,7 +438,6 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 		plt.gca().spines['left'].set_linewidth(5)
 		plt.gca().spines['top'].set_visible(False)
 		plt.gca().spines['right'].set_visible(False)
-		# plt.gca().set_facecolor(fc)
 		plt.gca().tick_params(width=5)
 		plt.tight_layout()
 		plt.close()
@@ -513,7 +499,6 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 				counter += 1
 			plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))], groups, rotation='vertical', fontsize=fs)
 			plt.yticks(fontsize=fs)
-			# plt.xlabel('Groups', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_t)
 			# set axes width
@@ -521,7 +506,6 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 			plt.gca().spines['left'].set_linewidth(5)
 			plt.gca().spines['top'].set_visible(False)
 			plt.gca().spines['right'].set_visible(False)
-			# plt.gca().set_facecolor(fc)
 			plt.gca().tick_params(width=5)
 			plt.tight_layout()
 			plt.close()
@@ -546,7 +530,6 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 				counter += 1
 			plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 			plt.yticks(fontsize=fs)
-			# plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_g)
 			# set axes width
@@ -554,7 +537,6 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 			plt.gca().spines['left'].set_linewidth(5)
 			plt.gca().spines['top'].set_visible(False)
 			plt.gca().spines['right'].set_visible(False)
-			# plt.gca().set_facecolor(fc)
 			plt.gca().tick_params(width=5)
 			plt.tight_layout()
 			plt.close()
@@ -584,7 +566,6 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 				counter += 1
 			plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))], groups, rotation='horizontal', fontsize=fs)
 			plt.yticks(fontsize=fs)
-			# plt.xlabel('Groups', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.ylabel('Copy Number per Chromosome', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_t)
 			# set axes width
@@ -592,7 +573,6 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 			plt.gca().spines['left'].set_linewidth(5)
 			plt.gca().spines['top'].set_visible(False)
 			plt.gca().spines['right'].set_visible(False)
-			# plt.gca().set_facecolor(fc)
 			plt.gca().tick_params(width=5)
 			plt.tight_layout()
 			plt.close()
@@ -617,7 +597,6 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 				counter += 1
 			plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 			plt.yticks(fontsize=fs)
-			# plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.ylabel('Copy Number per Chromosome', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_g)
 			# set axes width
@@ -625,7 +604,6 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 			plt.gca().spines['left'].set_linewidth(5)
 			plt.gca().spines['top'].set_visible(False)
 			plt.gca().spines['right'].set_visible(False)
-			# plt.gca().set_facecolor(fc)
 			plt.gca().tick_params(width=5)
 			plt.tight_layout()
 			plt.close()
@@ -658,7 +636,6 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 				counter += 1
 			plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))], groups, rotation='horizontal', fontsize=fs)
 			plt.yticks(fontsize=fs)
-			# plt.xlabel('Groups', fontsize=fs+10, fontweight='bold', labelpad=20)
 			if model == 'relative_dCT':
 				plt.ylabel(r'RQ$_{ΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 			else:
@@ -669,7 +646,6 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 			plt.gca().spines['left'].set_linewidth(5)
 			plt.gca().spines['top'].set_visible(False)
 			plt.gca().spines['right'].set_visible(False)
-			# plt.gca().set_facecolor(fc)
 			plt.gca().tick_params(width=5)
 			plt.tight_layout()
 			plt.close()
@@ -705,7 +681,6 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 			plt.gca().spines['left'].set_linewidth(5)
 			plt.gca().spines['top'].set_visible(False)
 			plt.gca().spines['right'].set_visible(False)
-			# plt.gca().set_facecolor(fc)
 			plt.gca().tick_params(width=5)
 			plt.tight_layout()
 			plt.close()
@@ -758,7 +733,6 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 			plt.gca().spines['left'].set_linewidth(5)
 			plt.gca().spines['top'].set_visible(False)
 			plt.gca().spines['right'].set_visible(False)
-			# plt.gca().set_facecolor(fc)
 			plt.gca().tick_params(width=5)
 			plt.tight_layout()
 			plt.close()
@@ -792,7 +766,6 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 			plt.gca().spines['left'].set_linewidth(5)
 			plt.gca().spines['top'].set_visible(False)
 			plt.gca().spines['right'].set_visible(False)
-			# plt.gca().set_facecolor(fc)
 			plt.gca().tick_params(width=5)
 			plt.tight_layout()
 			plt.close()
@@ -834,7 +807,6 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 			plt.gca().spines['left'].set_linewidth(5)
 			plt.gca().spines['top'].set_visible(False)
 			plt.gca().spines['right'].set_visible(False)
-			# plt.gca().set_facecolor(fc)
 			plt.gca().tick_params(width=5)
 			plt.tight_layout()
 			plt.close()
