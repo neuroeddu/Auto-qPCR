@@ -14,20 +14,17 @@
 
 # run the model (absolute, relative dCT, relative ddCT, instability) selected in the GUI 
 
-VERSION = "0.1.7"
-QUALITY = ""
+VERSION = "1.0.0"
 
 import pandas
 import numpy as np
 from application import absolute , relative , stability
-# from tabulate import tabulate
 
 
 def process_data(data , model , quencher, task, cgenes , cutoff , max_outliers , preservevar, target_sorter=None , sample_sorter=None , csample=None, colnames=None):
 	"""This filters the data and processes the selected model, returning a list of output dataframes"""
 	# Transforms certain columns from string to numeric
-	
-	#print(data.head())
+
 	data = data[data['Task'].str.contains(task, na=False, case=False)]
 	
 	cols = ['CT']
@@ -73,11 +70,8 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, preservevar, task):
 	f = (d['Ignore'].eq(False)) & (d['Task'].str.lower() == task.lower())
 	d1 = d[f].groupby(['Sample Name' , 'Target Name']).agg({'CT': ['std']})
 
-
-	# print(tabulate(d1, headers='keys', tablefmt='psql'))
 	f = (d1['CT']['std'] >= cutoff)
 	d2 = d1[f]
-	# print(tabulate(d2, headers='keys', tablefmt='psql'))
 
 
 	if not d2.empty:
@@ -97,7 +91,7 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, preservevar, task):
 				dx = d[f].copy()
 				dxg1 = d[f].groupby(['Sample Name' , 'Target Name']).agg({'CT': [np.size , 'std' , 'mean']})
 				dxg2 = d[f].groupby(['Sample Name', 'Target Name']).agg({feature: [np.size, 'std', 'mean']})
-				# print(tabulate(dxg1, headers='keys', tablefmt='psql'))
+			
 
 				if dxg1['CT']['std'].iloc[0] < cutoff:
 					# CT std is under the threshold
@@ -106,8 +100,6 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, preservevar, task):
 				size -= 1
 				if size < min_size:
 					# Ignore the entire group of measurements
-					# for j in dx_idx:
-					#    d['Ignore'].loc[j] = True
 					break
 				# Will remove the measurement which is furthest from the mean
 				dx['Distance'] = (dx[feature] - dxg2[feature]['mean'].iloc[0]) ** 2
@@ -116,7 +108,7 @@ def cleanup_outliers(d , feature , cutoff , max_outliers, preservevar, task):
 				# check if the outlier should be kept if mean has high variation
 				if preservevar == 'True':
 					if abs((dxg2[feature]['mean'].iloc[0]-dx[feature].median())/dx[feature].median()) < 0.1:
-						# print('preserve: '+ str(abs((dxg2[feature]['mean'].iloc[0]-dx[feature].median())/dx[feature].median())))
+						
 						d['Outliers'].loc[j] = False
 
 	return d[(d['Ignore'].eq(False))]

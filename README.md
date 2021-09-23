@@ -1,21 +1,20 @@
 # Auto-qPCR
 A python program to process spreadsheet output directly from qPCR thermocycler.
 
+This repository contains the python and flask scripts that are used to create the web app. 
+
 See the web app version https://auto-q-pcr.com/
 
-Python scripts to run the program our found in this repository. 
-
-# To run a locally 
-Local installation:
+# To run locally in development mode
 Clone this github repository
 
 1. navigate to the folder 'website/Auto-q-pcr-frontend'. You must be within the local-GUI folder or the program won't run.
 $ cd website/Auto-q-pcr-frontend/
 
 2. create a virtual environment and install requirements, and run the program.
-$ run.sh
 
-3. in command line type: python main.py  - this will run the program 
+
+3. run the program 
 $ python main.py
  * Serving Flask app "application" (lazy loading)
  * Environment: production
@@ -33,35 +32,17 @@ The file requirments.txt list packages needed to run the local server.
 
 4. In your local web browser follow the instructions and enter all the user input boxes. 
 
+# Run a local version not for development
+A zip folder containing a local version with instruction on how to run is currently under the help tab on the auto-q-pcr website.
+The same folder can be located when you pull this github repo and navigate to
+$ Auto-qPCR/website/Files_to_link_website/sample data/Local_Download
+
  
-# Command Line python script instructions
+# Command Line version is archived 
+We are not updating these scripts.
 
-The initial version of this analysis program using command line can be found in the folder 'auto-q-pcr-command_line'.
-
-The document 'Perpare your computer pythonScript.docx' details how to install the required packages.
-
-Steps to run a qPCR analysis from the command line. You must install python and required packages.
-
-1. a) save the raw qPCR output data as a .csv file. Place the file(s) in a data folder.
-
-   b) copy the project_config.conf file into the data folder.
-   
-   c) Update the project_config.conf file to match your situation:
-   
-         1. choose your model: absolute, relative (delta CT), stability (delta delta CT)
-   
-         2. Specify Control Genes (house keeping/ configuration genes)
-         
-         3. If you are using delta-delta CT (the stability test) specify your reference sample.
-         
-         4. Save the file. 
-2. open command window (by typing cmd in your windows bar).
-3. navigate to the folder with the program files. Type: "cd /Desktop/Auto-qPCR/program/idlab/
-4. type "python idlab.py"      (this will run the program)
-5. A window will open asking you to select the location of your raw data.  Navigate in the window to select your data folder and pick OK.
-
-The analysis will run and the plots will all be displayed. The plots will be save and an xls file with the output data will be saved in the "data" folder.
-
+# Contributions
+We invite your contributions.  Please fork this repository and make a pull request if you are interested in contributing to the web app or command line version. 
 
 # Authorship
 
@@ -78,4 +59,16 @@ Web app and interface development, statistic and plotting: Gracia Gu
 This repository is managed by Rhalena Thomas.  The auto-qPCR webapp is maintained by Rhalena Thomas. 
 
 # Licencing
+
+Auto-q-PCR is a program for analysis of qPCR data for absolute and relative quantification
+Copyright (C) 2021 Rhalena Thomas, Eddie Cai, Gracia Gu and Iva Demirova at the NeuroEDDU
+This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation version 3 of the License,
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+
+For further information see: http://www.gnu.org/licenses/gpl.html
 

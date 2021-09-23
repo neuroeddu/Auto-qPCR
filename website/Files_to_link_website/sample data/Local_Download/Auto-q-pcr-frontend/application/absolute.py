@@ -26,16 +26,12 @@ def process(data, colnames, target_sorter, sample_sorter):
 	data['NormQuant'] = 0
 
 	control_filter = (data['Control'].eq(True))
-	# print("Endogenous Control Quantity Means and SSD")
-	# print(data_controls_grouped)
 
 	data_controls_quantity = data[control_filter].groupby(['Sample Name'], sort=False).agg({'Quantity': 'mean'})
-	# print("Combined Endogenous Control Quantity Means and SSD")
-	# print(data_controls_quantity)
 
 	# Create Normalized Quantity column
 	for i , row in enumerate(data_controls_quantity.itertuples(name=None) , 1):
-		name_filter = (data['Sample Name'] == row[0]) #control filter used to be here
+		name_filter = (data['Sample Name'] == row[0])
 		for j in data[name_filter].index:
 			data.loc[j , 'NormQuant'] = data.loc[j , 'Quantity'] / row[1]
 
