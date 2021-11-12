@@ -5,6 +5,13 @@ This repository contains the python and flask scripts that are used to create th
 
 See the web app version https://auto-q-pcr.com/
 
+This work is described in the publication:
+https://www.nature.com/articles/s41598-021-99727-6#Abs1
+
+Please site our publication if you use Auto-qPCR in our research
+Maussion, G., Thomas, R.A., Demirova, I. et al. Auto-qPCR; a python-based web app for automated and reproducible analysis of qPCR data. Sci Rep 11, 21293 (2021). https://doi.org/10.1038/s41598-021-99727-6
+
+
 # To run locally in development mode
 Clone this github repository
 
