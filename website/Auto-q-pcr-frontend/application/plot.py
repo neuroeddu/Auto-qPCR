@@ -398,7 +398,7 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 			counter += 1
 		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		if model == 'relative':
+		if model == 'relative_dCT':
 			plt.ylabel(r'RQ$_{ΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
 			plt.ylabel(r'RQ$_{ΔΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
