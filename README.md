@@ -9,9 +9,9 @@ This work is described in the publication:
 https://www.nature.com/articles/s41598-021-99727-6#Abs1
 
 Please site our publication if you use Auto-qPCR in our research
-Maussion, G.$, Thomas, R.A.$, Demirova, I. et al. Auto-qPCR; a python-based web app for automated and reproducible analysis of qPCR data. Sci Rep 11, 21293 (2021). https://doi.org/10.1038/s41598-021-99727-6
+Maussion, G.1, Thomas, R.A.1, Demirova, I. et al. Auto-qPCR; a python-based web app for automated and reproducible analysis of qPCR data. Sci Rep 11, 21293 (2021). https://doi.org/10.1038/s41598-021-99727-6
 
-$Equal contribution
+1 Equal contribution
 
 # To run locally in development mode
 Clone this github repository
