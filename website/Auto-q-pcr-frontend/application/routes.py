@@ -14,6 +14,8 @@
 
 
 
+from distutils import errors
+from distutils.log import error
 import logging
 from flask import render_template, request, make_response, send_from_directory, abort, flash
 from flask_mail import Message
@@ -25,6 +27,7 @@ from zipfile import ZipFile
 import re
 from application import regex_rename, AUTOqPCR, statistics, plot
 import traceback
+import csv
 
 
 @app.route('/')
@@ -86,12 +89,16 @@ def transform_view():
 			stream.seek(0)
 			if item.filename.endswith(".csv"):
 
+				sniffer = csv.Sniffer()
+				delimiter = sniffer.sniff(h).delimiter
+
 				filedata = pd.read_csv(stream,
 									skip_blank_lines=True,
 									skipinitialspace=True,
 									engine='python',
 									encoding="utf-8",
-									header=i)
+									header=i,
+									sep = delimiter)
 			else:
 				filedata = pd.read_csv(stream,
 									#skip_blank_lines=True,
@@ -192,7 +199,7 @@ def transform_view():
 																								 colnames)
 		# making summary data csv
 		output = summary_data.to_csv()
-		output_w_group = summary_data_w_group.to_csv()
+		#output_w_group = summary_data_w_group.to_csv()
 		clean_output = clean_data.to_csv()
 
 		logger.info('Clean data and summary data are created')
@@ -235,6 +242,7 @@ def transform_view():
 
 		# making stats csv
 		if qty is not None:
+			output_w_group = summary_data_w_group.to_csv()
 			if tw == 'False':
 				if request.form['option3'] != 'False':
 					if gcol.lower() in clean_data.columns.str.lower():
@@ -305,9 +313,10 @@ def transform_view():
 					image_name = 'Group1_vs_Group2.png'
 					myzip.writestr(image_name, buf.getvalue())
 					buf.close()
+				myzip.writestr('summary_data_w_groups.csv', output_w_group)
 			myzip.writestr('clean_data.csv', clean_output)
 			myzip.writestr('summary_data.csv', output)
-			myzip.writestr('summary_data_w_groups.csv', output_w_group)
+			#myzip.writestr('summary_data_w_groups.csv', output_w_group)
 			myzip.writestr('log.txt', log_stream.getvalue())
 			log_stream.flush()
 			# individual plots

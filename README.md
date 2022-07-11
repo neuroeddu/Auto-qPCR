@@ -45,7 +45,18 @@ A zip folder containing a local version with instruction on how to run is curren
 The same folder can be located when you pull this github repo and navigate to
 $ Auto-qPCR/website/Files_to_link_website/sample data/Local_Download
 
- 
+# To test the functions
+
+1. navigate to the folder 'website/Auto-q-pcr-frontend' after activating the virtual environment
+2. run  `py .\test.py -i input_file1.csv,input_file2.csv -o output_directory`
+
+If you have multiple input files separate the input files by comma(s)
+
+The output directory should contain log.txt file which has the relevant information for the program and clean_data.csv which showcases the correct output of the program
+
+Also the path to the input file(s) and the output file should be relative path
+
+
 # Command Line version is archived 
 We are not updating these scripts.
 
