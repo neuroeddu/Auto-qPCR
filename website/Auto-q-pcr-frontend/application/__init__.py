@@ -23,11 +23,20 @@ app = Flask(__name__)
 app.static_folder = 'static'
 app.secret_key = b'6Leez0scAAAAABp0A4Fi85tPDhz70dgRVXcX4g3f'
 
-app.config["MAIL_SERVER"] = 'Exchange'
-app.config["MAIL_PORT"] = 465
-app.config["MAIL_USERNAME"] = 'neuroeddu.mni@mcgill.ca'
-app.config["MAIL_PASSWORD"] = ''
-app.config['MAIL_USE_SSL'] = True
+# app.config["MAIL_SERVER"] = 'Exchange'
+# app.config["MAIL_PORT"] = 465
+# app.config["MAIL_USERNAME"] = 'neuroeddu.mni@mcgill.ca'
+# app.config["MAIL_PASSWORD"] = ''
+# app.config['MAIL_USE_SSL'] = True
+
+app.config['MAIL_SERVER']='smtp.mailtrap.io'
+app.config['MAIL_PORT'] = 2525
+app.config['MAIL_USERNAME'] = '011bcce9b3c8a9'
+app.config['MAIL_PASSWORD'] = '95d90cbf56699b'
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+
+#https://stackoverflow.com/questions/60910104/smtp-authentication-error-while-while-sending-mail-from-outlook-using-python-lan
 
 app.config['UPLOAD_FOLDER'] = 'static/files/'
 

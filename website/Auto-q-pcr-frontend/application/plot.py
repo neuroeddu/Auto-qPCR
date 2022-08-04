@@ -91,7 +91,7 @@ def plots(dataframe, model, targets, samples):
 		# ------------------------------------------------------------ #
 		# Absolute grouped bar plot by samples
 		# ------------------------------------------------------------ #
-		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
+		plt.xticks([i for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.yticks(fontsize=fs)
 		# plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
@@ -120,7 +120,7 @@ def plots(dataframe, model, targets, samples):
 					error_kw=error_kw, width=barwidth, edgecolor='white', label=item)
 			counter += 1
 
-		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
+		plt.xticks([i for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.yticks(fontsize=fs)
 		# plt.xlabel('Targets', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
@@ -154,7 +154,7 @@ def plots(dataframe, model, targets, samples):
 					error_kw=error_kw, width=barwidth, edgecolor='white', label=item)
 			counter += 1
 
-		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
+		plt.xticks([i for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.yticks(fontsize=fs)
 		# plt.xlabel('DNA Regions', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.ylabel('Copy Number per Chromosome', fontsize=fs+10, fontweight='bold', labelpad=20)
@@ -239,8 +239,8 @@ def plots(dataframe, model, targets, samples):
 		# ------------------------------------------------------------ #
 		# Relative grouped plot by sample
 		# ------------------------------------------------------------ #
-
-		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
+		#sample groups.png
+		plt.xticks([i for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.yticks(fontsize=fs)
 		# plt.xlabel('Samples', fontsize=fs+10, fontweight='bold', labelpad=20)
 		if model == 'relative_dCT':
@@ -269,7 +269,7 @@ def plots(dataframe, model, targets, samples):
 			plt.bar(x, target, yerr=list(dataframe.loc[(slice(None), item), 'rqSEM']['mean']), align='center',
 					error_kw=error_kw, width=barwidth, edgecolor='white', label=item)
 			counter += 1
-
+		# all targets
 		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.yticks(fontsize=fs)
 		if model == 'relative_dCT':
@@ -335,7 +335,7 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 					label=item)
 			counter += 1
 
-		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
+		plt.xticks([i for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.yticks(fontsize=fs)
 		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_t)
@@ -362,7 +362,7 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 					label=item)
 			counter += 1
 
-		plt.xticks([i * len(samples) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
+		plt.xticks([i for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 		plt.yticks(fontsize=fs)
 		plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
 		plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_s)
@@ -396,9 +396,10 @@ def plots_wo_controls(dataframe, model, targets, samples, cgenes):
 					error_kw=error_kw, width=barwidth, edgecolor='white',
 					label=item)
 			counter += 1
-		plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
+		# sample groups without .png
+		plt.xticks([i for i in range(len(samples))], samples, rotation='vertical', fontsize=fs)
 		plt.yticks(fontsize=fs)
-		if model == 'relative':
+		if model == 'relative_dCT':
 			plt.ylabel(r'RQ$_{ΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
 		else:
 			plt.ylabel(r'RQ$_{ΔΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
@@ -528,7 +529,7 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 				plt.bar(x, y, yerr=st_err, error_kw=error_kw, align='center',
 						width=barwidth, edgecolor='white', label=g)
 				counter += 1
-			plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
+			plt.xticks([i for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 			plt.yticks(fontsize=fs)
 			plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_g)
@@ -564,7 +565,7 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 						width=barwidth, edgecolor='white', label=t)
 
 				counter += 1
-			plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))], groups, rotation='horizontal', fontsize=fs)
+			plt.xticks([i for i in range(len(groups))], groups, rotation='horizontal', fontsize=fs)
 			plt.yticks(fontsize=fs)
 			plt.ylabel('Copy Number per Chromosome', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_t)
@@ -595,7 +596,7 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 						width=barwidth, edgecolor='white', label=g)
 
 				counter += 1
-			plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
+			plt.xticks([i for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 			plt.yticks(fontsize=fs)
 			plt.ylabel('Copy Number per Chromosome', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_g)
@@ -634,7 +635,8 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 						width=barwidth, edgecolor='white', label=t)
 
 				counter += 1
-			plt.xticks([i * len(targets) + barwidth * counter / 2 for i in range(len(groups))], groups, rotation='horizontal', fontsize=fs)
+			# sample groups without 
+			plt.xticks([i for i in range(len(groups))], groups, rotation='horizontal', fontsize=fs)
 			plt.yticks(fontsize=fs)
 			if model == 'relative_dCT':
 				plt.ylabel(r'RQ$_{ΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
@@ -669,7 +671,8 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 						width=barwidth, edgecolor='white', label=g)
 
 				counter += 1
-				plt.xticks([i * len(groups) + barwidth * counter / 2 for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
+				# sample without .png
+				plt.xticks([i for i in range(len(targets))], targets, rotation='horizontal', fontsize=fs)
 				plt.yticks(fontsize=fs)
 			if model == 'relative_dCT':
 				plt.ylabel(r'RQ$_{ΔCT}$', fontsize=fs+10, fontweight='bold', labelpad=20)
@@ -724,7 +727,7 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 						width=barwidth, edgecolor='white', label=g1)
 
 				counter += 1
-			plt.xticks([i * len(group1) + barwidth * counter / 2 for i in range(len(group2))], group2, rotation='vertical', fontsize=fs)
+			plt.xticks([i for i in range(len(group2))], group2, rotation='vertical', fontsize=fs)
 			plt.yticks(fontsize=fs)
 			plt.ylabel('Normalized Expression', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_g1)
@@ -757,7 +760,7 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 						width=barwidth, edgecolor='white', label=g1)
 
 				counter += 1
-			plt.xticks([i * len(group1) + barwidth * counter / 2 for i in range(len(group2))], group2, rotation='vertical', fontsize=fs)
+			plt.xticks([i for i in range(len(group2))], group2, rotation='vertical', fontsize=fs)
 			plt.yticks(fontsize=fs)
 			plt.ylabel('Copy Number per Chromosome', fontsize=fs+10, fontweight='bold', labelpad=20)
 			plt.legend(fontsize=fs, loc='upper left', bbox_to_anchor=(1, 1), ncol=ncol_g1)
@@ -794,8 +797,8 @@ def plot_by_groups(df, model, targets, cgenes, tw):
 						width=barwidth, edgecolor='white', label=g1)
 
 				counter += 1
-			plt.xticks([i * len(group1) + barwidth * counter / 2 for i in range(len(group2))], group2,
-					   rotation='vertical', fontsize=fs)
+			# sample without .png
+			plt.xticks([i for i in range(len(group2))], group2,rotation='vertical', fontsize=fs)
 			plt.yticks(fontsize=fs)
 			if model == 'relative_dCT':
 				plt.ylabel(r'RQ$_{ΔCT}$', fontsize=fs + 10, fontweight='bold', labelpad=20)
